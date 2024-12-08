@@ -4431,28 +4431,7 @@
 <a href="#4430" id="4430">4430</a>
 <a href="#4431" id="4431">4431</a>
 <a href="#4432" id="4432">4432</a>
-<a href="#4433" id="4433">4433</a>
-<a href="#4434" id="4434">4434</a>
-<a href="#4435" id="4435">4435</a>
-<a href="#4436" id="4436">4436</a>
-<a href="#4437" id="4437">4437</a>
-<a href="#4438" id="4438">4438</a>
-<a href="#4439" id="4439">4439</a>
-<a href="#4440" id="4440">4440</a>
-<a href="#4441" id="4441">4441</a>
-<a href="#4442" id="4442">4442</a>
-<a href="#4443" id="4443">4443</a>
-<a href="#4444" id="4444">4444</a>
-<a href="#4445" id="4445">4445</a>
-<a href="#4446" id="4446">4446</a>
-<a href="#4447" id="4447">4447</a>
-<a href="#4448" id="4448">4448</a>
-<a href="#4449" id="4449">4449</a>
-<a href="#4450" id="4450">4450</a>
-<a href="#4451" id="4451">4451</a>
-<a href="#4452" id="4452">4452</a>
-<a href="#4453" id="4453">4453</a>
-<a href="#4454" id="4454">4454</a></pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::missing_errors_doc)]
+<a href="#4433" id="4433">4433</a></pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::missing_errors_doc)]
 
 </span><span class="kw">use </span>std::borrow::Cow;
 <span class="kw">use </span>std::cell::Cell;
@@ -5246,12 +5225,12 @@
         .<span class="kw">await
     </span>}
 
-    <span class="kw">async fn </span>create_reaction_(
+    <span class="doccomment">/// Reacts to a message.
+    </span><span class="kw">pub async fn </span>create_reaction(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         channel_id: ChannelId,
         message_id: MessageId,
         reaction_type: <span class="kw-2">&amp;</span>ReactionType,
-        burst: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="self">self</span>.wind(Request {
             body: <span class="prelude-val">None</span>,
@@ -5263,31 +5242,10 @@
                 message_id,
                 reaction: <span class="kw-2">&amp;</span>reaction_type.as_data(),
             },
-            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>[(<span class="string">"burst"</span>, <span class="kw-2">&amp;</span>burst.to_arraystring())]),
+            params: <span class="prelude-val">None</span>,
         })
         .<span class="kw">await
     </span>}
-
-    <span class="doccomment">/// Reacts to a message.
-    </span><span class="kw">pub async fn </span>create_reaction(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        channel_id: ChannelId,
-        message_id: MessageId,
-        reaction_type: <span class="kw-2">&amp;</span>ReactionType,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>.create_reaction_(channel_id, message_id, reaction_type, <span class="bool-val">false</span>).<span class="kw">await
-    </span>}
-
-    <span class="doccomment">/// Super reacts to a message.
-    </span><span class="kw">pub async fn </span>create_super_reaction(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        channel_id: ChannelId,
-        message_id: MessageId,
-        reaction_type: <span class="kw-2">&amp;</span>ReactionType,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>.create_reaction_(channel_id, message_id, reaction_type, <span class="bool-val">true</span>).<span class="kw">await
-    </span>}
-
     <span class="doccomment">/// Creates a role.
     </span><span class="kw">pub async fn </span>create_role(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
