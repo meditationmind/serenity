@@ -1,1 +1,1 @@
-searchState.loadedDescShard("serenity", 2, "Mentions the <code>User</code> in the built message.\nAssign the dummy message the webhook author’s ID.")
+searchState.loadedDescShard("serenity", 2, "Assign the dummy message a flag whether it’ll be read by …\nMentions the <code>User</code> in the built message.\nAssign the dummy message the webhook author’s ID.")
