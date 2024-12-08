@@ -533,7 +533,18 @@
 <a href="#532" id="532">532</a>
 <a href="#533" id="533">533</a>
 <a href="#534" id="534">534</a>
-<a href="#535" id="535">535</a></pre></div><pre class="rust"><code><span class="kw">use </span>serde::de::{Deserialize, Deserializer, Error <span class="kw">as </span>DeError};
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a></pre></div><pre class="rust"><code><span class="kw">use </span>serde::de::{Deserialize, Deserializer, Error <span class="kw">as </span>DeError};
 <span class="kw">use </span>serde::ser::{Serialize, Serializer};
 
 <span class="kw">use super</span>::{
@@ -596,6 +607,17 @@
             <span class="self">Self</span>::Command(i) | <span class="self">Self</span>::Autocomplete(i) =&gt; i.app_permissions,
             <span class="self">Self</span>::Component(i) =&gt; i.app_permissions,
             <span class="self">Self</span>::Modal(i) =&gt; i.app_permissions,
+        }
+    }
+
+    <span class="doccomment">/// Guild ID the interaction was sent from, if any.
+    </span><span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>guild_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;GuildId&gt; {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Ping(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+            <span class="self">Self</span>::Command(i) | <span class="self">Self</span>::Autocomplete(i) =&gt; i.guild_id,
+            <span class="self">Self</span>::Component(i) =&gt; i.guild_id,
+            <span class="self">Self</span>::Modal(i) =&gt; i.guild_id,
         }
     }
 
