@@ -1339,7 +1339,7 @@
     }
 
     <span class="attr">#[cfg_attr(feature = <span class="string">"tracing_instrument"</span>, instrument(skip(<span class="self">self</span>)))]
-    </span><span class="kw">fn </span>handle_gateway_closed(<span class="kw-2">&amp;mut </span><span class="self">self</span>, data: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>CloseFrame&lt;<span class="lifetime">'static</span>&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    </span><span class="kw">fn </span>handle_gateway_closed(<span class="kw-2">&amp;mut </span><span class="self">self</span>, data: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>CloseFrame&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(code) = data.map(|d| d.code) {
             <span class="kw">match </span>CloseCode(code.into()) {
                 CloseCode::UnknownError =&gt; <span class="macro">warn!</span>(<span class="string">"[{:?}] Unknown gateway error."</span>, <span class="self">self</span>.shard_info),

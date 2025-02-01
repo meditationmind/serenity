@@ -550,9 +550,7 @@
 <a href="#549" id="549">549</a>
 <a href="#550" id="550">550</a>
 <a href="#551" id="551">551</a>
-<a href="#552" id="552">552</a>
-<a href="#553" id="553">553</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
-<span class="kw">use </span>std::sync::Arc;
+<a href="#552" id="552">552</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>futures::channel::mpsc::{<span class="self">self</span>, UnboundedReceiver <span class="kw">as </span>Receiver, UnboundedSender <span class="kw">as </span>Sender};
 <span class="kw">use </span>tokio_tungstenite::tungstenite;
@@ -798,7 +796,7 @@
                 .client
                 .close(<span class="prelude-val">Some</span>(CloseFrame {
                     code: close_code.into(),
-                    reason: Cow::from(<span class="string">""</span>),
+                    reason: <span class="string">""</span>.into(),
                 }))
                 .<span class="kw">await</span>,
         );
@@ -861,7 +859,7 @@
                 <span class="kw">let </span>reason = reason.unwrap_or_default();
                 <span class="kw">let </span>close = CloseFrame {
                     code: code.into(),
-                    reason: Cow::from(reason),
+                    reason: reason.into(),
                 };
                 <span class="self">self</span>.shard.client.close(<span class="prelude-val">Some</span>(close)).<span class="kw">await</span>.is_ok()
             },

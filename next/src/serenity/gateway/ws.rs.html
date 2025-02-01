@@ -444,7 +444,10 @@
 <a href="#443" id="443">443</a>
 <a href="#444" id="444">444</a>
 <a href="#445" id="445">445</a>
-<a href="#446" id="446">446</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 <span class="kw">use </span>std::env::consts;
 <span class="kw">use </span>std::io::Read;
 <span class="kw">use </span>std::time::SystemTime;
@@ -674,11 +677,14 @@
 
 <span class="kw">impl </span>WsClient {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>connect(url: Url, compression: TransportCompression) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>config = WebSocketConfig {
-            max_message_size: <span class="prelude-val">None</span>,
-            max_frame_size: <span class="prelude-val">None</span>,
-            ..Default::default()
+        <span class="kw">let </span>config = {
+            <span class="kw">let </span><span class="kw-2">mut </span>config = WebSocketConfig::default();
+            config.max_message_size = <span class="prelude-val">None</span>;
+            config.max_frame_size = <span class="prelude-val">None</span>;
+
+            config
         };
+
         <span class="kw">let </span>(stream, <span class="kw">_</span>) = connect_async_with_config(url, <span class="prelude-val">Some</span>(config), <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
@@ -695,7 +701,7 @@
         };
 
         <span class="kw">let </span>json_bytes = <span class="kw">match </span>message {
-            Message::Text(payload) =&gt; Cow::Owned(payload.into_bytes()),
+            Message::Text(payload) =&gt; Cow::Owned(payload.as_bytes().to_vec()),
             Message::Binary(bytes) =&gt; {
                 <span class="kw">let </span><span class="prelude-val">Some</span>(decompressed) = <span class="self">self</span>.compression.inflate(<span class="kw-2">&amp;</span>bytes)<span class="question-mark">? </span><span class="kw">else </span>{
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
@@ -730,7 +736,7 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>send_json(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">impl </span>serde::Serialize) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">let </span>message = serde_json::to_string(value).map(Message::Text)<span class="question-mark">?</span>;
+        <span class="kw">let </span>message = Message::Text(serde_json::to_string(value)<span class="question-mark">?</span>.into());
 
         <span class="self">self</span>.stream.send(message).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -748,7 +754,7 @@
     }
 
     <span class="doccomment">/// Delegate to `WebSocketStream::close`
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>close(<span class="kw-2">&amp;mut </span><span class="self">self</span>, msg: <span class="prelude-ty">Option</span>&lt;CloseFrame&lt;<span class="lifetime">'_</span>&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>close(<span class="kw-2">&amp;mut </span><span class="self">self</span>, msg: <span class="prelude-ty">Option</span>&lt;CloseFrame&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="self">self</span>.stream.close(msg).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
