@@ -755,7 +755,7 @@
 
                 <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(delay_time)) = delay_time {
                     sleep(delay_time).<span class="kw">await</span>;
-                };
+                }
 
                 delay_time.map(|d| d.is_some())
             };
