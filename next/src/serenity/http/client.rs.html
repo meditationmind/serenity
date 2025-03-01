@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/http/client.rs`."><title>client.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (617aad8c2 2025-02-24)" data-channel="nightly" data-search-js="search-f7327375.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../static.files/storage-d8ac8691.js"></script><script defer src="../../../static.files/src-script-b8d3f215.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-a7bf3405.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/http/</div>client.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#![allow(clippy::missing_errors_doc)]
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/http/client.rs`."><title>client.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (287487624 2025-02-28)" data-channel="nightly" data-search-js="search-f7327375.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../static.files/storage-d8ac8691.js"></script><script defer src="../../../static.files/src-script-b8d3f215.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-a7bf3405.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/http/</div>client.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#![allow(clippy::missing_errors_doc)]
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a></span><span class="kw">use </span>std::borrow::Cow;
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>std::cell::Cell;
@@ -3725,703 +3725,700 @@
 <a href=#3725 id=3725 data-nosnippet>3725</a>        event_id: <span class="prelude-ty">Option</span>&lt;ScheduledEventId&gt;,
 <a href=#3726 id=3726 data-nosnippet>3726</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Invite&gt; {
 <a href=#3727 id=3727 data-nosnippet>3727</a>        <span class="kw">let </span>(member_counts_str, expiration_str, event_id_str);
-<a href=#3728 id=3728 data-nosnippet>3728</a>        <span class="attr">#[cfg(feature = <span class="string">"utils"</span>)]
-<a href=#3729 id=3729 data-nosnippet>3729</a>        </span><span class="kw">let </span>code = <span class="kw">crate</span>::utils::parse_invite(code);
-<a href=#3730 id=3730 data-nosnippet>3730</a>
-<a href=#3731 id=3731 data-nosnippet>3731</a>        <span class="kw">let </span><span class="kw-2">mut </span>params = ArrayVec::&lt;<span class="kw">_</span>, <span class="number">3</span>&gt;::new();
+<a href=#3728 id=3728 data-nosnippet>3728</a>        <span class="kw">let </span><span class="kw-2">mut </span>params = ArrayVec::&lt;<span class="kw">_</span>, <span class="number">3</span>&gt;::new();
+<a href=#3729 id=3729 data-nosnippet>3729</a>
+<a href=#3730 id=3730 data-nosnippet>3730</a>        member_counts_str = member_counts.to_arraystring();
+<a href=#3731 id=3731 data-nosnippet>3731</a>        params.push((<span class="string">"member_counts"</span>, member_counts_str.as_str()));
 <a href=#3732 id=3732 data-nosnippet>3732</a>
-<a href=#3733 id=3733 data-nosnippet>3733</a>        member_counts_str = member_counts.to_arraystring();
-<a href=#3734 id=3734 data-nosnippet>3734</a>        params.push((<span class="string">"member_counts"</span>, member_counts_str.as_str()));
+<a href=#3733 id=3733 data-nosnippet>3733</a>        expiration_str = expiration.to_arraystring();
+<a href=#3734 id=3734 data-nosnippet>3734</a>        params.push((<span class="string">"expiration"</span>, <span class="kw-2">&amp;</span>expiration_str));
 <a href=#3735 id=3735 data-nosnippet>3735</a>
-<a href=#3736 id=3736 data-nosnippet>3736</a>        expiration_str = expiration.to_arraystring();
-<a href=#3737 id=3737 data-nosnippet>3737</a>        params.push((<span class="string">"expiration"</span>, <span class="kw-2">&amp;</span>expiration_str));
-<a href=#3738 id=3738 data-nosnippet>3738</a>
-<a href=#3739 id=3739 data-nosnippet>3739</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(event_id) = event_id {
-<a href=#3740 id=3740 data-nosnippet>3740</a>            event_id_str = event_id.to_arraystring();
-<a href=#3741 id=3741 data-nosnippet>3741</a>            params.push((<span class="string">"event_id"</span>, <span class="kw-2">&amp;</span>event_id_str));
-<a href=#3742 id=3742 data-nosnippet>3742</a>        }
-<a href=#3743 id=3743 data-nosnippet>3743</a>
-<a href=#3744 id=3744 data-nosnippet>3744</a>        <span class="self">self</span>.fire(Request {
-<a href=#3745 id=3745 data-nosnippet>3745</a>            body: <span class="prelude-val">None</span>,
-<a href=#3746 id=3746 data-nosnippet>3746</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3747 id=3747 data-nosnippet>3747</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3748 id=3748 data-nosnippet>3748</a>            method: LightMethod::Get,
-<a href=#3749 id=3749 data-nosnippet>3749</a>            route: Route::Invite {
-<a href=#3750 id=3750 data-nosnippet>3750</a>                code,
-<a href=#3751 id=3751 data-nosnippet>3751</a>            },
-<a href=#3752 id=3752 data-nosnippet>3752</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>params),
-<a href=#3753 id=3753 data-nosnippet>3753</a>        })
-<a href=#3754 id=3754 data-nosnippet>3754</a>        .<span class="kw">await
-<a href=#3755 id=3755 data-nosnippet>3755</a>    </span>}
-<a href=#3756 id=3756 data-nosnippet>3756</a>
-<a href=#3757 id=3757 data-nosnippet>3757</a>    <span class="doccomment">/// Gets member of a guild.
-<a href=#3758 id=3758 data-nosnippet>3758</a>    </span><span class="kw">pub async fn </span>get_member(<span class="kw-2">&amp;</span><span class="self">self</span>, guild_id: GuildId, user_id: UserId) -&gt; <span class="prelude-ty">Result</span>&lt;Member&gt; {
-<a href=#3759 id=3759 data-nosnippet>3759</a>        <span class="kw">let </span><span class="kw-2">mut </span>value: Value = <span class="self">self
-<a href=#3760 id=3760 data-nosnippet>3760</a>            </span>.fire(Request {
-<a href=#3761 id=3761 data-nosnippet>3761</a>                body: <span class="prelude-val">None</span>,
-<a href=#3762 id=3762 data-nosnippet>3762</a>                multipart: <span class="prelude-val">None</span>,
-<a href=#3763 id=3763 data-nosnippet>3763</a>                headers: <span class="prelude-val">None</span>,
-<a href=#3764 id=3764 data-nosnippet>3764</a>                method: LightMethod::Get,
-<a href=#3765 id=3765 data-nosnippet>3765</a>                route: Route::GuildMember {
-<a href=#3766 id=3766 data-nosnippet>3766</a>                    guild_id,
-<a href=#3767 id=3767 data-nosnippet>3767</a>                    user_id,
-<a href=#3768 id=3768 data-nosnippet>3768</a>                },
-<a href=#3769 id=3769 data-nosnippet>3769</a>                params: <span class="prelude-val">None</span>,
-<a href=#3770 id=3770 data-nosnippet>3770</a>            })
-<a href=#3771 id=3771 data-nosnippet>3771</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#3772 id=3772 data-nosnippet>3772</a>
-<a href=#3773 id=3773 data-nosnippet>3773</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(map) = value.as_object_mut() {
-<a href=#3774 id=3774 data-nosnippet>3774</a>            map.insert(<span class="string">"guild_id"</span>.to_string(), guild_id.get().into());
-<a href=#3775 id=3775 data-nosnippet>3775</a>        }
+<a href=#3736 id=3736 data-nosnippet>3736</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(event_id) = event_id {
+<a href=#3737 id=3737 data-nosnippet>3737</a>            event_id_str = event_id.to_arraystring();
+<a href=#3738 id=3738 data-nosnippet>3738</a>            params.push((<span class="string">"event_id"</span>, <span class="kw-2">&amp;</span>event_id_str));
+<a href=#3739 id=3739 data-nosnippet>3739</a>        }
+<a href=#3740 id=3740 data-nosnippet>3740</a>
+<a href=#3741 id=3741 data-nosnippet>3741</a>        <span class="self">self</span>.fire(Request {
+<a href=#3742 id=3742 data-nosnippet>3742</a>            body: <span class="prelude-val">None</span>,
+<a href=#3743 id=3743 data-nosnippet>3743</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3744 id=3744 data-nosnippet>3744</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3745 id=3745 data-nosnippet>3745</a>            method: LightMethod::Get,
+<a href=#3746 id=3746 data-nosnippet>3746</a>            route: Route::Invite {
+<a href=#3747 id=3747 data-nosnippet>3747</a>                code,
+<a href=#3748 id=3748 data-nosnippet>3748</a>            },
+<a href=#3749 id=3749 data-nosnippet>3749</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>params),
+<a href=#3750 id=3750 data-nosnippet>3750</a>        })
+<a href=#3751 id=3751 data-nosnippet>3751</a>        .<span class="kw">await
+<a href=#3752 id=3752 data-nosnippet>3752</a>    </span>}
+<a href=#3753 id=3753 data-nosnippet>3753</a>
+<a href=#3754 id=3754 data-nosnippet>3754</a>    <span class="doccomment">/// Gets member of a guild.
+<a href=#3755 id=3755 data-nosnippet>3755</a>    </span><span class="kw">pub async fn </span>get_member(<span class="kw-2">&amp;</span><span class="self">self</span>, guild_id: GuildId, user_id: UserId) -&gt; <span class="prelude-ty">Result</span>&lt;Member&gt; {
+<a href=#3756 id=3756 data-nosnippet>3756</a>        <span class="kw">let </span><span class="kw-2">mut </span>value: Value = <span class="self">self
+<a href=#3757 id=3757 data-nosnippet>3757</a>            </span>.fire(Request {
+<a href=#3758 id=3758 data-nosnippet>3758</a>                body: <span class="prelude-val">None</span>,
+<a href=#3759 id=3759 data-nosnippet>3759</a>                multipart: <span class="prelude-val">None</span>,
+<a href=#3760 id=3760 data-nosnippet>3760</a>                headers: <span class="prelude-val">None</span>,
+<a href=#3761 id=3761 data-nosnippet>3761</a>                method: LightMethod::Get,
+<a href=#3762 id=3762 data-nosnippet>3762</a>                route: Route::GuildMember {
+<a href=#3763 id=3763 data-nosnippet>3763</a>                    guild_id,
+<a href=#3764 id=3764 data-nosnippet>3764</a>                    user_id,
+<a href=#3765 id=3765 data-nosnippet>3765</a>                },
+<a href=#3766 id=3766 data-nosnippet>3766</a>                params: <span class="prelude-val">None</span>,
+<a href=#3767 id=3767 data-nosnippet>3767</a>            })
+<a href=#3768 id=3768 data-nosnippet>3768</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#3769 id=3769 data-nosnippet>3769</a>
+<a href=#3770 id=3770 data-nosnippet>3770</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(map) = value.as_object_mut() {
+<a href=#3771 id=3771 data-nosnippet>3771</a>            map.insert(<span class="string">"guild_id"</span>.to_string(), guild_id.get().into());
+<a href=#3772 id=3772 data-nosnippet>3772</a>        }
+<a href=#3773 id=3773 data-nosnippet>3773</a>
+<a href=#3774 id=3774 data-nosnippet>3774</a>        from_value(value).map_err(From::from)
+<a href=#3775 id=3775 data-nosnippet>3775</a>    }
 <a href=#3776 id=3776 data-nosnippet>3776</a>
-<a href=#3777 id=3777 data-nosnippet>3777</a>        from_value(value).map_err(From::from)
-<a href=#3778 id=3778 data-nosnippet>3778</a>    }
-<a href=#3779 id=3779 data-nosnippet>3779</a>
-<a href=#3780 id=3780 data-nosnippet>3780</a>    <span class="doccomment">/// Gets a message by an Id, bots only.
-<a href=#3781 id=3781 data-nosnippet>3781</a>    </span><span class="kw">pub async fn </span>get_message(
-<a href=#3782 id=3782 data-nosnippet>3782</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#3783 id=3783 data-nosnippet>3783</a>        channel_id: ChannelId,
-<a href=#3784 id=3784 data-nosnippet>3784</a>        message_id: MessageId,
-<a href=#3785 id=3785 data-nosnippet>3785</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
-<a href=#3786 id=3786 data-nosnippet>3786</a>        <span class="self">self</span>.fire(Request {
-<a href=#3787 id=3787 data-nosnippet>3787</a>            body: <span class="prelude-val">None</span>,
-<a href=#3788 id=3788 data-nosnippet>3788</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3789 id=3789 data-nosnippet>3789</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3790 id=3790 data-nosnippet>3790</a>            method: LightMethod::Get,
-<a href=#3791 id=3791 data-nosnippet>3791</a>            route: Route::ChannelMessage {
-<a href=#3792 id=3792 data-nosnippet>3792</a>                channel_id,
-<a href=#3793 id=3793 data-nosnippet>3793</a>                message_id,
-<a href=#3794 id=3794 data-nosnippet>3794</a>            },
-<a href=#3795 id=3795 data-nosnippet>3795</a>            params: <span class="prelude-val">None</span>,
-<a href=#3796 id=3796 data-nosnippet>3796</a>        })
-<a href=#3797 id=3797 data-nosnippet>3797</a>        .<span class="kw">await
-<a href=#3798 id=3798 data-nosnippet>3798</a>    </span>}
-<a href=#3799 id=3799 data-nosnippet>3799</a>
-<a href=#3800 id=3800 data-nosnippet>3800</a>    <span class="doccomment">/// Gets X messages from a channel.
-<a href=#3801 id=3801 data-nosnippet>3801</a>    </span><span class="kw">pub async fn </span>get_messages(
-<a href=#3802 id=3802 data-nosnippet>3802</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#3803 id=3803 data-nosnippet>3803</a>        channel_id: ChannelId,
-<a href=#3804 id=3804 data-nosnippet>3804</a>        target: <span class="prelude-ty">Option</span>&lt;MessagePagination&gt;,
-<a href=#3805 id=3805 data-nosnippet>3805</a>        limit: <span class="prelude-ty">Option</span>&lt;NonMaxU8&gt;,
-<a href=#3806 id=3806 data-nosnippet>3806</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Message&gt;&gt; {
-<a href=#3807 id=3807 data-nosnippet>3807</a>        <span class="kw">let </span>(limit_str, id_str);
-<a href=#3808 id=3808 data-nosnippet>3808</a>        <span class="kw">let </span><span class="kw-2">mut </span>params = ArrayVec::&lt;<span class="kw">_</span>, <span class="number">2</span>&gt;::new();
-<a href=#3809 id=3809 data-nosnippet>3809</a>
-<a href=#3810 id=3810 data-nosnippet>3810</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(limit) = limit {
-<a href=#3811 id=3811 data-nosnippet>3811</a>            limit_str = limit.get().to_arraystring();
-<a href=#3812 id=3812 data-nosnippet>3812</a>            params.push((<span class="string">"limit"</span>, limit_str.as_str()));
-<a href=#3813 id=3813 data-nosnippet>3813</a>        }
-<a href=#3814 id=3814 data-nosnippet>3814</a>
-<a href=#3815 id=3815 data-nosnippet>3815</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(target) = target {
-<a href=#3816 id=3816 data-nosnippet>3816</a>            <span class="kw">let </span>(name, id) = <span class="kw">match </span>target {
-<a href=#3817 id=3817 data-nosnippet>3817</a>                MessagePagination::After(id) =&gt; (<span class="string">"after"</span>, id),
-<a href=#3818 id=3818 data-nosnippet>3818</a>                MessagePagination::Around(id) =&gt; (<span class="string">"around"</span>, id),
-<a href=#3819 id=3819 data-nosnippet>3819</a>                MessagePagination::Before(id) =&gt; (<span class="string">"before"</span>, id),
-<a href=#3820 id=3820 data-nosnippet>3820</a>            };
-<a href=#3821 id=3821 data-nosnippet>3821</a>
-<a href=#3822 id=3822 data-nosnippet>3822</a>            id_str = id.to_arraystring();
-<a href=#3823 id=3823 data-nosnippet>3823</a>            params.push((name, <span class="kw-2">&amp;</span>id_str));
-<a href=#3824 id=3824 data-nosnippet>3824</a>        }
-<a href=#3825 id=3825 data-nosnippet>3825</a>
-<a href=#3826 id=3826 data-nosnippet>3826</a>        <span class="self">self</span>.fire(Request {
-<a href=#3827 id=3827 data-nosnippet>3827</a>            body: <span class="prelude-val">None</span>,
-<a href=#3828 id=3828 data-nosnippet>3828</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3829 id=3829 data-nosnippet>3829</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3830 id=3830 data-nosnippet>3830</a>            method: LightMethod::Get,
-<a href=#3831 id=3831 data-nosnippet>3831</a>            route: Route::ChannelMessages {
-<a href=#3832 id=3832 data-nosnippet>3832</a>                channel_id,
-<a href=#3833 id=3833 data-nosnippet>3833</a>            },
-<a href=#3834 id=3834 data-nosnippet>3834</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>params),
-<a href=#3835 id=3835 data-nosnippet>3835</a>        })
-<a href=#3836 id=3836 data-nosnippet>3836</a>        .<span class="kw">await
-<a href=#3837 id=3837 data-nosnippet>3837</a>    </span>}
-<a href=#3838 id=3838 data-nosnippet>3838</a>
-<a href=#3839 id=3839 data-nosnippet>3839</a>    <span class="doccomment">/// Retrieves a specific [`StickerPack`] from it's [`StickerPackId`]
-<a href=#3840 id=3840 data-nosnippet>3840</a>    </span><span class="kw">pub async fn </span>get_sticker_pack(<span class="kw-2">&amp;</span><span class="self">self</span>, sticker_pack_id: StickerPackId) -&gt; <span class="prelude-ty">Result</span>&lt;StickerPack&gt; {
-<a href=#3841 id=3841 data-nosnippet>3841</a>        <span class="self">self</span>.fire(Request {
-<a href=#3842 id=3842 data-nosnippet>3842</a>            body: <span class="prelude-val">None</span>,
-<a href=#3843 id=3843 data-nosnippet>3843</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3844 id=3844 data-nosnippet>3844</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3845 id=3845 data-nosnippet>3845</a>            method: LightMethod::Get,
-<a href=#3846 id=3846 data-nosnippet>3846</a>            route: Route::StickerPack {
-<a href=#3847 id=3847 data-nosnippet>3847</a>                sticker_pack_id,
-<a href=#3848 id=3848 data-nosnippet>3848</a>            },
-<a href=#3849 id=3849 data-nosnippet>3849</a>            params: <span class="prelude-val">None</span>,
-<a href=#3850 id=3850 data-nosnippet>3850</a>        })
-<a href=#3851 id=3851 data-nosnippet>3851</a>        .<span class="kw">await
-<a href=#3852 id=3852 data-nosnippet>3852</a>    </span>}
-<a href=#3853 id=3853 data-nosnippet>3853</a>
-<a href=#3854 id=3854 data-nosnippet>3854</a>    <span class="doccomment">/// Retrieves a list of all nitro sticker packs.
-<a href=#3855 id=3855 data-nosnippet>3855</a>    </span><span class="kw">pub async fn </span>get_nitro_stickers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;StickerPack&gt;&gt; {
-<a href=#3856 id=3856 data-nosnippet>3856</a>        <span class="attr">#[derive(Deserialize)]
-<a href=#3857 id=3857 data-nosnippet>3857</a>        </span><span class="kw">struct </span>StickerPacks {
-<a href=#3858 id=3858 data-nosnippet>3858</a>            sticker_packs: Vec&lt;StickerPack&gt;,
-<a href=#3859 id=3859 data-nosnippet>3859</a>        }
-<a href=#3860 id=3860 data-nosnippet>3860</a>
-<a href=#3861 id=3861 data-nosnippet>3861</a>        <span class="self">self</span>.fire(Request {
-<a href=#3862 id=3862 data-nosnippet>3862</a>            body: <span class="prelude-val">None</span>,
-<a href=#3863 id=3863 data-nosnippet>3863</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3864 id=3864 data-nosnippet>3864</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3865 id=3865 data-nosnippet>3865</a>            method: LightMethod::Get,
-<a href=#3866 id=3866 data-nosnippet>3866</a>            route: Route::StickerPacks,
-<a href=#3867 id=3867 data-nosnippet>3867</a>            params: <span class="prelude-val">None</span>,
-<a href=#3868 id=3868 data-nosnippet>3868</a>        })
-<a href=#3869 id=3869 data-nosnippet>3869</a>        .<span class="kw">await
-<a href=#3870 id=3870 data-nosnippet>3870</a>        </span>.map(|s: StickerPacks| s.sticker_packs)
-<a href=#3871 id=3871 data-nosnippet>3871</a>    }
-<a href=#3872 id=3872 data-nosnippet>3872</a>
-<a href=#3873 id=3873 data-nosnippet>3873</a>    <span class="doccomment">/// Gets all pins of a channel.
-<a href=#3874 id=3874 data-nosnippet>3874</a>    </span><span class="kw">pub async fn </span>get_pins(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_id: ChannelId) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Message&gt;&gt; {
-<a href=#3875 id=3875 data-nosnippet>3875</a>        <span class="self">self</span>.fire(Request {
-<a href=#3876 id=3876 data-nosnippet>3876</a>            body: <span class="prelude-val">None</span>,
-<a href=#3877 id=3877 data-nosnippet>3877</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3878 id=3878 data-nosnippet>3878</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3879 id=3879 data-nosnippet>3879</a>            method: LightMethod::Get,
-<a href=#3880 id=3880 data-nosnippet>3880</a>            route: Route::ChannelPins {
-<a href=#3881 id=3881 data-nosnippet>3881</a>                channel_id,
-<a href=#3882 id=3882 data-nosnippet>3882</a>            },
-<a href=#3883 id=3883 data-nosnippet>3883</a>            params: <span class="prelude-val">None</span>,
-<a href=#3884 id=3884 data-nosnippet>3884</a>        })
-<a href=#3885 id=3885 data-nosnippet>3885</a>        .<span class="kw">await
-<a href=#3886 id=3886 data-nosnippet>3886</a>    </span>}
-<a href=#3887 id=3887 data-nosnippet>3887</a>
-<a href=#3888 id=3888 data-nosnippet>3888</a>    <span class="doccomment">/// Gets user Ids based on their reaction to a message. This endpoint is dumb.
-<a href=#3889 id=3889 data-nosnippet>3889</a>    </span><span class="kw">pub async fn </span>get_reaction_users(
-<a href=#3890 id=3890 data-nosnippet>3890</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#3891 id=3891 data-nosnippet>3891</a>        channel_id: ChannelId,
-<a href=#3892 id=3892 data-nosnippet>3892</a>        message_id: MessageId,
-<a href=#3893 id=3893 data-nosnippet>3893</a>        reaction_type: <span class="kw-2">&amp;</span>ReactionType,
-<a href=#3894 id=3894 data-nosnippet>3894</a>        limit: u8,
-<a href=#3895 id=3895 data-nosnippet>3895</a>        after: <span class="prelude-ty">Option</span>&lt;UserId&gt;,
-<a href=#3896 id=3896 data-nosnippet>3896</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;User&gt;&gt; {
-<a href=#3897 id=3897 data-nosnippet>3897</a>        <span class="kw">let </span>(limit_str, after_str);
-<a href=#3898 id=3898 data-nosnippet>3898</a>        <span class="kw">let </span><span class="kw-2">mut </span>params = ArrayVec::&lt;<span class="kw">_</span>, <span class="number">2</span>&gt;::new();
+<a href=#3777 id=3777 data-nosnippet>3777</a>    <span class="doccomment">/// Gets a message by an Id, bots only.
+<a href=#3778 id=3778 data-nosnippet>3778</a>    </span><span class="kw">pub async fn </span>get_message(
+<a href=#3779 id=3779 data-nosnippet>3779</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#3780 id=3780 data-nosnippet>3780</a>        channel_id: ChannelId,
+<a href=#3781 id=3781 data-nosnippet>3781</a>        message_id: MessageId,
+<a href=#3782 id=3782 data-nosnippet>3782</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
+<a href=#3783 id=3783 data-nosnippet>3783</a>        <span class="self">self</span>.fire(Request {
+<a href=#3784 id=3784 data-nosnippet>3784</a>            body: <span class="prelude-val">None</span>,
+<a href=#3785 id=3785 data-nosnippet>3785</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3786 id=3786 data-nosnippet>3786</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3787 id=3787 data-nosnippet>3787</a>            method: LightMethod::Get,
+<a href=#3788 id=3788 data-nosnippet>3788</a>            route: Route::ChannelMessage {
+<a href=#3789 id=3789 data-nosnippet>3789</a>                channel_id,
+<a href=#3790 id=3790 data-nosnippet>3790</a>                message_id,
+<a href=#3791 id=3791 data-nosnippet>3791</a>            },
+<a href=#3792 id=3792 data-nosnippet>3792</a>            params: <span class="prelude-val">None</span>,
+<a href=#3793 id=3793 data-nosnippet>3793</a>        })
+<a href=#3794 id=3794 data-nosnippet>3794</a>        .<span class="kw">await
+<a href=#3795 id=3795 data-nosnippet>3795</a>    </span>}
+<a href=#3796 id=3796 data-nosnippet>3796</a>
+<a href=#3797 id=3797 data-nosnippet>3797</a>    <span class="doccomment">/// Gets X messages from a channel.
+<a href=#3798 id=3798 data-nosnippet>3798</a>    </span><span class="kw">pub async fn </span>get_messages(
+<a href=#3799 id=3799 data-nosnippet>3799</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#3800 id=3800 data-nosnippet>3800</a>        channel_id: ChannelId,
+<a href=#3801 id=3801 data-nosnippet>3801</a>        target: <span class="prelude-ty">Option</span>&lt;MessagePagination&gt;,
+<a href=#3802 id=3802 data-nosnippet>3802</a>        limit: <span class="prelude-ty">Option</span>&lt;NonMaxU8&gt;,
+<a href=#3803 id=3803 data-nosnippet>3803</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Message&gt;&gt; {
+<a href=#3804 id=3804 data-nosnippet>3804</a>        <span class="kw">let </span>(limit_str, id_str);
+<a href=#3805 id=3805 data-nosnippet>3805</a>        <span class="kw">let </span><span class="kw-2">mut </span>params = ArrayVec::&lt;<span class="kw">_</span>, <span class="number">2</span>&gt;::new();
+<a href=#3806 id=3806 data-nosnippet>3806</a>
+<a href=#3807 id=3807 data-nosnippet>3807</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(limit) = limit {
+<a href=#3808 id=3808 data-nosnippet>3808</a>            limit_str = limit.get().to_arraystring();
+<a href=#3809 id=3809 data-nosnippet>3809</a>            params.push((<span class="string">"limit"</span>, limit_str.as_str()));
+<a href=#3810 id=3810 data-nosnippet>3810</a>        }
+<a href=#3811 id=3811 data-nosnippet>3811</a>
+<a href=#3812 id=3812 data-nosnippet>3812</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(target) = target {
+<a href=#3813 id=3813 data-nosnippet>3813</a>            <span class="kw">let </span>(name, id) = <span class="kw">match </span>target {
+<a href=#3814 id=3814 data-nosnippet>3814</a>                MessagePagination::After(id) =&gt; (<span class="string">"after"</span>, id),
+<a href=#3815 id=3815 data-nosnippet>3815</a>                MessagePagination::Around(id) =&gt; (<span class="string">"around"</span>, id),
+<a href=#3816 id=3816 data-nosnippet>3816</a>                MessagePagination::Before(id) =&gt; (<span class="string">"before"</span>, id),
+<a href=#3817 id=3817 data-nosnippet>3817</a>            };
+<a href=#3818 id=3818 data-nosnippet>3818</a>
+<a href=#3819 id=3819 data-nosnippet>3819</a>            id_str = id.to_arraystring();
+<a href=#3820 id=3820 data-nosnippet>3820</a>            params.push((name, <span class="kw-2">&amp;</span>id_str));
+<a href=#3821 id=3821 data-nosnippet>3821</a>        }
+<a href=#3822 id=3822 data-nosnippet>3822</a>
+<a href=#3823 id=3823 data-nosnippet>3823</a>        <span class="self">self</span>.fire(Request {
+<a href=#3824 id=3824 data-nosnippet>3824</a>            body: <span class="prelude-val">None</span>,
+<a href=#3825 id=3825 data-nosnippet>3825</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3826 id=3826 data-nosnippet>3826</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3827 id=3827 data-nosnippet>3827</a>            method: LightMethod::Get,
+<a href=#3828 id=3828 data-nosnippet>3828</a>            route: Route::ChannelMessages {
+<a href=#3829 id=3829 data-nosnippet>3829</a>                channel_id,
+<a href=#3830 id=3830 data-nosnippet>3830</a>            },
+<a href=#3831 id=3831 data-nosnippet>3831</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>params),
+<a href=#3832 id=3832 data-nosnippet>3832</a>        })
+<a href=#3833 id=3833 data-nosnippet>3833</a>        .<span class="kw">await
+<a href=#3834 id=3834 data-nosnippet>3834</a>    </span>}
+<a href=#3835 id=3835 data-nosnippet>3835</a>
+<a href=#3836 id=3836 data-nosnippet>3836</a>    <span class="doccomment">/// Retrieves a specific [`StickerPack`] from it's [`StickerPackId`]
+<a href=#3837 id=3837 data-nosnippet>3837</a>    </span><span class="kw">pub async fn </span>get_sticker_pack(<span class="kw-2">&amp;</span><span class="self">self</span>, sticker_pack_id: StickerPackId) -&gt; <span class="prelude-ty">Result</span>&lt;StickerPack&gt; {
+<a href=#3838 id=3838 data-nosnippet>3838</a>        <span class="self">self</span>.fire(Request {
+<a href=#3839 id=3839 data-nosnippet>3839</a>            body: <span class="prelude-val">None</span>,
+<a href=#3840 id=3840 data-nosnippet>3840</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3841 id=3841 data-nosnippet>3841</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3842 id=3842 data-nosnippet>3842</a>            method: LightMethod::Get,
+<a href=#3843 id=3843 data-nosnippet>3843</a>            route: Route::StickerPack {
+<a href=#3844 id=3844 data-nosnippet>3844</a>                sticker_pack_id,
+<a href=#3845 id=3845 data-nosnippet>3845</a>            },
+<a href=#3846 id=3846 data-nosnippet>3846</a>            params: <span class="prelude-val">None</span>,
+<a href=#3847 id=3847 data-nosnippet>3847</a>        })
+<a href=#3848 id=3848 data-nosnippet>3848</a>        .<span class="kw">await
+<a href=#3849 id=3849 data-nosnippet>3849</a>    </span>}
+<a href=#3850 id=3850 data-nosnippet>3850</a>
+<a href=#3851 id=3851 data-nosnippet>3851</a>    <span class="doccomment">/// Retrieves a list of all nitro sticker packs.
+<a href=#3852 id=3852 data-nosnippet>3852</a>    </span><span class="kw">pub async fn </span>get_nitro_stickers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;StickerPack&gt;&gt; {
+<a href=#3853 id=3853 data-nosnippet>3853</a>        <span class="attr">#[derive(Deserialize)]
+<a href=#3854 id=3854 data-nosnippet>3854</a>        </span><span class="kw">struct </span>StickerPacks {
+<a href=#3855 id=3855 data-nosnippet>3855</a>            sticker_packs: Vec&lt;StickerPack&gt;,
+<a href=#3856 id=3856 data-nosnippet>3856</a>        }
+<a href=#3857 id=3857 data-nosnippet>3857</a>
+<a href=#3858 id=3858 data-nosnippet>3858</a>        <span class="self">self</span>.fire(Request {
+<a href=#3859 id=3859 data-nosnippet>3859</a>            body: <span class="prelude-val">None</span>,
+<a href=#3860 id=3860 data-nosnippet>3860</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3861 id=3861 data-nosnippet>3861</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3862 id=3862 data-nosnippet>3862</a>            method: LightMethod::Get,
+<a href=#3863 id=3863 data-nosnippet>3863</a>            route: Route::StickerPacks,
+<a href=#3864 id=3864 data-nosnippet>3864</a>            params: <span class="prelude-val">None</span>,
+<a href=#3865 id=3865 data-nosnippet>3865</a>        })
+<a href=#3866 id=3866 data-nosnippet>3866</a>        .<span class="kw">await
+<a href=#3867 id=3867 data-nosnippet>3867</a>        </span>.map(|s: StickerPacks| s.sticker_packs)
+<a href=#3868 id=3868 data-nosnippet>3868</a>    }
+<a href=#3869 id=3869 data-nosnippet>3869</a>
+<a href=#3870 id=3870 data-nosnippet>3870</a>    <span class="doccomment">/// Gets all pins of a channel.
+<a href=#3871 id=3871 data-nosnippet>3871</a>    </span><span class="kw">pub async fn </span>get_pins(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_id: ChannelId) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Message&gt;&gt; {
+<a href=#3872 id=3872 data-nosnippet>3872</a>        <span class="self">self</span>.fire(Request {
+<a href=#3873 id=3873 data-nosnippet>3873</a>            body: <span class="prelude-val">None</span>,
+<a href=#3874 id=3874 data-nosnippet>3874</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3875 id=3875 data-nosnippet>3875</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3876 id=3876 data-nosnippet>3876</a>            method: LightMethod::Get,
+<a href=#3877 id=3877 data-nosnippet>3877</a>            route: Route::ChannelPins {
+<a href=#3878 id=3878 data-nosnippet>3878</a>                channel_id,
+<a href=#3879 id=3879 data-nosnippet>3879</a>            },
+<a href=#3880 id=3880 data-nosnippet>3880</a>            params: <span class="prelude-val">None</span>,
+<a href=#3881 id=3881 data-nosnippet>3881</a>        })
+<a href=#3882 id=3882 data-nosnippet>3882</a>        .<span class="kw">await
+<a href=#3883 id=3883 data-nosnippet>3883</a>    </span>}
+<a href=#3884 id=3884 data-nosnippet>3884</a>
+<a href=#3885 id=3885 data-nosnippet>3885</a>    <span class="doccomment">/// Gets user Ids based on their reaction to a message. This endpoint is dumb.
+<a href=#3886 id=3886 data-nosnippet>3886</a>    </span><span class="kw">pub async fn </span>get_reaction_users(
+<a href=#3887 id=3887 data-nosnippet>3887</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#3888 id=3888 data-nosnippet>3888</a>        channel_id: ChannelId,
+<a href=#3889 id=3889 data-nosnippet>3889</a>        message_id: MessageId,
+<a href=#3890 id=3890 data-nosnippet>3890</a>        reaction_type: <span class="kw-2">&amp;</span>ReactionType,
+<a href=#3891 id=3891 data-nosnippet>3891</a>        limit: u8,
+<a href=#3892 id=3892 data-nosnippet>3892</a>        after: <span class="prelude-ty">Option</span>&lt;UserId&gt;,
+<a href=#3893 id=3893 data-nosnippet>3893</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;User&gt;&gt; {
+<a href=#3894 id=3894 data-nosnippet>3894</a>        <span class="kw">let </span>(limit_str, after_str);
+<a href=#3895 id=3895 data-nosnippet>3895</a>        <span class="kw">let </span><span class="kw-2">mut </span>params = ArrayVec::&lt;<span class="kw">_</span>, <span class="number">2</span>&gt;::new();
+<a href=#3896 id=3896 data-nosnippet>3896</a>
+<a href=#3897 id=3897 data-nosnippet>3897</a>        limit_str = limit.to_arraystring();
+<a href=#3898 id=3898 data-nosnippet>3898</a>        params.push((<span class="string">"limit"</span>, limit_str.as_str()));
 <a href=#3899 id=3899 data-nosnippet>3899</a>
-<a href=#3900 id=3900 data-nosnippet>3900</a>        limit_str = limit.to_arraystring();
-<a href=#3901 id=3901 data-nosnippet>3901</a>        params.push((<span class="string">"limit"</span>, limit_str.as_str()));
-<a href=#3902 id=3902 data-nosnippet>3902</a>
-<a href=#3903 id=3903 data-nosnippet>3903</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(after) = after {
-<a href=#3904 id=3904 data-nosnippet>3904</a>            after_str = after.to_arraystring();
-<a href=#3905 id=3905 data-nosnippet>3905</a>            params.push((<span class="string">"after"</span>, <span class="kw-2">&amp;</span>after_str));
-<a href=#3906 id=3906 data-nosnippet>3906</a>        }
-<a href=#3907 id=3907 data-nosnippet>3907</a>
-<a href=#3908 id=3908 data-nosnippet>3908</a>        <span class="self">self</span>.fire(Request {
-<a href=#3909 id=3909 data-nosnippet>3909</a>            body: <span class="prelude-val">None</span>,
-<a href=#3910 id=3910 data-nosnippet>3910</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3911 id=3911 data-nosnippet>3911</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3912 id=3912 data-nosnippet>3912</a>            method: LightMethod::Get,
-<a href=#3913 id=3913 data-nosnippet>3913</a>            route: Route::ChannelMessageReactionEmoji {
-<a href=#3914 id=3914 data-nosnippet>3914</a>                channel_id,
-<a href=#3915 id=3915 data-nosnippet>3915</a>                message_id,
-<a href=#3916 id=3916 data-nosnippet>3916</a>                reaction: <span class="kw-2">&amp;</span>reaction_type.as_data(),
-<a href=#3917 id=3917 data-nosnippet>3917</a>            },
-<a href=#3918 id=3918 data-nosnippet>3918</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>params),
-<a href=#3919 id=3919 data-nosnippet>3919</a>        })
-<a href=#3920 id=3920 data-nosnippet>3920</a>        .<span class="kw">await
-<a href=#3921 id=3921 data-nosnippet>3921</a>    </span>}
-<a href=#3922 id=3922 data-nosnippet>3922</a>
-<a href=#3923 id=3923 data-nosnippet>3923</a>    <span class="doccomment">/// Gets all SKUs for the current application.
-<a href=#3924 id=3924 data-nosnippet>3924</a>    </span><span class="kw">pub async fn </span>get_skus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Sku&gt;&gt; {
-<a href=#3925 id=3925 data-nosnippet>3925</a>        <span class="self">self</span>.fire(Request {
-<a href=#3926 id=3926 data-nosnippet>3926</a>            body: <span class="prelude-val">None</span>,
-<a href=#3927 id=3927 data-nosnippet>3927</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3928 id=3928 data-nosnippet>3928</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3929 id=3929 data-nosnippet>3929</a>            method: LightMethod::Get,
-<a href=#3930 id=3930 data-nosnippet>3930</a>            route: Route::Skus {
-<a href=#3931 id=3931 data-nosnippet>3931</a>                application_id: <span class="self">self</span>.try_application_id()<span class="question-mark">?</span>,
-<a href=#3932 id=3932 data-nosnippet>3932</a>            },
-<a href=#3933 id=3933 data-nosnippet>3933</a>            params: <span class="prelude-val">None</span>,
-<a href=#3934 id=3934 data-nosnippet>3934</a>        })
-<a href=#3935 id=3935 data-nosnippet>3935</a>        .<span class="kw">await
-<a href=#3936 id=3936 data-nosnippet>3936</a>    </span>}
-<a href=#3937 id=3937 data-nosnippet>3937</a>
-<a href=#3938 id=3938 data-nosnippet>3938</a>    <span class="doccomment">/// Gets a sticker.
-<a href=#3939 id=3939 data-nosnippet>3939</a>    </span><span class="kw">pub async fn </span>get_sticker(<span class="kw-2">&amp;</span><span class="self">self</span>, sticker_id: StickerId) -&gt; <span class="prelude-ty">Result</span>&lt;Sticker&gt; {
-<a href=#3940 id=3940 data-nosnippet>3940</a>        <span class="self">self</span>.fire(Request {
-<a href=#3941 id=3941 data-nosnippet>3941</a>            body: <span class="prelude-val">None</span>,
-<a href=#3942 id=3942 data-nosnippet>3942</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#3943 id=3943 data-nosnippet>3943</a>            headers: <span class="prelude-val">None</span>,
-<a href=#3944 id=3944 data-nosnippet>3944</a>            method: LightMethod::Get,
-<a href=#3945 id=3945 data-nosnippet>3945</a>            route: Route::Sticker {
-<a href=#3946 id=3946 data-nosnippet>3946</a>                sticker_id,
-<a href=#3947 id=3947 data-nosnippet>3947</a>            },
-<a href=#3948 id=3948 data-nosnippet>3948</a>            params: <span class="prelude-val">None</span>,
-<a href=#3949 id=3949 data-nosnippet>3949</a>        })
-<a href=#3950 id=3950 data-nosnippet>3950</a>        .<span class="kw">await
-<a href=#3951 id=3951 data-nosnippet>3951</a>    </span>}
-<a href=#3952 id=3952 data-nosnippet>3952</a>
-<a href=#3953 id=3953 data-nosnippet>3953</a>    <span class="doccomment">/// Gets the current unresolved incidents from Discord's Status API.
-<a href=#3954 id=3954 data-nosnippet>3954</a>    ///
-<a href=#3955 id=3955 data-nosnippet>3955</a>    /// Does not require authentication.
-<a href=#3956 id=3956 data-nosnippet>3956</a>    </span><span class="kw">pub async fn </span>get_unresolved_incidents(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Incident&gt;&gt; {
-<a href=#3957 id=3957 data-nosnippet>3957</a>        <span class="attr">#[derive(Deserialize)]
-<a href=#3958 id=3958 data-nosnippet>3958</a>        </span><span class="kw">struct </span>StatusResponse {
-<a href=#3959 id=3959 data-nosnippet>3959</a>            <span class="attr">#[serde(default)]
-<a href=#3960 id=3960 data-nosnippet>3960</a>            </span>incidents: Vec&lt;Incident&gt;,
-<a href=#3961 id=3961 data-nosnippet>3961</a>        }
-<a href=#3962 id=3962 data-nosnippet>3962</a>
-<a href=#3963 id=3963 data-nosnippet>3963</a>        <span class="kw">let </span>status: StatusResponse = <span class="self">self
-<a href=#3964 id=3964 data-nosnippet>3964</a>            </span>.fire(Request {
-<a href=#3965 id=3965 data-nosnippet>3965</a>                body: <span class="prelude-val">None</span>,
-<a href=#3966 id=3966 data-nosnippet>3966</a>                multipart: <span class="prelude-val">None</span>,
-<a href=#3967 id=3967 data-nosnippet>3967</a>                headers: <span class="prelude-val">None</span>,
-<a href=#3968 id=3968 data-nosnippet>3968</a>                method: LightMethod::Get,
-<a href=#3969 id=3969 data-nosnippet>3969</a>                route: Route::StatusIncidentsUnresolved,
-<a href=#3970 id=3970 data-nosnippet>3970</a>                params: <span class="prelude-val">None</span>,
-<a href=#3971 id=3971 data-nosnippet>3971</a>            })
-<a href=#3972 id=3972 data-nosnippet>3972</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#3900 id=3900 data-nosnippet>3900</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(after) = after {
+<a href=#3901 id=3901 data-nosnippet>3901</a>            after_str = after.to_arraystring();
+<a href=#3902 id=3902 data-nosnippet>3902</a>            params.push((<span class="string">"after"</span>, <span class="kw-2">&amp;</span>after_str));
+<a href=#3903 id=3903 data-nosnippet>3903</a>        }
+<a href=#3904 id=3904 data-nosnippet>3904</a>
+<a href=#3905 id=3905 data-nosnippet>3905</a>        <span class="self">self</span>.fire(Request {
+<a href=#3906 id=3906 data-nosnippet>3906</a>            body: <span class="prelude-val">None</span>,
+<a href=#3907 id=3907 data-nosnippet>3907</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3908 id=3908 data-nosnippet>3908</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3909 id=3909 data-nosnippet>3909</a>            method: LightMethod::Get,
+<a href=#3910 id=3910 data-nosnippet>3910</a>            route: Route::ChannelMessageReactionEmoji {
+<a href=#3911 id=3911 data-nosnippet>3911</a>                channel_id,
+<a href=#3912 id=3912 data-nosnippet>3912</a>                message_id,
+<a href=#3913 id=3913 data-nosnippet>3913</a>                reaction: <span class="kw-2">&amp;</span>reaction_type.as_data(),
+<a href=#3914 id=3914 data-nosnippet>3914</a>            },
+<a href=#3915 id=3915 data-nosnippet>3915</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>params),
+<a href=#3916 id=3916 data-nosnippet>3916</a>        })
+<a href=#3917 id=3917 data-nosnippet>3917</a>        .<span class="kw">await
+<a href=#3918 id=3918 data-nosnippet>3918</a>    </span>}
+<a href=#3919 id=3919 data-nosnippet>3919</a>
+<a href=#3920 id=3920 data-nosnippet>3920</a>    <span class="doccomment">/// Gets all SKUs for the current application.
+<a href=#3921 id=3921 data-nosnippet>3921</a>    </span><span class="kw">pub async fn </span>get_skus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Sku&gt;&gt; {
+<a href=#3922 id=3922 data-nosnippet>3922</a>        <span class="self">self</span>.fire(Request {
+<a href=#3923 id=3923 data-nosnippet>3923</a>            body: <span class="prelude-val">None</span>,
+<a href=#3924 id=3924 data-nosnippet>3924</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3925 id=3925 data-nosnippet>3925</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3926 id=3926 data-nosnippet>3926</a>            method: LightMethod::Get,
+<a href=#3927 id=3927 data-nosnippet>3927</a>            route: Route::Skus {
+<a href=#3928 id=3928 data-nosnippet>3928</a>                application_id: <span class="self">self</span>.try_application_id()<span class="question-mark">?</span>,
+<a href=#3929 id=3929 data-nosnippet>3929</a>            },
+<a href=#3930 id=3930 data-nosnippet>3930</a>            params: <span class="prelude-val">None</span>,
+<a href=#3931 id=3931 data-nosnippet>3931</a>        })
+<a href=#3932 id=3932 data-nosnippet>3932</a>        .<span class="kw">await
+<a href=#3933 id=3933 data-nosnippet>3933</a>    </span>}
+<a href=#3934 id=3934 data-nosnippet>3934</a>
+<a href=#3935 id=3935 data-nosnippet>3935</a>    <span class="doccomment">/// Gets a sticker.
+<a href=#3936 id=3936 data-nosnippet>3936</a>    </span><span class="kw">pub async fn </span>get_sticker(<span class="kw-2">&amp;</span><span class="self">self</span>, sticker_id: StickerId) -&gt; <span class="prelude-ty">Result</span>&lt;Sticker&gt; {
+<a href=#3937 id=3937 data-nosnippet>3937</a>        <span class="self">self</span>.fire(Request {
+<a href=#3938 id=3938 data-nosnippet>3938</a>            body: <span class="prelude-val">None</span>,
+<a href=#3939 id=3939 data-nosnippet>3939</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#3940 id=3940 data-nosnippet>3940</a>            headers: <span class="prelude-val">None</span>,
+<a href=#3941 id=3941 data-nosnippet>3941</a>            method: LightMethod::Get,
+<a href=#3942 id=3942 data-nosnippet>3942</a>            route: Route::Sticker {
+<a href=#3943 id=3943 data-nosnippet>3943</a>                sticker_id,
+<a href=#3944 id=3944 data-nosnippet>3944</a>            },
+<a href=#3945 id=3945 data-nosnippet>3945</a>            params: <span class="prelude-val">None</span>,
+<a href=#3946 id=3946 data-nosnippet>3946</a>        })
+<a href=#3947 id=3947 data-nosnippet>3947</a>        .<span class="kw">await
+<a href=#3948 id=3948 data-nosnippet>3948</a>    </span>}
+<a href=#3949 id=3949 data-nosnippet>3949</a>
+<a href=#3950 id=3950 data-nosnippet>3950</a>    <span class="doccomment">/// Gets the current unresolved incidents from Discord's Status API.
+<a href=#3951 id=3951 data-nosnippet>3951</a>    ///
+<a href=#3952 id=3952 data-nosnippet>3952</a>    /// Does not require authentication.
+<a href=#3953 id=3953 data-nosnippet>3953</a>    </span><span class="kw">pub async fn </span>get_unresolved_incidents(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Incident&gt;&gt; {
+<a href=#3954 id=3954 data-nosnippet>3954</a>        <span class="attr">#[derive(Deserialize)]
+<a href=#3955 id=3955 data-nosnippet>3955</a>        </span><span class="kw">struct </span>StatusResponse {
+<a href=#3956 id=3956 data-nosnippet>3956</a>            <span class="attr">#[serde(default)]
+<a href=#3957 id=3957 data-nosnippet>3957</a>            </span>incidents: Vec&lt;Incident&gt;,
+<a href=#3958 id=3958 data-nosnippet>3958</a>        }
+<a href=#3959 id=3959 data-nosnippet>3959</a>
+<a href=#3960 id=3960 data-nosnippet>3960</a>        <span class="kw">let </span>status: StatusResponse = <span class="self">self
+<a href=#3961 id=3961 data-nosnippet>3961</a>            </span>.fire(Request {
+<a href=#3962 id=3962 data-nosnippet>3962</a>                body: <span class="prelude-val">None</span>,
+<a href=#3963 id=3963 data-nosnippet>3963</a>                multipart: <span class="prelude-val">None</span>,
+<a href=#3964 id=3964 data-nosnippet>3964</a>                headers: <span class="prelude-val">None</span>,
+<a href=#3965 id=3965 data-nosnippet>3965</a>                method: LightMethod::Get,
+<a href=#3966 id=3966 data-nosnippet>3966</a>                route: Route::StatusIncidentsUnresolved,
+<a href=#3967 id=3967 data-nosnippet>3967</a>                params: <span class="prelude-val">None</span>,
+<a href=#3968 id=3968 data-nosnippet>3968</a>            })
+<a href=#3969 id=3969 data-nosnippet>3969</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#3970 id=3970 data-nosnippet>3970</a>
+<a href=#3971 id=3971 data-nosnippet>3971</a>        <span class="prelude-val">Ok</span>(status.incidents)
+<a href=#3972 id=3972 data-nosnippet>3972</a>    }
 <a href=#3973 id=3973 data-nosnippet>3973</a>
-<a href=#3974 id=3974 data-nosnippet>3974</a>        <span class="prelude-val">Ok</span>(status.incidents)
-<a href=#3975 id=3975 data-nosnippet>3975</a>    }
-<a href=#3976 id=3976 data-nosnippet>3976</a>
-<a href=#3977 id=3977 data-nosnippet>3977</a>    <span class="doccomment">/// Gets the upcoming (planned) maintenances from Discord's Status API.
-<a href=#3978 id=3978 data-nosnippet>3978</a>    ///
-<a href=#3979 id=3979 data-nosnippet>3979</a>    /// Does not require authentication.
-<a href=#3980 id=3980 data-nosnippet>3980</a>    </span><span class="kw">pub async fn </span>get_upcoming_maintenances(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Maintenance&gt;&gt; {
-<a href=#3981 id=3981 data-nosnippet>3981</a>        <span class="attr">#[derive(Deserialize)]
-<a href=#3982 id=3982 data-nosnippet>3982</a>        </span><span class="kw">struct </span>StatusResponse {
-<a href=#3983 id=3983 data-nosnippet>3983</a>            <span class="attr">#[serde(default)]
-<a href=#3984 id=3984 data-nosnippet>3984</a>            </span>scheduled_maintenances: Vec&lt;Maintenance&gt;,
-<a href=#3985 id=3985 data-nosnippet>3985</a>        }
-<a href=#3986 id=3986 data-nosnippet>3986</a>
-<a href=#3987 id=3987 data-nosnippet>3987</a>        <span class="kw">let </span>status: StatusResponse = <span class="self">self
-<a href=#3988 id=3988 data-nosnippet>3988</a>            </span>.fire(Request {
-<a href=#3989 id=3989 data-nosnippet>3989</a>                body: <span class="prelude-val">None</span>,
-<a href=#3990 id=3990 data-nosnippet>3990</a>                multipart: <span class="prelude-val">None</span>,
-<a href=#3991 id=3991 data-nosnippet>3991</a>                headers: <span class="prelude-val">None</span>,
-<a href=#3992 id=3992 data-nosnippet>3992</a>                method: LightMethod::Get,
-<a href=#3993 id=3993 data-nosnippet>3993</a>                route: Route::StatusMaintenancesUpcoming,
-<a href=#3994 id=3994 data-nosnippet>3994</a>                params: <span class="prelude-val">None</span>,
-<a href=#3995 id=3995 data-nosnippet>3995</a>            })
-<a href=#3996 id=3996 data-nosnippet>3996</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#3974 id=3974 data-nosnippet>3974</a>    <span class="doccomment">/// Gets the upcoming (planned) maintenances from Discord's Status API.
+<a href=#3975 id=3975 data-nosnippet>3975</a>    ///
+<a href=#3976 id=3976 data-nosnippet>3976</a>    /// Does not require authentication.
+<a href=#3977 id=3977 data-nosnippet>3977</a>    </span><span class="kw">pub async fn </span>get_upcoming_maintenances(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Maintenance&gt;&gt; {
+<a href=#3978 id=3978 data-nosnippet>3978</a>        <span class="attr">#[derive(Deserialize)]
+<a href=#3979 id=3979 data-nosnippet>3979</a>        </span><span class="kw">struct </span>StatusResponse {
+<a href=#3980 id=3980 data-nosnippet>3980</a>            <span class="attr">#[serde(default)]
+<a href=#3981 id=3981 data-nosnippet>3981</a>            </span>scheduled_maintenances: Vec&lt;Maintenance&gt;,
+<a href=#3982 id=3982 data-nosnippet>3982</a>        }
+<a href=#3983 id=3983 data-nosnippet>3983</a>
+<a href=#3984 id=3984 data-nosnippet>3984</a>        <span class="kw">let </span>status: StatusResponse = <span class="self">self
+<a href=#3985 id=3985 data-nosnippet>3985</a>            </span>.fire(Request {
+<a href=#3986 id=3986 data-nosnippet>3986</a>                body: <span class="prelude-val">None</span>,
+<a href=#3987 id=3987 data-nosnippet>3987</a>                multipart: <span class="prelude-val">None</span>,
+<a href=#3988 id=3988 data-nosnippet>3988</a>                headers: <span class="prelude-val">None</span>,
+<a href=#3989 id=3989 data-nosnippet>3989</a>                method: LightMethod::Get,
+<a href=#3990 id=3990 data-nosnippet>3990</a>                route: Route::StatusMaintenancesUpcoming,
+<a href=#3991 id=3991 data-nosnippet>3991</a>                params: <span class="prelude-val">None</span>,
+<a href=#3992 id=3992 data-nosnippet>3992</a>            })
+<a href=#3993 id=3993 data-nosnippet>3993</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#3994 id=3994 data-nosnippet>3994</a>
+<a href=#3995 id=3995 data-nosnippet>3995</a>        <span class="prelude-val">Ok</span>(status.scheduled_maintenances)
+<a href=#3996 id=3996 data-nosnippet>3996</a>    }
 <a href=#3997 id=3997 data-nosnippet>3997</a>
-<a href=#3998 id=3998 data-nosnippet>3998</a>        <span class="prelude-val">Ok</span>(status.scheduled_maintenances)
-<a href=#3999 id=3999 data-nosnippet>3999</a>    }
-<a href=#4000 id=4000 data-nosnippet>4000</a>
-<a href=#4001 id=4001 data-nosnippet>4001</a>    <span class="doccomment">/// Gets a user by Id.
-<a href=#4002 id=4002 data-nosnippet>4002</a>    </span><span class="kw">pub async fn </span>get_user(<span class="kw-2">&amp;</span><span class="self">self</span>, user_id: UserId) -&gt; <span class="prelude-ty">Result</span>&lt;User&gt; {
-<a href=#4003 id=4003 data-nosnippet>4003</a>        <span class="self">self</span>.fire(Request {
-<a href=#4004 id=4004 data-nosnippet>4004</a>            body: <span class="prelude-val">None</span>,
-<a href=#4005 id=4005 data-nosnippet>4005</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4006 id=4006 data-nosnippet>4006</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4007 id=4007 data-nosnippet>4007</a>            method: LightMethod::Get,
-<a href=#4008 id=4008 data-nosnippet>4008</a>            route: Route::User {
-<a href=#4009 id=4009 data-nosnippet>4009</a>                user_id,
-<a href=#4010 id=4010 data-nosnippet>4010</a>            },
-<a href=#4011 id=4011 data-nosnippet>4011</a>            params: <span class="prelude-val">None</span>,
-<a href=#4012 id=4012 data-nosnippet>4012</a>        })
-<a href=#4013 id=4013 data-nosnippet>4013</a>        .<span class="kw">await
-<a href=#4014 id=4014 data-nosnippet>4014</a>    </span>}
-<a href=#4015 id=4015 data-nosnippet>4015</a>
-<a href=#4016 id=4016 data-nosnippet>4016</a>    <span class="doccomment">/// Gets the current user's third party connections.
-<a href=#4017 id=4017 data-nosnippet>4017</a>    ///
-<a href=#4018 id=4018 data-nosnippet>4018</a>    /// This method only works for user tokens with the [`Connections`] OAuth2 scope.
-<a href=#4019 id=4019 data-nosnippet>4019</a>    ///
-<a href=#4020 id=4020 data-nosnippet>4020</a>    /// [`Connections`]: crate::model::application::Scope::Connections
-<a href=#4021 id=4021 data-nosnippet>4021</a>    </span><span class="kw">pub async fn </span>get_user_connections(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Connection&gt;&gt; {
-<a href=#4022 id=4022 data-nosnippet>4022</a>        <span class="self">self</span>.fire(Request {
-<a href=#4023 id=4023 data-nosnippet>4023</a>            body: <span class="prelude-val">None</span>,
-<a href=#4024 id=4024 data-nosnippet>4024</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4025 id=4025 data-nosnippet>4025</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4026 id=4026 data-nosnippet>4026</a>            method: LightMethod::Get,
-<a href=#4027 id=4027 data-nosnippet>4027</a>            route: Route::UserMeConnections,
-<a href=#4028 id=4028 data-nosnippet>4028</a>            params: <span class="prelude-val">None</span>,
-<a href=#4029 id=4029 data-nosnippet>4029</a>        })
-<a href=#4030 id=4030 data-nosnippet>4030</a>        .<span class="kw">await
-<a href=#4031 id=4031 data-nosnippet>4031</a>    </span>}
-<a href=#4032 id=4032 data-nosnippet>4032</a>
-<a href=#4033 id=4033 data-nosnippet>4033</a>    <span class="doccomment">/// Gets our DM channels.
-<a href=#4034 id=4034 data-nosnippet>4034</a>    </span><span class="kw">pub async fn </span>get_user_dm_channels(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;PrivateChannel&gt;&gt; {
-<a href=#4035 id=4035 data-nosnippet>4035</a>        <span class="self">self</span>.fire(Request {
-<a href=#4036 id=4036 data-nosnippet>4036</a>            body: <span class="prelude-val">None</span>,
-<a href=#4037 id=4037 data-nosnippet>4037</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4038 id=4038 data-nosnippet>4038</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4039 id=4039 data-nosnippet>4039</a>            method: LightMethod::Get,
-<a href=#4040 id=4040 data-nosnippet>4040</a>            route: Route::UserMeDmChannels,
-<a href=#4041 id=4041 data-nosnippet>4041</a>            params: <span class="prelude-val">None</span>,
-<a href=#4042 id=4042 data-nosnippet>4042</a>        })
-<a href=#4043 id=4043 data-nosnippet>4043</a>        .<span class="kw">await
-<a href=#4044 id=4044 data-nosnippet>4044</a>    </span>}
-<a href=#4045 id=4045 data-nosnippet>4045</a>
-<a href=#4046 id=4046 data-nosnippet>4046</a>    <span class="doccomment">/// Gets all voice regions.
-<a href=#4047 id=4047 data-nosnippet>4047</a>    </span><span class="kw">pub async fn </span>get_voice_regions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;VoiceRegion&gt;&gt; {
-<a href=#4048 id=4048 data-nosnippet>4048</a>        <span class="self">self</span>.fire(Request {
-<a href=#4049 id=4049 data-nosnippet>4049</a>            body: <span class="prelude-val">None</span>,
-<a href=#4050 id=4050 data-nosnippet>4050</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4051 id=4051 data-nosnippet>4051</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4052 id=4052 data-nosnippet>4052</a>            method: LightMethod::Get,
-<a href=#4053 id=4053 data-nosnippet>4053</a>            route: Route::VoiceRegions,
-<a href=#4054 id=4054 data-nosnippet>4054</a>            params: <span class="prelude-val">None</span>,
-<a href=#4055 id=4055 data-nosnippet>4055</a>        })
-<a href=#4056 id=4056 data-nosnippet>4056</a>        .<span class="kw">await
-<a href=#4057 id=4057 data-nosnippet>4057</a>    </span>}
-<a href=#4058 id=4058 data-nosnippet>4058</a>
-<a href=#4059 id=4059 data-nosnippet>4059</a>    <span class="doccomment">/// Retrieves a webhook given its Id.
-<a href=#4060 id=4060 data-nosnippet>4060</a>    ///
-<a href=#4061 id=4061 data-nosnippet>4061</a>    /// This method requires authentication, whereas [`Http::get_webhook_with_token`] and
-<a href=#4062 id=4062 data-nosnippet>4062</a>    /// [`Http::get_webhook_from_url`] do not.
-<a href=#4063 id=4063 data-nosnippet>4063</a>    </span><span class="kw">pub async fn </span>get_webhook(<span class="kw-2">&amp;</span><span class="self">self</span>, webhook_id: WebhookId) -&gt; <span class="prelude-ty">Result</span>&lt;Webhook&gt; {
-<a href=#4064 id=4064 data-nosnippet>4064</a>        <span class="self">self</span>.fire(Request {
-<a href=#4065 id=4065 data-nosnippet>4065</a>            body: <span class="prelude-val">None</span>,
-<a href=#4066 id=4066 data-nosnippet>4066</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4067 id=4067 data-nosnippet>4067</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4068 id=4068 data-nosnippet>4068</a>            method: LightMethod::Get,
-<a href=#4069 id=4069 data-nosnippet>4069</a>            route: Route::Webhook {
-<a href=#4070 id=4070 data-nosnippet>4070</a>                webhook_id,
-<a href=#4071 id=4071 data-nosnippet>4071</a>            },
-<a href=#4072 id=4072 data-nosnippet>4072</a>            params: <span class="prelude-val">None</span>,
-<a href=#4073 id=4073 data-nosnippet>4073</a>        })
-<a href=#4074 id=4074 data-nosnippet>4074</a>        .<span class="kw">await
-<a href=#4075 id=4075 data-nosnippet>4075</a>    </span>}
-<a href=#4076 id=4076 data-nosnippet>4076</a>
-<a href=#4077 id=4077 data-nosnippet>4077</a>    <span class="doccomment">/// Retrieves a webhook given its Id and unique token.
-<a href=#4078 id=4078 data-nosnippet>4078</a>    ///
-<a href=#4079 id=4079 data-nosnippet>4079</a>    /// This method does _not_ require authentication.
-<a href=#4080 id=4080 data-nosnippet>4080</a>    </span><span class="kw">pub async fn </span>get_webhook_with_token(
-<a href=#4081 id=4081 data-nosnippet>4081</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4082 id=4082 data-nosnippet>4082</a>        webhook_id: WebhookId,
-<a href=#4083 id=4083 data-nosnippet>4083</a>        token: <span class="kw-2">&amp;</span>str,
-<a href=#4084 id=4084 data-nosnippet>4084</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Webhook&gt; {
-<a href=#4085 id=4085 data-nosnippet>4085</a>        <span class="self">self</span>.fire(Request {
-<a href=#4086 id=4086 data-nosnippet>4086</a>            body: <span class="prelude-val">None</span>,
-<a href=#4087 id=4087 data-nosnippet>4087</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4088 id=4088 data-nosnippet>4088</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4089 id=4089 data-nosnippet>4089</a>            method: LightMethod::Get,
-<a href=#4090 id=4090 data-nosnippet>4090</a>            route: Route::WebhookWithToken {
-<a href=#4091 id=4091 data-nosnippet>4091</a>                webhook_id,
-<a href=#4092 id=4092 data-nosnippet>4092</a>                token,
-<a href=#4093 id=4093 data-nosnippet>4093</a>            },
-<a href=#4094 id=4094 data-nosnippet>4094</a>            params: <span class="prelude-val">None</span>,
-<a href=#4095 id=4095 data-nosnippet>4095</a>        })
-<a href=#4096 id=4096 data-nosnippet>4096</a>        .<span class="kw">await
-<a href=#4097 id=4097 data-nosnippet>4097</a>    </span>}
-<a href=#4098 id=4098 data-nosnippet>4098</a>
-<a href=#4099 id=4099 data-nosnippet>4099</a>    <span class="doccomment">/// Retrieves a webhook given its url.
-<a href=#4100 id=4100 data-nosnippet>4100</a>    ///
-<a href=#4101 id=4101 data-nosnippet>4101</a>    /// This method does _not_ require authentication
-<a href=#4102 id=4102 data-nosnippet>4102</a>    </span><span class="attr">#[cfg(feature = <span class="string">"utils"</span>)]
-<a href=#4103 id=4103 data-nosnippet>4103</a>    </span><span class="kw">pub async fn </span>get_webhook_from_url(<span class="kw-2">&amp;</span><span class="self">self</span>, url: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Webhook&gt; {
-<a href=#4104 id=4104 data-nosnippet>4104</a>        <span class="kw">let </span>url = Url::parse(url).map_err(HttpError::Url)<span class="question-mark">?</span>;
-<a href=#4105 id=4105 data-nosnippet>4105</a>        <span class="kw">let </span>(webhook_id, token) =
-<a href=#4106 id=4106 data-nosnippet>4106</a>            <span class="kw">crate</span>::utils::parse_webhook(<span class="kw-2">&amp;</span>url).ok_or(HttpError::InvalidWebhook)<span class="question-mark">?</span>;
-<a href=#4107 id=4107 data-nosnippet>4107</a>        <span class="self">self</span>.fire(Request {
-<a href=#4108 id=4108 data-nosnippet>4108</a>            body: <span class="prelude-val">None</span>,
-<a href=#4109 id=4109 data-nosnippet>4109</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4110 id=4110 data-nosnippet>4110</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4111 id=4111 data-nosnippet>4111</a>            method: LightMethod::Get,
-<a href=#4112 id=4112 data-nosnippet>4112</a>            route: Route::WebhookWithToken {
-<a href=#4113 id=4113 data-nosnippet>4113</a>                webhook_id,
-<a href=#4114 id=4114 data-nosnippet>4114</a>                token,
-<a href=#4115 id=4115 data-nosnippet>4115</a>            },
-<a href=#4116 id=4116 data-nosnippet>4116</a>            params: <span class="prelude-val">None</span>,
-<a href=#4117 id=4117 data-nosnippet>4117</a>        })
-<a href=#4118 id=4118 data-nosnippet>4118</a>        .<span class="kw">await
-<a href=#4119 id=4119 data-nosnippet>4119</a>    </span>}
-<a href=#4120 id=4120 data-nosnippet>4120</a>
-<a href=#4121 id=4121 data-nosnippet>4121</a>    <span class="doccomment">/// Kicks a member from a guild with a provided reason.
-<a href=#4122 id=4122 data-nosnippet>4122</a>    </span><span class="kw">pub async fn </span>kick_member(
-<a href=#4123 id=4123 data-nosnippet>4123</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4124 id=4124 data-nosnippet>4124</a>        guild_id: GuildId,
-<a href=#4125 id=4125 data-nosnippet>4125</a>        user_id: UserId,
-<a href=#4126 id=4126 data-nosnippet>4126</a>        reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-<a href=#4127 id=4127 data-nosnippet>4127</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4128 id=4128 data-nosnippet>4128</a>        <span class="self">self</span>.wind(Request {
-<a href=#4129 id=4129 data-nosnippet>4129</a>            body: <span class="prelude-val">None</span>,
-<a href=#4130 id=4130 data-nosnippet>4130</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4131 id=4131 data-nosnippet>4131</a>            headers: reason.map(reason_into_header),
-<a href=#4132 id=4132 data-nosnippet>4132</a>            method: LightMethod::Delete,
-<a href=#4133 id=4133 data-nosnippet>4133</a>            route: Route::GuildMember {
-<a href=#4134 id=4134 data-nosnippet>4134</a>                guild_id,
-<a href=#4135 id=4135 data-nosnippet>4135</a>                user_id,
-<a href=#4136 id=4136 data-nosnippet>4136</a>            },
-<a href=#4137 id=4137 data-nosnippet>4137</a>            params: <span class="prelude-val">None</span>,
-<a href=#4138 id=4138 data-nosnippet>4138</a>        })
-<a href=#4139 id=4139 data-nosnippet>4139</a>        .<span class="kw">await
-<a href=#4140 id=4140 data-nosnippet>4140</a>    </span>}
-<a href=#4141 id=4141 data-nosnippet>4141</a>
-<a href=#4142 id=4142 data-nosnippet>4142</a>    <span class="doccomment">/// Leaves a guild.
-<a href=#4143 id=4143 data-nosnippet>4143</a>    </span><span class="kw">pub async fn </span>leave_guild(<span class="kw-2">&amp;</span><span class="self">self</span>, guild_id: GuildId) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4144 id=4144 data-nosnippet>4144</a>        <span class="self">self</span>.wind(Request {
-<a href=#4145 id=4145 data-nosnippet>4145</a>            body: <span class="prelude-val">None</span>,
-<a href=#4146 id=4146 data-nosnippet>4146</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4147 id=4147 data-nosnippet>4147</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4148 id=4148 data-nosnippet>4148</a>            method: LightMethod::Delete,
-<a href=#4149 id=4149 data-nosnippet>4149</a>            route: Route::UserMeGuild {
-<a href=#4150 id=4150 data-nosnippet>4150</a>                guild_id,
-<a href=#4151 id=4151 data-nosnippet>4151</a>            },
-<a href=#4152 id=4152 data-nosnippet>4152</a>            params: <span class="prelude-val">None</span>,
-<a href=#4153 id=4153 data-nosnippet>4153</a>        })
-<a href=#4154 id=4154 data-nosnippet>4154</a>        .<span class="kw">await
-<a href=#4155 id=4155 data-nosnippet>4155</a>    </span>}
-<a href=#4156 id=4156 data-nosnippet>4156</a>
-<a href=#4157 id=4157 data-nosnippet>4157</a>    <span class="doccomment">/// Sends a message to a channel.
-<a href=#4158 id=4158 data-nosnippet>4158</a>    </span><span class="kw">pub async fn </span>send_message(
-<a href=#4159 id=4159 data-nosnippet>4159</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4160 id=4160 data-nosnippet>4160</a>        channel_id: ChannelId,
-<a href=#4161 id=4161 data-nosnippet>4161</a>        files: Vec&lt;CreateAttachment&lt;<span class="lifetime">'_</span>&gt;&gt;,
-<a href=#4162 id=4162 data-nosnippet>4162</a>        map: <span class="kw-2">&amp;</span><span class="kw">impl </span>serde::Serialize,
-<a href=#4163 id=4163 data-nosnippet>4163</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
-<a href=#4164 id=4164 data-nosnippet>4164</a>        <span class="kw">let </span><span class="kw-2">mut </span>request = Request {
-<a href=#4165 id=4165 data-nosnippet>4165</a>            body: <span class="prelude-val">None</span>,
-<a href=#4166 id=4166 data-nosnippet>4166</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4167 id=4167 data-nosnippet>4167</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4168 id=4168 data-nosnippet>4168</a>            method: LightMethod::Post,
-<a href=#4169 id=4169 data-nosnippet>4169</a>            route: Route::ChannelMessages {
-<a href=#4170 id=4170 data-nosnippet>4170</a>                channel_id,
-<a href=#4171 id=4171 data-nosnippet>4171</a>            },
-<a href=#4172 id=4172 data-nosnippet>4172</a>            params: <span class="prelude-val">None</span>,
-<a href=#4173 id=4173 data-nosnippet>4173</a>        };
-<a href=#4174 id=4174 data-nosnippet>4174</a>
-<a href=#4175 id=4175 data-nosnippet>4175</a>        <span class="kw">if </span>files.is_empty() {
-<a href=#4176 id=4176 data-nosnippet>4176</a>            request.body = <span class="prelude-val">Some</span>(to_vec(map)<span class="question-mark">?</span>);
-<a href=#4177 id=4177 data-nosnippet>4177</a>        } <span class="kw">else </span>{
-<a href=#4178 id=4178 data-nosnippet>4178</a>            request.multipart = <span class="prelude-val">Some</span>(Multipart {
-<a href=#4179 id=4179 data-nosnippet>4179</a>                upload: MultipartUpload::Attachments(files),
-<a href=#4180 id=4180 data-nosnippet>4180</a>                payload_json: <span class="prelude-val">Some</span>(to_string(map)<span class="question-mark">?</span>),
-<a href=#4181 id=4181 data-nosnippet>4181</a>                fields: <span class="macro">vec!</span>[],
-<a href=#4182 id=4182 data-nosnippet>4182</a>            });
-<a href=#4183 id=4183 data-nosnippet>4183</a>        }
+<a href=#3998 id=3998 data-nosnippet>3998</a>    <span class="doccomment">/// Gets a user by Id.
+<a href=#3999 id=3999 data-nosnippet>3999</a>    </span><span class="kw">pub async fn </span>get_user(<span class="kw-2">&amp;</span><span class="self">self</span>, user_id: UserId) -&gt; <span class="prelude-ty">Result</span>&lt;User&gt; {
+<a href=#4000 id=4000 data-nosnippet>4000</a>        <span class="self">self</span>.fire(Request {
+<a href=#4001 id=4001 data-nosnippet>4001</a>            body: <span class="prelude-val">None</span>,
+<a href=#4002 id=4002 data-nosnippet>4002</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4003 id=4003 data-nosnippet>4003</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4004 id=4004 data-nosnippet>4004</a>            method: LightMethod::Get,
+<a href=#4005 id=4005 data-nosnippet>4005</a>            route: Route::User {
+<a href=#4006 id=4006 data-nosnippet>4006</a>                user_id,
+<a href=#4007 id=4007 data-nosnippet>4007</a>            },
+<a href=#4008 id=4008 data-nosnippet>4008</a>            params: <span class="prelude-val">None</span>,
+<a href=#4009 id=4009 data-nosnippet>4009</a>        })
+<a href=#4010 id=4010 data-nosnippet>4010</a>        .<span class="kw">await
+<a href=#4011 id=4011 data-nosnippet>4011</a>    </span>}
+<a href=#4012 id=4012 data-nosnippet>4012</a>
+<a href=#4013 id=4013 data-nosnippet>4013</a>    <span class="doccomment">/// Gets the current user's third party connections.
+<a href=#4014 id=4014 data-nosnippet>4014</a>    ///
+<a href=#4015 id=4015 data-nosnippet>4015</a>    /// This method only works for user tokens with the [`Connections`] OAuth2 scope.
+<a href=#4016 id=4016 data-nosnippet>4016</a>    ///
+<a href=#4017 id=4017 data-nosnippet>4017</a>    /// [`Connections`]: crate::model::application::Scope::Connections
+<a href=#4018 id=4018 data-nosnippet>4018</a>    </span><span class="kw">pub async fn </span>get_user_connections(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Connection&gt;&gt; {
+<a href=#4019 id=4019 data-nosnippet>4019</a>        <span class="self">self</span>.fire(Request {
+<a href=#4020 id=4020 data-nosnippet>4020</a>            body: <span class="prelude-val">None</span>,
+<a href=#4021 id=4021 data-nosnippet>4021</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4022 id=4022 data-nosnippet>4022</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4023 id=4023 data-nosnippet>4023</a>            method: LightMethod::Get,
+<a href=#4024 id=4024 data-nosnippet>4024</a>            route: Route::UserMeConnections,
+<a href=#4025 id=4025 data-nosnippet>4025</a>            params: <span class="prelude-val">None</span>,
+<a href=#4026 id=4026 data-nosnippet>4026</a>        })
+<a href=#4027 id=4027 data-nosnippet>4027</a>        .<span class="kw">await
+<a href=#4028 id=4028 data-nosnippet>4028</a>    </span>}
+<a href=#4029 id=4029 data-nosnippet>4029</a>
+<a href=#4030 id=4030 data-nosnippet>4030</a>    <span class="doccomment">/// Gets our DM channels.
+<a href=#4031 id=4031 data-nosnippet>4031</a>    </span><span class="kw">pub async fn </span>get_user_dm_channels(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;PrivateChannel&gt;&gt; {
+<a href=#4032 id=4032 data-nosnippet>4032</a>        <span class="self">self</span>.fire(Request {
+<a href=#4033 id=4033 data-nosnippet>4033</a>            body: <span class="prelude-val">None</span>,
+<a href=#4034 id=4034 data-nosnippet>4034</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4035 id=4035 data-nosnippet>4035</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4036 id=4036 data-nosnippet>4036</a>            method: LightMethod::Get,
+<a href=#4037 id=4037 data-nosnippet>4037</a>            route: Route::UserMeDmChannels,
+<a href=#4038 id=4038 data-nosnippet>4038</a>            params: <span class="prelude-val">None</span>,
+<a href=#4039 id=4039 data-nosnippet>4039</a>        })
+<a href=#4040 id=4040 data-nosnippet>4040</a>        .<span class="kw">await
+<a href=#4041 id=4041 data-nosnippet>4041</a>    </span>}
+<a href=#4042 id=4042 data-nosnippet>4042</a>
+<a href=#4043 id=4043 data-nosnippet>4043</a>    <span class="doccomment">/// Gets all voice regions.
+<a href=#4044 id=4044 data-nosnippet>4044</a>    </span><span class="kw">pub async fn </span>get_voice_regions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;VoiceRegion&gt;&gt; {
+<a href=#4045 id=4045 data-nosnippet>4045</a>        <span class="self">self</span>.fire(Request {
+<a href=#4046 id=4046 data-nosnippet>4046</a>            body: <span class="prelude-val">None</span>,
+<a href=#4047 id=4047 data-nosnippet>4047</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4048 id=4048 data-nosnippet>4048</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4049 id=4049 data-nosnippet>4049</a>            method: LightMethod::Get,
+<a href=#4050 id=4050 data-nosnippet>4050</a>            route: Route::VoiceRegions,
+<a href=#4051 id=4051 data-nosnippet>4051</a>            params: <span class="prelude-val">None</span>,
+<a href=#4052 id=4052 data-nosnippet>4052</a>        })
+<a href=#4053 id=4053 data-nosnippet>4053</a>        .<span class="kw">await
+<a href=#4054 id=4054 data-nosnippet>4054</a>    </span>}
+<a href=#4055 id=4055 data-nosnippet>4055</a>
+<a href=#4056 id=4056 data-nosnippet>4056</a>    <span class="doccomment">/// Retrieves a webhook given its Id.
+<a href=#4057 id=4057 data-nosnippet>4057</a>    ///
+<a href=#4058 id=4058 data-nosnippet>4058</a>    /// This method requires authentication, whereas [`Http::get_webhook_with_token`] and
+<a href=#4059 id=4059 data-nosnippet>4059</a>    /// [`Http::get_webhook_from_url`] do not.
+<a href=#4060 id=4060 data-nosnippet>4060</a>    </span><span class="kw">pub async fn </span>get_webhook(<span class="kw-2">&amp;</span><span class="self">self</span>, webhook_id: WebhookId) -&gt; <span class="prelude-ty">Result</span>&lt;Webhook&gt; {
+<a href=#4061 id=4061 data-nosnippet>4061</a>        <span class="self">self</span>.fire(Request {
+<a href=#4062 id=4062 data-nosnippet>4062</a>            body: <span class="prelude-val">None</span>,
+<a href=#4063 id=4063 data-nosnippet>4063</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4064 id=4064 data-nosnippet>4064</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4065 id=4065 data-nosnippet>4065</a>            method: LightMethod::Get,
+<a href=#4066 id=4066 data-nosnippet>4066</a>            route: Route::Webhook {
+<a href=#4067 id=4067 data-nosnippet>4067</a>                webhook_id,
+<a href=#4068 id=4068 data-nosnippet>4068</a>            },
+<a href=#4069 id=4069 data-nosnippet>4069</a>            params: <span class="prelude-val">None</span>,
+<a href=#4070 id=4070 data-nosnippet>4070</a>        })
+<a href=#4071 id=4071 data-nosnippet>4071</a>        .<span class="kw">await
+<a href=#4072 id=4072 data-nosnippet>4072</a>    </span>}
+<a href=#4073 id=4073 data-nosnippet>4073</a>
+<a href=#4074 id=4074 data-nosnippet>4074</a>    <span class="doccomment">/// Retrieves a webhook given its Id and unique token.
+<a href=#4075 id=4075 data-nosnippet>4075</a>    ///
+<a href=#4076 id=4076 data-nosnippet>4076</a>    /// This method does _not_ require authentication.
+<a href=#4077 id=4077 data-nosnippet>4077</a>    </span><span class="kw">pub async fn </span>get_webhook_with_token(
+<a href=#4078 id=4078 data-nosnippet>4078</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4079 id=4079 data-nosnippet>4079</a>        webhook_id: WebhookId,
+<a href=#4080 id=4080 data-nosnippet>4080</a>        token: <span class="kw-2">&amp;</span>str,
+<a href=#4081 id=4081 data-nosnippet>4081</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Webhook&gt; {
+<a href=#4082 id=4082 data-nosnippet>4082</a>        <span class="self">self</span>.fire(Request {
+<a href=#4083 id=4083 data-nosnippet>4083</a>            body: <span class="prelude-val">None</span>,
+<a href=#4084 id=4084 data-nosnippet>4084</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4085 id=4085 data-nosnippet>4085</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4086 id=4086 data-nosnippet>4086</a>            method: LightMethod::Get,
+<a href=#4087 id=4087 data-nosnippet>4087</a>            route: Route::WebhookWithToken {
+<a href=#4088 id=4088 data-nosnippet>4088</a>                webhook_id,
+<a href=#4089 id=4089 data-nosnippet>4089</a>                token,
+<a href=#4090 id=4090 data-nosnippet>4090</a>            },
+<a href=#4091 id=4091 data-nosnippet>4091</a>            params: <span class="prelude-val">None</span>,
+<a href=#4092 id=4092 data-nosnippet>4092</a>        })
+<a href=#4093 id=4093 data-nosnippet>4093</a>        .<span class="kw">await
+<a href=#4094 id=4094 data-nosnippet>4094</a>    </span>}
+<a href=#4095 id=4095 data-nosnippet>4095</a>
+<a href=#4096 id=4096 data-nosnippet>4096</a>    <span class="doccomment">/// Retrieves a webhook given its url.
+<a href=#4097 id=4097 data-nosnippet>4097</a>    ///
+<a href=#4098 id=4098 data-nosnippet>4098</a>    /// This method does _not_ require authentication
+<a href=#4099 id=4099 data-nosnippet>4099</a>    </span><span class="attr">#[cfg(feature = <span class="string">"utils"</span>)]
+<a href=#4100 id=4100 data-nosnippet>4100</a>    </span><span class="kw">pub async fn </span>get_webhook_from_url(<span class="kw-2">&amp;</span><span class="self">self</span>, url: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Webhook&gt; {
+<a href=#4101 id=4101 data-nosnippet>4101</a>        <span class="kw">let </span>url = Url::parse(url).map_err(HttpError::Url)<span class="question-mark">?</span>;
+<a href=#4102 id=4102 data-nosnippet>4102</a>        <span class="kw">let </span>(webhook_id, token) =
+<a href=#4103 id=4103 data-nosnippet>4103</a>            <span class="kw">crate</span>::utils::parse_webhook(<span class="kw-2">&amp;</span>url).ok_or(HttpError::InvalidWebhook)<span class="question-mark">?</span>;
+<a href=#4104 id=4104 data-nosnippet>4104</a>        <span class="self">self</span>.fire(Request {
+<a href=#4105 id=4105 data-nosnippet>4105</a>            body: <span class="prelude-val">None</span>,
+<a href=#4106 id=4106 data-nosnippet>4106</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4107 id=4107 data-nosnippet>4107</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4108 id=4108 data-nosnippet>4108</a>            method: LightMethod::Get,
+<a href=#4109 id=4109 data-nosnippet>4109</a>            route: Route::WebhookWithToken {
+<a href=#4110 id=4110 data-nosnippet>4110</a>                webhook_id,
+<a href=#4111 id=4111 data-nosnippet>4111</a>                token,
+<a href=#4112 id=4112 data-nosnippet>4112</a>            },
+<a href=#4113 id=4113 data-nosnippet>4113</a>            params: <span class="prelude-val">None</span>,
+<a href=#4114 id=4114 data-nosnippet>4114</a>        })
+<a href=#4115 id=4115 data-nosnippet>4115</a>        .<span class="kw">await
+<a href=#4116 id=4116 data-nosnippet>4116</a>    </span>}
+<a href=#4117 id=4117 data-nosnippet>4117</a>
+<a href=#4118 id=4118 data-nosnippet>4118</a>    <span class="doccomment">/// Kicks a member from a guild with a provided reason.
+<a href=#4119 id=4119 data-nosnippet>4119</a>    </span><span class="kw">pub async fn </span>kick_member(
+<a href=#4120 id=4120 data-nosnippet>4120</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4121 id=4121 data-nosnippet>4121</a>        guild_id: GuildId,
+<a href=#4122 id=4122 data-nosnippet>4122</a>        user_id: UserId,
+<a href=#4123 id=4123 data-nosnippet>4123</a>        reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+<a href=#4124 id=4124 data-nosnippet>4124</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4125 id=4125 data-nosnippet>4125</a>        <span class="self">self</span>.wind(Request {
+<a href=#4126 id=4126 data-nosnippet>4126</a>            body: <span class="prelude-val">None</span>,
+<a href=#4127 id=4127 data-nosnippet>4127</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4128 id=4128 data-nosnippet>4128</a>            headers: reason.map(reason_into_header),
+<a href=#4129 id=4129 data-nosnippet>4129</a>            method: LightMethod::Delete,
+<a href=#4130 id=4130 data-nosnippet>4130</a>            route: Route::GuildMember {
+<a href=#4131 id=4131 data-nosnippet>4131</a>                guild_id,
+<a href=#4132 id=4132 data-nosnippet>4132</a>                user_id,
+<a href=#4133 id=4133 data-nosnippet>4133</a>            },
+<a href=#4134 id=4134 data-nosnippet>4134</a>            params: <span class="prelude-val">None</span>,
+<a href=#4135 id=4135 data-nosnippet>4135</a>        })
+<a href=#4136 id=4136 data-nosnippet>4136</a>        .<span class="kw">await
+<a href=#4137 id=4137 data-nosnippet>4137</a>    </span>}
+<a href=#4138 id=4138 data-nosnippet>4138</a>
+<a href=#4139 id=4139 data-nosnippet>4139</a>    <span class="doccomment">/// Leaves a guild.
+<a href=#4140 id=4140 data-nosnippet>4140</a>    </span><span class="kw">pub async fn </span>leave_guild(<span class="kw-2">&amp;</span><span class="self">self</span>, guild_id: GuildId) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4141 id=4141 data-nosnippet>4141</a>        <span class="self">self</span>.wind(Request {
+<a href=#4142 id=4142 data-nosnippet>4142</a>            body: <span class="prelude-val">None</span>,
+<a href=#4143 id=4143 data-nosnippet>4143</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4144 id=4144 data-nosnippet>4144</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4145 id=4145 data-nosnippet>4145</a>            method: LightMethod::Delete,
+<a href=#4146 id=4146 data-nosnippet>4146</a>            route: Route::UserMeGuild {
+<a href=#4147 id=4147 data-nosnippet>4147</a>                guild_id,
+<a href=#4148 id=4148 data-nosnippet>4148</a>            },
+<a href=#4149 id=4149 data-nosnippet>4149</a>            params: <span class="prelude-val">None</span>,
+<a href=#4150 id=4150 data-nosnippet>4150</a>        })
+<a href=#4151 id=4151 data-nosnippet>4151</a>        .<span class="kw">await
+<a href=#4152 id=4152 data-nosnippet>4152</a>    </span>}
+<a href=#4153 id=4153 data-nosnippet>4153</a>
+<a href=#4154 id=4154 data-nosnippet>4154</a>    <span class="doccomment">/// Sends a message to a channel.
+<a href=#4155 id=4155 data-nosnippet>4155</a>    </span><span class="kw">pub async fn </span>send_message(
+<a href=#4156 id=4156 data-nosnippet>4156</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4157 id=4157 data-nosnippet>4157</a>        channel_id: ChannelId,
+<a href=#4158 id=4158 data-nosnippet>4158</a>        files: Vec&lt;CreateAttachment&lt;<span class="lifetime">'_</span>&gt;&gt;,
+<a href=#4159 id=4159 data-nosnippet>4159</a>        map: <span class="kw-2">&amp;</span><span class="kw">impl </span>serde::Serialize,
+<a href=#4160 id=4160 data-nosnippet>4160</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
+<a href=#4161 id=4161 data-nosnippet>4161</a>        <span class="kw">let </span><span class="kw-2">mut </span>request = Request {
+<a href=#4162 id=4162 data-nosnippet>4162</a>            body: <span class="prelude-val">None</span>,
+<a href=#4163 id=4163 data-nosnippet>4163</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4164 id=4164 data-nosnippet>4164</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4165 id=4165 data-nosnippet>4165</a>            method: LightMethod::Post,
+<a href=#4166 id=4166 data-nosnippet>4166</a>            route: Route::ChannelMessages {
+<a href=#4167 id=4167 data-nosnippet>4167</a>                channel_id,
+<a href=#4168 id=4168 data-nosnippet>4168</a>            },
+<a href=#4169 id=4169 data-nosnippet>4169</a>            params: <span class="prelude-val">None</span>,
+<a href=#4170 id=4170 data-nosnippet>4170</a>        };
+<a href=#4171 id=4171 data-nosnippet>4171</a>
+<a href=#4172 id=4172 data-nosnippet>4172</a>        <span class="kw">if </span>files.is_empty() {
+<a href=#4173 id=4173 data-nosnippet>4173</a>            request.body = <span class="prelude-val">Some</span>(to_vec(map)<span class="question-mark">?</span>);
+<a href=#4174 id=4174 data-nosnippet>4174</a>        } <span class="kw">else </span>{
+<a href=#4175 id=4175 data-nosnippet>4175</a>            request.multipart = <span class="prelude-val">Some</span>(Multipart {
+<a href=#4176 id=4176 data-nosnippet>4176</a>                upload: MultipartUpload::Attachments(files),
+<a href=#4177 id=4177 data-nosnippet>4177</a>                payload_json: <span class="prelude-val">Some</span>(to_string(map)<span class="question-mark">?</span>),
+<a href=#4178 id=4178 data-nosnippet>4178</a>                fields: <span class="macro">vec!</span>[],
+<a href=#4179 id=4179 data-nosnippet>4179</a>            });
+<a href=#4180 id=4180 data-nosnippet>4180</a>        }
+<a href=#4181 id=4181 data-nosnippet>4181</a>
+<a href=#4182 id=4182 data-nosnippet>4182</a>        <span class="self">self</span>.fire(request).<span class="kw">await
+<a href=#4183 id=4183 data-nosnippet>4183</a>    </span>}
 <a href=#4184 id=4184 data-nosnippet>4184</a>
-<a href=#4185 id=4185 data-nosnippet>4185</a>        <span class="self">self</span>.fire(request).<span class="kw">await
-<a href=#4186 id=4186 data-nosnippet>4186</a>    </span>}
-<a href=#4187 id=4187 data-nosnippet>4187</a>
-<a href=#4188 id=4188 data-nosnippet>4188</a>    <span class="doccomment">/// Pins a message in a channel.
-<a href=#4189 id=4189 data-nosnippet>4189</a>    </span><span class="kw">pub async fn </span>pin_message(
-<a href=#4190 id=4190 data-nosnippet>4190</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4191 id=4191 data-nosnippet>4191</a>        channel_id: ChannelId,
-<a href=#4192 id=4192 data-nosnippet>4192</a>        message_id: MessageId,
-<a href=#4193 id=4193 data-nosnippet>4193</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-<a href=#4194 id=4194 data-nosnippet>4194</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4195 id=4195 data-nosnippet>4195</a>        <span class="self">self</span>.wind(Request {
-<a href=#4196 id=4196 data-nosnippet>4196</a>            body: <span class="prelude-val">None</span>,
-<a href=#4197 id=4197 data-nosnippet>4197</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4198 id=4198 data-nosnippet>4198</a>            headers: audit_log_reason.map(reason_into_header),
-<a href=#4199 id=4199 data-nosnippet>4199</a>            method: LightMethod::Put,
-<a href=#4200 id=4200 data-nosnippet>4200</a>            route: Route::ChannelPin {
-<a href=#4201 id=4201 data-nosnippet>4201</a>                channel_id,
-<a href=#4202 id=4202 data-nosnippet>4202</a>                message_id,
-<a href=#4203 id=4203 data-nosnippet>4203</a>            },
-<a href=#4204 id=4204 data-nosnippet>4204</a>            params: <span class="prelude-val">None</span>,
-<a href=#4205 id=4205 data-nosnippet>4205</a>        })
-<a href=#4206 id=4206 data-nosnippet>4206</a>        .<span class="kw">await
-<a href=#4207 id=4207 data-nosnippet>4207</a>    </span>}
-<a href=#4208 id=4208 data-nosnippet>4208</a>
-<a href=#4209 id=4209 data-nosnippet>4209</a>    <span class="doccomment">/// Unbans a user from a guild.
-<a href=#4210 id=4210 data-nosnippet>4210</a>    </span><span class="kw">pub async fn </span>remove_ban(
-<a href=#4211 id=4211 data-nosnippet>4211</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4212 id=4212 data-nosnippet>4212</a>        guild_id: GuildId,
-<a href=#4213 id=4213 data-nosnippet>4213</a>        user_id: UserId,
-<a href=#4214 id=4214 data-nosnippet>4214</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-<a href=#4215 id=4215 data-nosnippet>4215</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4216 id=4216 data-nosnippet>4216</a>        <span class="self">self</span>.wind(Request {
-<a href=#4217 id=4217 data-nosnippet>4217</a>            body: <span class="prelude-val">None</span>,
-<a href=#4218 id=4218 data-nosnippet>4218</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4219 id=4219 data-nosnippet>4219</a>            headers: audit_log_reason.map(reason_into_header),
-<a href=#4220 id=4220 data-nosnippet>4220</a>            method: LightMethod::Delete,
-<a href=#4221 id=4221 data-nosnippet>4221</a>            route: Route::GuildBan {
-<a href=#4222 id=4222 data-nosnippet>4222</a>                guild_id,
-<a href=#4223 id=4223 data-nosnippet>4223</a>                user_id,
-<a href=#4224 id=4224 data-nosnippet>4224</a>            },
-<a href=#4225 id=4225 data-nosnippet>4225</a>            params: <span class="prelude-val">None</span>,
-<a href=#4226 id=4226 data-nosnippet>4226</a>        })
-<a href=#4227 id=4227 data-nosnippet>4227</a>        .<span class="kw">await
-<a href=#4228 id=4228 data-nosnippet>4228</a>    </span>}
-<a href=#4229 id=4229 data-nosnippet>4229</a>
-<a href=#4230 id=4230 data-nosnippet>4230</a>    <span class="doccomment">/// Deletes a single [`Role`] from a [`Member`] in a [`Guild`].
-<a href=#4231 id=4231 data-nosnippet>4231</a>    </span><span class="kw">pub async fn </span>remove_member_role(
-<a href=#4232 id=4232 data-nosnippet>4232</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4233 id=4233 data-nosnippet>4233</a>        guild_id: GuildId,
-<a href=#4234 id=4234 data-nosnippet>4234</a>        user_id: UserId,
-<a href=#4235 id=4235 data-nosnippet>4235</a>        role_id: RoleId,
-<a href=#4236 id=4236 data-nosnippet>4236</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-<a href=#4237 id=4237 data-nosnippet>4237</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4238 id=4238 data-nosnippet>4238</a>        <span class="self">self</span>.wind(Request {
-<a href=#4239 id=4239 data-nosnippet>4239</a>            body: <span class="prelude-val">None</span>,
-<a href=#4240 id=4240 data-nosnippet>4240</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4241 id=4241 data-nosnippet>4241</a>            headers: audit_log_reason.map(reason_into_header),
-<a href=#4242 id=4242 data-nosnippet>4242</a>            method: LightMethod::Delete,
-<a href=#4243 id=4243 data-nosnippet>4243</a>            route: Route::GuildMemberRole {
-<a href=#4244 id=4244 data-nosnippet>4244</a>                guild_id,
-<a href=#4245 id=4245 data-nosnippet>4245</a>                user_id,
-<a href=#4246 id=4246 data-nosnippet>4246</a>                role_id,
-<a href=#4247 id=4247 data-nosnippet>4247</a>            },
-<a href=#4248 id=4248 data-nosnippet>4248</a>            params: <span class="prelude-val">None</span>,
-<a href=#4249 id=4249 data-nosnippet>4249</a>        })
-<a href=#4250 id=4250 data-nosnippet>4250</a>        .<span class="kw">await
-<a href=#4251 id=4251 data-nosnippet>4251</a>    </span>}
-<a href=#4252 id=4252 data-nosnippet>4252</a>
-<a href=#4253 id=4253 data-nosnippet>4253</a>    <span class="doccomment">/// Returns a list of [`Member`]s in a [`Guild`] whose username or nickname starts with a
-<a href=#4254 id=4254 data-nosnippet>4254</a>    /// provided string.
-<a href=#4255 id=4255 data-nosnippet>4255</a>    </span><span class="kw">pub async fn </span>search_guild_members(
-<a href=#4256 id=4256 data-nosnippet>4256</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4257 id=4257 data-nosnippet>4257</a>        guild_id: GuildId,
-<a href=#4258 id=4258 data-nosnippet>4258</a>        query: <span class="kw-2">&amp;</span>str,
-<a href=#4259 id=4259 data-nosnippet>4259</a>        limit: <span class="prelude-ty">Option</span>&lt;NonMaxU16&gt;,
-<a href=#4260 id=4260 data-nosnippet>4260</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Member&gt;&gt; {
-<a href=#4261 id=4261 data-nosnippet>4261</a>        <span class="kw">let </span>limit_str = limit.unwrap_or(constants::MEMBER_FETCH_LIMIT).get().to_arraystring();
-<a href=#4262 id=4262 data-nosnippet>4262</a>        <span class="kw">let </span><span class="kw-2">mut </span>value: Value = <span class="self">self
-<a href=#4263 id=4263 data-nosnippet>4263</a>            </span>.fire(Request {
-<a href=#4264 id=4264 data-nosnippet>4264</a>                body: <span class="prelude-val">None</span>,
-<a href=#4265 id=4265 data-nosnippet>4265</a>                multipart: <span class="prelude-val">None</span>,
-<a href=#4266 id=4266 data-nosnippet>4266</a>                headers: <span class="prelude-val">None</span>,
-<a href=#4267 id=4267 data-nosnippet>4267</a>                method: LightMethod::Get,
-<a href=#4268 id=4268 data-nosnippet>4268</a>                route: Route::GuildMembersSearch {
-<a href=#4269 id=4269 data-nosnippet>4269</a>                    guild_id,
-<a href=#4270 id=4270 data-nosnippet>4270</a>                },
-<a href=#4271 id=4271 data-nosnippet>4271</a>                params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>[(<span class="string">"query"</span>, query), (<span class="string">"limit"</span>, <span class="kw-2">&amp;</span>limit_str)]),
-<a href=#4272 id=4272 data-nosnippet>4272</a>            })
-<a href=#4273 id=4273 data-nosnippet>4273</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#4274 id=4274 data-nosnippet>4274</a>
-<a href=#4275 id=4275 data-nosnippet>4275</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(members) = value.as_array_mut() {
-<a href=#4276 id=4276 data-nosnippet>4276</a>            <span class="kw">for </span>member <span class="kw">in </span>members {
-<a href=#4277 id=4277 data-nosnippet>4277</a>                <span class="kw">if let </span><span class="prelude-val">Some</span>(map) = member.as_object_mut() {
-<a href=#4278 id=4278 data-nosnippet>4278</a>                    map.insert(<span class="string">"guild_id"</span>.to_string(), guild_id.get().into());
-<a href=#4279 id=4279 data-nosnippet>4279</a>                }
-<a href=#4280 id=4280 data-nosnippet>4280</a>            }
-<a href=#4281 id=4281 data-nosnippet>4281</a>        }
+<a href=#4185 id=4185 data-nosnippet>4185</a>    <span class="doccomment">/// Pins a message in a channel.
+<a href=#4186 id=4186 data-nosnippet>4186</a>    </span><span class="kw">pub async fn </span>pin_message(
+<a href=#4187 id=4187 data-nosnippet>4187</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4188 id=4188 data-nosnippet>4188</a>        channel_id: ChannelId,
+<a href=#4189 id=4189 data-nosnippet>4189</a>        message_id: MessageId,
+<a href=#4190 id=4190 data-nosnippet>4190</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+<a href=#4191 id=4191 data-nosnippet>4191</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4192 id=4192 data-nosnippet>4192</a>        <span class="self">self</span>.wind(Request {
+<a href=#4193 id=4193 data-nosnippet>4193</a>            body: <span class="prelude-val">None</span>,
+<a href=#4194 id=4194 data-nosnippet>4194</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4195 id=4195 data-nosnippet>4195</a>            headers: audit_log_reason.map(reason_into_header),
+<a href=#4196 id=4196 data-nosnippet>4196</a>            method: LightMethod::Put,
+<a href=#4197 id=4197 data-nosnippet>4197</a>            route: Route::ChannelPin {
+<a href=#4198 id=4198 data-nosnippet>4198</a>                channel_id,
+<a href=#4199 id=4199 data-nosnippet>4199</a>                message_id,
+<a href=#4200 id=4200 data-nosnippet>4200</a>            },
+<a href=#4201 id=4201 data-nosnippet>4201</a>            params: <span class="prelude-val">None</span>,
+<a href=#4202 id=4202 data-nosnippet>4202</a>        })
+<a href=#4203 id=4203 data-nosnippet>4203</a>        .<span class="kw">await
+<a href=#4204 id=4204 data-nosnippet>4204</a>    </span>}
+<a href=#4205 id=4205 data-nosnippet>4205</a>
+<a href=#4206 id=4206 data-nosnippet>4206</a>    <span class="doccomment">/// Unbans a user from a guild.
+<a href=#4207 id=4207 data-nosnippet>4207</a>    </span><span class="kw">pub async fn </span>remove_ban(
+<a href=#4208 id=4208 data-nosnippet>4208</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4209 id=4209 data-nosnippet>4209</a>        guild_id: GuildId,
+<a href=#4210 id=4210 data-nosnippet>4210</a>        user_id: UserId,
+<a href=#4211 id=4211 data-nosnippet>4211</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+<a href=#4212 id=4212 data-nosnippet>4212</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4213 id=4213 data-nosnippet>4213</a>        <span class="self">self</span>.wind(Request {
+<a href=#4214 id=4214 data-nosnippet>4214</a>            body: <span class="prelude-val">None</span>,
+<a href=#4215 id=4215 data-nosnippet>4215</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4216 id=4216 data-nosnippet>4216</a>            headers: audit_log_reason.map(reason_into_header),
+<a href=#4217 id=4217 data-nosnippet>4217</a>            method: LightMethod::Delete,
+<a href=#4218 id=4218 data-nosnippet>4218</a>            route: Route::GuildBan {
+<a href=#4219 id=4219 data-nosnippet>4219</a>                guild_id,
+<a href=#4220 id=4220 data-nosnippet>4220</a>                user_id,
+<a href=#4221 id=4221 data-nosnippet>4221</a>            },
+<a href=#4222 id=4222 data-nosnippet>4222</a>            params: <span class="prelude-val">None</span>,
+<a href=#4223 id=4223 data-nosnippet>4223</a>        })
+<a href=#4224 id=4224 data-nosnippet>4224</a>        .<span class="kw">await
+<a href=#4225 id=4225 data-nosnippet>4225</a>    </span>}
+<a href=#4226 id=4226 data-nosnippet>4226</a>
+<a href=#4227 id=4227 data-nosnippet>4227</a>    <span class="doccomment">/// Deletes a single [`Role`] from a [`Member`] in a [`Guild`].
+<a href=#4228 id=4228 data-nosnippet>4228</a>    </span><span class="kw">pub async fn </span>remove_member_role(
+<a href=#4229 id=4229 data-nosnippet>4229</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4230 id=4230 data-nosnippet>4230</a>        guild_id: GuildId,
+<a href=#4231 id=4231 data-nosnippet>4231</a>        user_id: UserId,
+<a href=#4232 id=4232 data-nosnippet>4232</a>        role_id: RoleId,
+<a href=#4233 id=4233 data-nosnippet>4233</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+<a href=#4234 id=4234 data-nosnippet>4234</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4235 id=4235 data-nosnippet>4235</a>        <span class="self">self</span>.wind(Request {
+<a href=#4236 id=4236 data-nosnippet>4236</a>            body: <span class="prelude-val">None</span>,
+<a href=#4237 id=4237 data-nosnippet>4237</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4238 id=4238 data-nosnippet>4238</a>            headers: audit_log_reason.map(reason_into_header),
+<a href=#4239 id=4239 data-nosnippet>4239</a>            method: LightMethod::Delete,
+<a href=#4240 id=4240 data-nosnippet>4240</a>            route: Route::GuildMemberRole {
+<a href=#4241 id=4241 data-nosnippet>4241</a>                guild_id,
+<a href=#4242 id=4242 data-nosnippet>4242</a>                user_id,
+<a href=#4243 id=4243 data-nosnippet>4243</a>                role_id,
+<a href=#4244 id=4244 data-nosnippet>4244</a>            },
+<a href=#4245 id=4245 data-nosnippet>4245</a>            params: <span class="prelude-val">None</span>,
+<a href=#4246 id=4246 data-nosnippet>4246</a>        })
+<a href=#4247 id=4247 data-nosnippet>4247</a>        .<span class="kw">await
+<a href=#4248 id=4248 data-nosnippet>4248</a>    </span>}
+<a href=#4249 id=4249 data-nosnippet>4249</a>
+<a href=#4250 id=4250 data-nosnippet>4250</a>    <span class="doccomment">/// Returns a list of [`Member`]s in a [`Guild`] whose username or nickname starts with a
+<a href=#4251 id=4251 data-nosnippet>4251</a>    /// provided string.
+<a href=#4252 id=4252 data-nosnippet>4252</a>    </span><span class="kw">pub async fn </span>search_guild_members(
+<a href=#4253 id=4253 data-nosnippet>4253</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4254 id=4254 data-nosnippet>4254</a>        guild_id: GuildId,
+<a href=#4255 id=4255 data-nosnippet>4255</a>        query: <span class="kw-2">&amp;</span>str,
+<a href=#4256 id=4256 data-nosnippet>4256</a>        limit: <span class="prelude-ty">Option</span>&lt;NonMaxU16&gt;,
+<a href=#4257 id=4257 data-nosnippet>4257</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Member&gt;&gt; {
+<a href=#4258 id=4258 data-nosnippet>4258</a>        <span class="kw">let </span>limit_str = limit.unwrap_or(constants::MEMBER_FETCH_LIMIT).get().to_arraystring();
+<a href=#4259 id=4259 data-nosnippet>4259</a>        <span class="kw">let </span><span class="kw-2">mut </span>value: Value = <span class="self">self
+<a href=#4260 id=4260 data-nosnippet>4260</a>            </span>.fire(Request {
+<a href=#4261 id=4261 data-nosnippet>4261</a>                body: <span class="prelude-val">None</span>,
+<a href=#4262 id=4262 data-nosnippet>4262</a>                multipart: <span class="prelude-val">None</span>,
+<a href=#4263 id=4263 data-nosnippet>4263</a>                headers: <span class="prelude-val">None</span>,
+<a href=#4264 id=4264 data-nosnippet>4264</a>                method: LightMethod::Get,
+<a href=#4265 id=4265 data-nosnippet>4265</a>                route: Route::GuildMembersSearch {
+<a href=#4266 id=4266 data-nosnippet>4266</a>                    guild_id,
+<a href=#4267 id=4267 data-nosnippet>4267</a>                },
+<a href=#4268 id=4268 data-nosnippet>4268</a>                params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>[(<span class="string">"query"</span>, query), (<span class="string">"limit"</span>, <span class="kw-2">&amp;</span>limit_str)]),
+<a href=#4269 id=4269 data-nosnippet>4269</a>            })
+<a href=#4270 id=4270 data-nosnippet>4270</a>            .<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#4271 id=4271 data-nosnippet>4271</a>
+<a href=#4272 id=4272 data-nosnippet>4272</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(members) = value.as_array_mut() {
+<a href=#4273 id=4273 data-nosnippet>4273</a>            <span class="kw">for </span>member <span class="kw">in </span>members {
+<a href=#4274 id=4274 data-nosnippet>4274</a>                <span class="kw">if let </span><span class="prelude-val">Some</span>(map) = member.as_object_mut() {
+<a href=#4275 id=4275 data-nosnippet>4275</a>                    map.insert(<span class="string">"guild_id"</span>.to_string(), guild_id.get().into());
+<a href=#4276 id=4276 data-nosnippet>4276</a>                }
+<a href=#4277 id=4277 data-nosnippet>4277</a>            }
+<a href=#4278 id=4278 data-nosnippet>4278</a>        }
+<a href=#4279 id=4279 data-nosnippet>4279</a>
+<a href=#4280 id=4280 data-nosnippet>4280</a>        from_value(value).map_err(From::from)
+<a href=#4281 id=4281 data-nosnippet>4281</a>    }
 <a href=#4282 id=4282 data-nosnippet>4282</a>
-<a href=#4283 id=4283 data-nosnippet>4283</a>        from_value(value).map_err(From::from)
-<a href=#4284 id=4284 data-nosnippet>4284</a>    }
-<a href=#4285 id=4285 data-nosnippet>4285</a>
-<a href=#4286 id=4286 data-nosnippet>4286</a>    <span class="doccomment">/// Starts removing some members from a guild based on the last time they've been online.
-<a href=#4287 id=4287 data-nosnippet>4287</a>    </span><span class="kw">pub async fn </span>start_guild_prune(
-<a href=#4288 id=4288 data-nosnippet>4288</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4289 id=4289 data-nosnippet>4289</a>        guild_id: GuildId,
-<a href=#4290 id=4290 data-nosnippet>4290</a>        days: u8,
-<a href=#4291 id=4291 data-nosnippet>4291</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-<a href=#4292 id=4292 data-nosnippet>4292</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;GuildPrune&gt; {
-<a href=#4293 id=4293 data-nosnippet>4293</a>        <span class="kw">let </span>days_str = days.to_arraystring();
-<a href=#4294 id=4294 data-nosnippet>4294</a>        <span class="self">self</span>.fire(Request {
-<a href=#4295 id=4295 data-nosnippet>4295</a>            body: <span class="prelude-val">None</span>,
-<a href=#4296 id=4296 data-nosnippet>4296</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4297 id=4297 data-nosnippet>4297</a>            headers: audit_log_reason.map(reason_into_header),
-<a href=#4298 id=4298 data-nosnippet>4298</a>            method: LightMethod::Post,
-<a href=#4299 id=4299 data-nosnippet>4299</a>            route: Route::GuildPrune {
-<a href=#4300 id=4300 data-nosnippet>4300</a>                guild_id,
-<a href=#4301 id=4301 data-nosnippet>4301</a>            },
-<a href=#4302 id=4302 data-nosnippet>4302</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>[(<span class="string">"days"</span>, <span class="kw-2">&amp;</span>days_str)]),
-<a href=#4303 id=4303 data-nosnippet>4303</a>        })
-<a href=#4304 id=4304 data-nosnippet>4304</a>        .<span class="kw">await
-<a href=#4305 id=4305 data-nosnippet>4305</a>    </span>}
-<a href=#4306 id=4306 data-nosnippet>4306</a>
-<a href=#4307 id=4307 data-nosnippet>4307</a>    <span class="doccomment">/// Starts syncing an integration with a guild.
-<a href=#4308 id=4308 data-nosnippet>4308</a>    </span><span class="kw">pub async fn </span>start_integration_sync(
-<a href=#4309 id=4309 data-nosnippet>4309</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4310 id=4310 data-nosnippet>4310</a>        guild_id: GuildId,
-<a href=#4311 id=4311 data-nosnippet>4311</a>        integration_id: IntegrationId,
-<a href=#4312 id=4312 data-nosnippet>4312</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4313 id=4313 data-nosnippet>4313</a>        <span class="self">self</span>.wind(Request {
-<a href=#4314 id=4314 data-nosnippet>4314</a>            body: <span class="prelude-val">None</span>,
-<a href=#4315 id=4315 data-nosnippet>4315</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4316 id=4316 data-nosnippet>4316</a>            headers: <span class="prelude-val">None</span>,
-<a href=#4317 id=4317 data-nosnippet>4317</a>            method: LightMethod::Post,
-<a href=#4318 id=4318 data-nosnippet>4318</a>            route: Route::GuildIntegrationSync {
-<a href=#4319 id=4319 data-nosnippet>4319</a>                guild_id,
-<a href=#4320 id=4320 data-nosnippet>4320</a>                integration_id,
-<a href=#4321 id=4321 data-nosnippet>4321</a>            },
-<a href=#4322 id=4322 data-nosnippet>4322</a>            params: <span class="prelude-val">None</span>,
-<a href=#4323 id=4323 data-nosnippet>4323</a>        })
-<a href=#4324 id=4324 data-nosnippet>4324</a>        .<span class="kw">await
-<a href=#4325 id=4325 data-nosnippet>4325</a>    </span>}
-<a href=#4326 id=4326 data-nosnippet>4326</a>
-<a href=#4327 id=4327 data-nosnippet>4327</a>    <span class="doccomment">/// Unpins a message from a channel.
-<a href=#4328 id=4328 data-nosnippet>4328</a>    </span><span class="kw">pub async fn </span>unpin_message(
-<a href=#4329 id=4329 data-nosnippet>4329</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#4330 id=4330 data-nosnippet>4330</a>        channel_id: ChannelId,
-<a href=#4331 id=4331 data-nosnippet>4331</a>        message_id: MessageId,
-<a href=#4332 id=4332 data-nosnippet>4332</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-<a href=#4333 id=4333 data-nosnippet>4333</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4334 id=4334 data-nosnippet>4334</a>        <span class="self">self</span>.wind(Request {
-<a href=#4335 id=4335 data-nosnippet>4335</a>            body: <span class="prelude-val">None</span>,
-<a href=#4336 id=4336 data-nosnippet>4336</a>            multipart: <span class="prelude-val">None</span>,
-<a href=#4337 id=4337 data-nosnippet>4337</a>            headers: audit_log_reason.map(reason_into_header),
-<a href=#4338 id=4338 data-nosnippet>4338</a>            method: LightMethod::Delete,
-<a href=#4339 id=4339 data-nosnippet>4339</a>            route: Route::ChannelPin {
-<a href=#4340 id=4340 data-nosnippet>4340</a>                channel_id,
-<a href=#4341 id=4341 data-nosnippet>4341</a>                message_id,
-<a href=#4342 id=4342 data-nosnippet>4342</a>            },
-<a href=#4343 id=4343 data-nosnippet>4343</a>            params: <span class="prelude-val">None</span>,
-<a href=#4344 id=4344 data-nosnippet>4344</a>        })
-<a href=#4345 id=4345 data-nosnippet>4345</a>        .<span class="kw">await
-<a href=#4346 id=4346 data-nosnippet>4346</a>    </span>}
-<a href=#4347 id=4347 data-nosnippet>4347</a>
-<a href=#4348 id=4348 data-nosnippet>4348</a>    <span class="doccomment">/// Fires off a request, deserializing the response reader via the given type bound.
+<a href=#4283 id=4283 data-nosnippet>4283</a>    <span class="doccomment">/// Starts removing some members from a guild based on the last time they've been online.
+<a href=#4284 id=4284 data-nosnippet>4284</a>    </span><span class="kw">pub async fn </span>start_guild_prune(
+<a href=#4285 id=4285 data-nosnippet>4285</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4286 id=4286 data-nosnippet>4286</a>        guild_id: GuildId,
+<a href=#4287 id=4287 data-nosnippet>4287</a>        days: u8,
+<a href=#4288 id=4288 data-nosnippet>4288</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+<a href=#4289 id=4289 data-nosnippet>4289</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;GuildPrune&gt; {
+<a href=#4290 id=4290 data-nosnippet>4290</a>        <span class="kw">let </span>days_str = days.to_arraystring();
+<a href=#4291 id=4291 data-nosnippet>4291</a>        <span class="self">self</span>.fire(Request {
+<a href=#4292 id=4292 data-nosnippet>4292</a>            body: <span class="prelude-val">None</span>,
+<a href=#4293 id=4293 data-nosnippet>4293</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4294 id=4294 data-nosnippet>4294</a>            headers: audit_log_reason.map(reason_into_header),
+<a href=#4295 id=4295 data-nosnippet>4295</a>            method: LightMethod::Post,
+<a href=#4296 id=4296 data-nosnippet>4296</a>            route: Route::GuildPrune {
+<a href=#4297 id=4297 data-nosnippet>4297</a>                guild_id,
+<a href=#4298 id=4298 data-nosnippet>4298</a>            },
+<a href=#4299 id=4299 data-nosnippet>4299</a>            params: <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>[(<span class="string">"days"</span>, <span class="kw-2">&amp;</span>days_str)]),
+<a href=#4300 id=4300 data-nosnippet>4300</a>        })
+<a href=#4301 id=4301 data-nosnippet>4301</a>        .<span class="kw">await
+<a href=#4302 id=4302 data-nosnippet>4302</a>    </span>}
+<a href=#4303 id=4303 data-nosnippet>4303</a>
+<a href=#4304 id=4304 data-nosnippet>4304</a>    <span class="doccomment">/// Starts syncing an integration with a guild.
+<a href=#4305 id=4305 data-nosnippet>4305</a>    </span><span class="kw">pub async fn </span>start_integration_sync(
+<a href=#4306 id=4306 data-nosnippet>4306</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4307 id=4307 data-nosnippet>4307</a>        guild_id: GuildId,
+<a href=#4308 id=4308 data-nosnippet>4308</a>        integration_id: IntegrationId,
+<a href=#4309 id=4309 data-nosnippet>4309</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4310 id=4310 data-nosnippet>4310</a>        <span class="self">self</span>.wind(Request {
+<a href=#4311 id=4311 data-nosnippet>4311</a>            body: <span class="prelude-val">None</span>,
+<a href=#4312 id=4312 data-nosnippet>4312</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4313 id=4313 data-nosnippet>4313</a>            headers: <span class="prelude-val">None</span>,
+<a href=#4314 id=4314 data-nosnippet>4314</a>            method: LightMethod::Post,
+<a href=#4315 id=4315 data-nosnippet>4315</a>            route: Route::GuildIntegrationSync {
+<a href=#4316 id=4316 data-nosnippet>4316</a>                guild_id,
+<a href=#4317 id=4317 data-nosnippet>4317</a>                integration_id,
+<a href=#4318 id=4318 data-nosnippet>4318</a>            },
+<a href=#4319 id=4319 data-nosnippet>4319</a>            params: <span class="prelude-val">None</span>,
+<a href=#4320 id=4320 data-nosnippet>4320</a>        })
+<a href=#4321 id=4321 data-nosnippet>4321</a>        .<span class="kw">await
+<a href=#4322 id=4322 data-nosnippet>4322</a>    </span>}
+<a href=#4323 id=4323 data-nosnippet>4323</a>
+<a href=#4324 id=4324 data-nosnippet>4324</a>    <span class="doccomment">/// Unpins a message from a channel.
+<a href=#4325 id=4325 data-nosnippet>4325</a>    </span><span class="kw">pub async fn </span>unpin_message(
+<a href=#4326 id=4326 data-nosnippet>4326</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#4327 id=4327 data-nosnippet>4327</a>        channel_id: ChannelId,
+<a href=#4328 id=4328 data-nosnippet>4328</a>        message_id: MessageId,
+<a href=#4329 id=4329 data-nosnippet>4329</a>        audit_log_reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+<a href=#4330 id=4330 data-nosnippet>4330</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4331 id=4331 data-nosnippet>4331</a>        <span class="self">self</span>.wind(Request {
+<a href=#4332 id=4332 data-nosnippet>4332</a>            body: <span class="prelude-val">None</span>,
+<a href=#4333 id=4333 data-nosnippet>4333</a>            multipart: <span class="prelude-val">None</span>,
+<a href=#4334 id=4334 data-nosnippet>4334</a>            headers: audit_log_reason.map(reason_into_header),
+<a href=#4335 id=4335 data-nosnippet>4335</a>            method: LightMethod::Delete,
+<a href=#4336 id=4336 data-nosnippet>4336</a>            route: Route::ChannelPin {
+<a href=#4337 id=4337 data-nosnippet>4337</a>                channel_id,
+<a href=#4338 id=4338 data-nosnippet>4338</a>                message_id,
+<a href=#4339 id=4339 data-nosnippet>4339</a>            },
+<a href=#4340 id=4340 data-nosnippet>4340</a>            params: <span class="prelude-val">None</span>,
+<a href=#4341 id=4341 data-nosnippet>4341</a>        })
+<a href=#4342 id=4342 data-nosnippet>4342</a>        .<span class="kw">await
+<a href=#4343 id=4343 data-nosnippet>4343</a>    </span>}
+<a href=#4344 id=4344 data-nosnippet>4344</a>
+<a href=#4345 id=4345 data-nosnippet>4345</a>    <span class="doccomment">/// Fires off a request, deserializing the response reader via the given type bound.
+<a href=#4346 id=4346 data-nosnippet>4346</a>    ///
+<a href=#4347 id=4347 data-nosnippet>4347</a>    /// If you don't need to deserialize the response and want the response instance itself, use
+<a href=#4348 id=4348 data-nosnippet>4348</a>    /// [`Self::request`].
 <a href=#4349 id=4349 data-nosnippet>4349</a>    ///
-<a href=#4350 id=4350 data-nosnippet>4350</a>    /// If you don't need to deserialize the response and want the response instance itself, use
-<a href=#4351 id=4351 data-nosnippet>4351</a>    /// [`Self::request`].
-<a href=#4352 id=4352 data-nosnippet>4352</a>    ///
-<a href=#4353 id=4353 data-nosnippet>4353</a>    /// # Errors
-<a href=#4354 id=4354 data-nosnippet>4354</a>    ///
-<a href=#4355 id=4355 data-nosnippet>4355</a>    /// If there is an error, it will be either [`Error::Http`] or [`Error::Json`].
-<a href=#4356 id=4356 data-nosnippet>4356</a>    </span><span class="kw">pub async fn </span>fire&lt;T: DeserializeOwned&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt; {
-<a href=#4357 id=4357 data-nosnippet>4357</a>        <span class="kw">let </span>response = <span class="self">self</span>.request(req).<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#4358 id=4358 data-nosnippet>4358</a>        <span class="kw">let </span>response_de = response.json().<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#4359 id=4359 data-nosnippet>4359</a>        <span class="prelude-val">Ok</span>(response_de)
-<a href=#4360 id=4360 data-nosnippet>4360</a>    }
-<a href=#4361 id=4361 data-nosnippet>4361</a>
-<a href=#4362 id=4362 data-nosnippet>4362</a>    <span class="doccomment">/// Performs a request, ratelimiting it if necessary.
-<a href=#4363 id=4363 data-nosnippet>4363</a>    ///
-<a href=#4364 id=4364 data-nosnippet>4364</a>    /// Returns the raw reqwest Response. Use [`Self::fire`] to deserialize the response into some
-<a href=#4365 id=4365 data-nosnippet>4365</a>    /// type.
-<a href=#4366 id=4366 data-nosnippet>4366</a>    </span><span class="attr">#[cfg_attr(feature = <span class="string">"tracing_instrument"</span>, instrument)]
-<a href=#4367 id=4367 data-nosnippet>4367</a>    </span><span class="kw">pub async fn </span>request(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;ReqwestResponse&gt; {
-<a href=#4368 id=4368 data-nosnippet>4368</a>        <span class="kw">let </span>method = req.method.reqwest_method();
-<a href=#4369 id=4369 data-nosnippet>4369</a>        <span class="kw">let </span>response = <span class="kw">if let </span><span class="prelude-val">Some</span>(ratelimiter) = <span class="kw-2">&amp;</span><span class="self">self</span>.ratelimiter {
-<a href=#4370 id=4370 data-nosnippet>4370</a>            ratelimiter.perform(req).<span class="kw">await</span><span class="question-mark">?
-<a href=#4371 id=4371 data-nosnippet>4371</a>        </span>} <span class="kw">else </span>{
-<a href=#4372 id=4372 data-nosnippet>4372</a>            <span class="kw">let </span>request = req
-<a href=#4373 id=4373 data-nosnippet>4373</a>                .build(
-<a href=#4374 id=4374 data-nosnippet>4374</a>                    <span class="kw-2">&amp;</span><span class="self">self</span>.client,
-<a href=#4375 id=4375 data-nosnippet>4375</a>                    <span class="self">self</span>.token.as_ref().map(Token::expose_secret),
-<a href=#4376 id=4376 data-nosnippet>4376</a>                    <span class="self">self</span>.proxy.as_deref(),
-<a href=#4377 id=4377 data-nosnippet>4377</a>                )<span class="question-mark">?
-<a href=#4378 id=4378 data-nosnippet>4378</a>                </span>.build()<span class="question-mark">?</span>;
-<a href=#4379 id=4379 data-nosnippet>4379</a>            <span class="self">self</span>.client.execute(request).<span class="kw">await</span><span class="question-mark">?
-<a href=#4380 id=4380 data-nosnippet>4380</a>        </span>};
-<a href=#4381 id=4381 data-nosnippet>4381</a>
-<a href=#4382 id=4382 data-nosnippet>4382</a>        <span class="kw">if </span>response.status().is_success() {
-<a href=#4383 id=4383 data-nosnippet>4383</a>            <span class="prelude-val">Ok</span>(response)
-<a href=#4384 id=4384 data-nosnippet>4384</a>        } <span class="kw">else </span>{
-<a href=#4385 id=4385 data-nosnippet>4385</a>            <span class="prelude-val">Err</span>(Error::Http(HttpError::UnsuccessfulRequest(
-<a href=#4386 id=4386 data-nosnippet>4386</a>                ErrorResponse::from_response(response, method).<span class="kw">await</span>,
-<a href=#4387 id=4387 data-nosnippet>4387</a>            )))
-<a href=#4388 id=4388 data-nosnippet>4388</a>        }
-<a href=#4389 id=4389 data-nosnippet>4389</a>    }
-<a href=#4390 id=4390 data-nosnippet>4390</a>
-<a href=#4391 id=4391 data-nosnippet>4391</a>    <span class="doccomment">/// Performs a request and verifies that Discord responds with [`StatusCode::NO_CONTENT`].
-<a href=#4392 id=4392 data-nosnippet>4392</a>    ///
-<a href=#4393 id=4393 data-nosnippet>4393</a>    /// This is a function that performs a light amount of work and returns the unit type, so it's
-<a href=#4394 id=4394 data-nosnippet>4394</a>    /// called "self.wind" to denote that it's lightweight.
-<a href=#4395 id=4395 data-nosnippet>4395</a>    </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">async fn </span>wind(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-<a href=#4396 id=4396 data-nosnippet>4396</a>        <span class="kw">let </span>route = req.route;
-<a href=#4397 id=4397 data-nosnippet>4397</a>        <span class="kw">let </span>method = req.method.reqwest_method();
-<a href=#4398 id=4398 data-nosnippet>4398</a>        <span class="kw">let </span>response = <span class="self">self</span>.request(req).<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#4399 id=4399 data-nosnippet>4399</a>
-<a href=#4400 id=4400 data-nosnippet>4400</a>        <span class="kw">let </span>status = response.status();
-<a href=#4401 id=4401 data-nosnippet>4401</a>        <span class="kw">if </span>status.is_success() {
-<a href=#4402 id=4402 data-nosnippet>4402</a>            <span class="kw">if </span>status != StatusCode::NO_CONTENT {
-<a href=#4403 id=4403 data-nosnippet>4403</a>                <span class="kw">let </span>route = route.path();
-<a href=#4404 id=4404 data-nosnippet>4404</a>                <span class="macro">warn!</span>(
-<a href=#4405 id=4405 data-nosnippet>4405</a>                    <span class="string">"Mismatched successful response status from {route}! Expected 'No Content' but got {status}"
-<a href=#4406 id=4406 data-nosnippet>4406</a>                </span>);
-<a href=#4407 id=4407 data-nosnippet>4407</a>            }
+<a href=#4350 id=4350 data-nosnippet>4350</a>    /// # Errors
+<a href=#4351 id=4351 data-nosnippet>4351</a>    ///
+<a href=#4352 id=4352 data-nosnippet>4352</a>    /// If there is an error, it will be either [`Error::Http`] or [`Error::Json`].
+<a href=#4353 id=4353 data-nosnippet>4353</a>    </span><span class="kw">pub async fn </span>fire&lt;T: DeserializeOwned&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt; {
+<a href=#4354 id=4354 data-nosnippet>4354</a>        <span class="kw">let </span>response = <span class="self">self</span>.request(req).<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#4355 id=4355 data-nosnippet>4355</a>        <span class="kw">let </span>response_de = response.json().<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#4356 id=4356 data-nosnippet>4356</a>        <span class="prelude-val">Ok</span>(response_de)
+<a href=#4357 id=4357 data-nosnippet>4357</a>    }
+<a href=#4358 id=4358 data-nosnippet>4358</a>
+<a href=#4359 id=4359 data-nosnippet>4359</a>    <span class="doccomment">/// Performs a request, ratelimiting it if necessary.
+<a href=#4360 id=4360 data-nosnippet>4360</a>    ///
+<a href=#4361 id=4361 data-nosnippet>4361</a>    /// Returns the raw reqwest Response. Use [`Self::fire`] to deserialize the response into some
+<a href=#4362 id=4362 data-nosnippet>4362</a>    /// type.
+<a href=#4363 id=4363 data-nosnippet>4363</a>    </span><span class="attr">#[cfg_attr(feature = <span class="string">"tracing_instrument"</span>, instrument)]
+<a href=#4364 id=4364 data-nosnippet>4364</a>    </span><span class="kw">pub async fn </span>request(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;ReqwestResponse&gt; {
+<a href=#4365 id=4365 data-nosnippet>4365</a>        <span class="kw">let </span>method = req.method.reqwest_method();
+<a href=#4366 id=4366 data-nosnippet>4366</a>        <span class="kw">let </span>response = <span class="kw">if let </span><span class="prelude-val">Some</span>(ratelimiter) = <span class="kw-2">&amp;</span><span class="self">self</span>.ratelimiter {
+<a href=#4367 id=4367 data-nosnippet>4367</a>            ratelimiter.perform(req).<span class="kw">await</span><span class="question-mark">?
+<a href=#4368 id=4368 data-nosnippet>4368</a>        </span>} <span class="kw">else </span>{
+<a href=#4369 id=4369 data-nosnippet>4369</a>            <span class="kw">let </span>request = req
+<a href=#4370 id=4370 data-nosnippet>4370</a>                .build(
+<a href=#4371 id=4371 data-nosnippet>4371</a>                    <span class="kw-2">&amp;</span><span class="self">self</span>.client,
+<a href=#4372 id=4372 data-nosnippet>4372</a>                    <span class="self">self</span>.token.as_ref().map(Token::expose_secret),
+<a href=#4373 id=4373 data-nosnippet>4373</a>                    <span class="self">self</span>.proxy.as_deref(),
+<a href=#4374 id=4374 data-nosnippet>4374</a>                )<span class="question-mark">?
+<a href=#4375 id=4375 data-nosnippet>4375</a>                </span>.build()<span class="question-mark">?</span>;
+<a href=#4376 id=4376 data-nosnippet>4376</a>            <span class="self">self</span>.client.execute(request).<span class="kw">await</span><span class="question-mark">?
+<a href=#4377 id=4377 data-nosnippet>4377</a>        </span>};
+<a href=#4378 id=4378 data-nosnippet>4378</a>
+<a href=#4379 id=4379 data-nosnippet>4379</a>        <span class="kw">if </span>response.status().is_success() {
+<a href=#4380 id=4380 data-nosnippet>4380</a>            <span class="prelude-val">Ok</span>(response)
+<a href=#4381 id=4381 data-nosnippet>4381</a>        } <span class="kw">else </span>{
+<a href=#4382 id=4382 data-nosnippet>4382</a>            <span class="prelude-val">Err</span>(Error::Http(HttpError::UnsuccessfulRequest(
+<a href=#4383 id=4383 data-nosnippet>4383</a>                ErrorResponse::from_response(response, method).<span class="kw">await</span>,
+<a href=#4384 id=4384 data-nosnippet>4384</a>            )))
+<a href=#4385 id=4385 data-nosnippet>4385</a>        }
+<a href=#4386 id=4386 data-nosnippet>4386</a>    }
+<a href=#4387 id=4387 data-nosnippet>4387</a>
+<a href=#4388 id=4388 data-nosnippet>4388</a>    <span class="doccomment">/// Performs a request and verifies that Discord responds with [`StatusCode::NO_CONTENT`].
+<a href=#4389 id=4389 data-nosnippet>4389</a>    ///
+<a href=#4390 id=4390 data-nosnippet>4390</a>    /// This is a function that performs a light amount of work and returns the unit type, so it's
+<a href=#4391 id=4391 data-nosnippet>4391</a>    /// called "self.wind" to denote that it's lightweight.
+<a href=#4392 id=4392 data-nosnippet>4392</a>    </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">async fn </span>wind(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<a href=#4393 id=4393 data-nosnippet>4393</a>        <span class="kw">let </span>route = req.route;
+<a href=#4394 id=4394 data-nosnippet>4394</a>        <span class="kw">let </span>method = req.method.reqwest_method();
+<a href=#4395 id=4395 data-nosnippet>4395</a>        <span class="kw">let </span>response = <span class="self">self</span>.request(req).<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#4396 id=4396 data-nosnippet>4396</a>
+<a href=#4397 id=4397 data-nosnippet>4397</a>        <span class="kw">let </span>status = response.status();
+<a href=#4398 id=4398 data-nosnippet>4398</a>        <span class="kw">if </span>status.is_success() {
+<a href=#4399 id=4399 data-nosnippet>4399</a>            <span class="kw">if </span>status != StatusCode::NO_CONTENT {
+<a href=#4400 id=4400 data-nosnippet>4400</a>                <span class="kw">let </span>route = route.path();
+<a href=#4401 id=4401 data-nosnippet>4401</a>                <span class="macro">warn!</span>(
+<a href=#4402 id=4402 data-nosnippet>4402</a>                    <span class="string">"Mismatched successful response status from {route}! Expected 'No Content' but got {status}"
+<a href=#4403 id=4403 data-nosnippet>4403</a>                </span>);
+<a href=#4404 id=4404 data-nosnippet>4404</a>            }
+<a href=#4405 id=4405 data-nosnippet>4405</a>
+<a href=#4406 id=4406 data-nosnippet>4406</a>            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
+<a href=#4407 id=4407 data-nosnippet>4407</a>        }
 <a href=#4408 id=4408 data-nosnippet>4408</a>
-<a href=#4409 id=4409 data-nosnippet>4409</a>            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-<a href=#4410 id=4410 data-nosnippet>4410</a>        }
-<a href=#4411 id=4411 data-nosnippet>4411</a>
-<a href=#4412 id=4412 data-nosnippet>4412</a>        <span class="macro">debug!</span>(<span class="string">"Unsuccessful response: {response:?}"</span>);
-<a href=#4413 id=4413 data-nosnippet>4413</a>        <span class="prelude-val">Err</span>(Error::Http(HttpError::UnsuccessfulRequest(
-<a href=#4414 id=4414 data-nosnippet>4414</a>            ErrorResponse::from_response(response, method).<span class="kw">await</span>,
-<a href=#4415 id=4415 data-nosnippet>4415</a>        )))
-<a href=#4416 id=4416 data-nosnippet>4416</a>    }
-<a href=#4417 id=4417 data-nosnippet>4417</a>}
-<a href=#4418 id=4418 data-nosnippet>4418</a>
-<a href=#4419 id=4419 data-nosnippet>4419</a><span class="attr">#[cfg(not(feature = <span class="string">"native_tls_backend"</span>))]
-<a href=#4420 id=4420 data-nosnippet>4420</a></span><span class="kw">fn </span>configure_client_backend(builder: ClientBuilder) -&gt; ClientBuilder {
-<a href=#4421 id=4421 data-nosnippet>4421</a>    builder.use_rustls_tls()
-<a href=#4422 id=4422 data-nosnippet>4422</a>}
-<a href=#4423 id=4423 data-nosnippet>4423</a>
-<a href=#4424 id=4424 data-nosnippet>4424</a><span class="attr">#[cfg(feature = <span class="string">"native_tls_backend"</span>)]
-<a href=#4425 id=4425 data-nosnippet>4425</a></span><span class="kw">fn </span>configure_client_backend(builder: ClientBuilder) -&gt; ClientBuilder {
-<a href=#4426 id=4426 data-nosnippet>4426</a>    builder.use_native_tls()
-<a href=#4427 id=4427 data-nosnippet>4427</a>}</code></pre></div></section></main></body></html>
+<a href=#4409 id=4409 data-nosnippet>4409</a>        <span class="macro">debug!</span>(<span class="string">"Unsuccessful response: {response:?}"</span>);
+<a href=#4410 id=4410 data-nosnippet>4410</a>        <span class="prelude-val">Err</span>(Error::Http(HttpError::UnsuccessfulRequest(
+<a href=#4411 id=4411 data-nosnippet>4411</a>            ErrorResponse::from_response(response, method).<span class="kw">await</span>,
+<a href=#4412 id=4412 data-nosnippet>4412</a>        )))
+<a href=#4413 id=4413 data-nosnippet>4413</a>    }
+<a href=#4414 id=4414 data-nosnippet>4414</a>}
+<a href=#4415 id=4415 data-nosnippet>4415</a>
+<a href=#4416 id=4416 data-nosnippet>4416</a><span class="attr">#[cfg(not(feature = <span class="string">"native_tls_backend"</span>))]
+<a href=#4417 id=4417 data-nosnippet>4417</a></span><span class="kw">fn </span>configure_client_backend(builder: ClientBuilder) -&gt; ClientBuilder {
+<a href=#4418 id=4418 data-nosnippet>4418</a>    builder.use_rustls_tls()
+<a href=#4419 id=4419 data-nosnippet>4419</a>}
+<a href=#4420 id=4420 data-nosnippet>4420</a>
+<a href=#4421 id=4421 data-nosnippet>4421</a><span class="attr">#[cfg(feature = <span class="string">"native_tls_backend"</span>)]
+<a href=#4422 id=4422 data-nosnippet>4422</a></span><span class="kw">fn </span>configure_client_backend(builder: ClientBuilder) -&gt; ClientBuilder {
+<a href=#4423 id=4423 data-nosnippet>4423</a>    builder.use_native_tls()
+<a href=#4424 id=4424 data-nosnippet>4424</a>}</code></pre></div></section></main></body></html>
