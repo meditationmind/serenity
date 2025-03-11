@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/model/utils.rs`."><title>utils.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (efea9896f 2025-03-08)" data-channel="nightly" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../static.files/storage-d8ac8691.js"></script><script defer src="../../../static.files/src-script-b8d3f215.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-a7bf3405.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/model/</div>utils.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::fmt;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/model/utils.rs`."><title>utils.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (9fb94b32d 2025-03-10)" data-channel="nightly" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../static.files/storage-d8ac8691.js"></script><script defer src="../../../static.files/src-script-b8d3f215.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-a7bf3405.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/model/</div>utils.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::fmt;
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span>arrayvec::ArrayVec;
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>serde::de::Error <span class="kw">as </span>DeError;
@@ -253,4 +253,51 @@
 <a href=#253 id=253 data-nosnippet>253</a>                .map_err(|<span class="kw">_</span>| DeError::custom(<span class="string">"Invalid colour data"</span>))
 <a href=#254 id=254 data-nosnippet>254</a>        })
 <a href=#255 id=255 data-nosnippet>255</a>        .collect()
-<a href=#256 id=256 data-nosnippet>256</a>}</code></pre></div></section></main></body></html>
+<a href=#256 id=256 data-nosnippet>256</a>}
+<a href=#257 id=257 data-nosnippet>257</a>
+<a href=#258 id=258 data-nosnippet>258</a><span class="comment">// Custom deserialize function to deserialize components safely without knocking the whole message
+<a href=#259 id=259 data-nosnippet>259</a>// out when new components are found but not supported.
+<a href=#260 id=260 data-nosnippet>260</a></span><span class="kw">pub fn </span>deserialize_components&lt;<span class="lifetime">'de</span>, D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;FixedArray&lt;ActionRow&gt;, D::Error&gt;
+<a href=#261 id=261 data-nosnippet>261</a><span class="kw">where
+<a href=#262 id=262 data-nosnippet>262</a>    </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+<a href=#263 id=263 data-nosnippet>263</a>{
+<a href=#264 id=264 data-nosnippet>264</a>    <span class="kw">struct </span>ComponentsVisitor;
+<a href=#265 id=265 data-nosnippet>265</a>
+<a href=#266 id=266 data-nosnippet>266</a>    <span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ComponentsVisitor {
+<a href=#267 id=267 data-nosnippet>267</a>        <span class="kw">type </span>Value = FixedArray&lt;ActionRow&gt;;
+<a href=#268 id=268 data-nosnippet>268</a>
+<a href=#269 id=269 data-nosnippet>269</a>        <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+<a href=#270 id=270 data-nosnippet>270</a>            formatter.write_str(<span class="string">"a sequence of ActionRow elements"</span>)
+<a href=#271 id=271 data-nosnippet>271</a>        }
+<a href=#272 id=272 data-nosnippet>272</a>
+<a href=#273 id=273 data-nosnippet>273</a>        <span class="kw">fn </span>visit_seq&lt;A&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt;
+<a href=#274 id=274 data-nosnippet>274</a>        <span class="kw">where
+<a href=#275 id=275 data-nosnippet>275</a>            </span>A: serde::de::SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
+<a href=#276 id=276 data-nosnippet>276</a>        {
+<a href=#277 id=277 data-nosnippet>277</a>            <span class="kw">let </span><span class="kw-2">mut </span>components = Vec::with_capacity(seq.size_hint().unwrap_or_default());
+<a href=#278 id=278 data-nosnippet>278</a>
+<a href=#279 id=279 data-nosnippet>279</a>            <span class="kw">while let </span><span class="prelude-val">Some</span>(map) = seq.next_element::&lt;JsonMap&gt;()<span class="question-mark">? </span>{
+<a href=#280 id=280 data-nosnippet>280</a>                <span class="comment">// We deserialize only the `kind` field to determine the component type.
+<a href=#281 id=281 data-nosnippet>281</a>                // We later use this to check if its a supported component before deserializing the
+<a href=#282 id=282 data-nosnippet>282</a>                // entire payload.
+<a href=#283 id=283 data-nosnippet>283</a>                </span><span class="kw">let </span>raw_kind =
+<a href=#284 id=284 data-nosnippet>284</a>                    map.get(<span class="string">"type"</span>).ok_or_else(|| DeError::missing_field(<span class="string">"type"</span>))<span class="question-mark">?</span>.clone();
+<a href=#285 id=285 data-nosnippet>285</a>                <span class="kw">let </span>kind: i64 = deserialize_val(raw_kind)<span class="question-mark">?</span>;
+<a href=#286 id=286 data-nosnippet>286</a>
+<a href=#287 id=287 data-nosnippet>287</a>                <span class="comment">// Action rows are the only top level component supported in serenity at this time.
+<a href=#288 id=288 data-nosnippet>288</a>                </span><span class="kw">if </span>kind == <span class="number">1 </span>{
+<a href=#289 id=289 data-nosnippet>289</a>                    <span class="kw">let </span>value = Value::from(map);
+<a href=#290 id=290 data-nosnippet>290</a>                    components.push(ActionRow::deserialize(value).map_err(DeError::custom)<span class="question-mark">?</span>);
+<a href=#291 id=291 data-nosnippet>291</a>                } <span class="kw">else </span>{
+<a href=#292 id=292 data-nosnippet>292</a>                    <span class="comment">// Top level component is not an action row and cannot be supported on
+<a href=#293 id=293 data-nosnippet>293</a>                    // serenity@current without breaking changes, so we skip them.
+<a href=#294 id=294 data-nosnippet>294</a>                    </span><span class="macro">tracing::debug!</span>(<span class="string">"Skipping component with unsupported kind: {kind}"</span>);
+<a href=#295 id=295 data-nosnippet>295</a>                }
+<a href=#296 id=296 data-nosnippet>296</a>            }
+<a href=#297 id=297 data-nosnippet>297</a>
+<a href=#298 id=298 data-nosnippet>298</a>            <span class="prelude-val">Ok</span>(FixedArray::from_vec_trunc(components))
+<a href=#299 id=299 data-nosnippet>299</a>        }
+<a href=#300 id=300 data-nosnippet>300</a>    }
+<a href=#301 id=301 data-nosnippet>301</a>
+<a href=#302 id=302 data-nosnippet>302</a>    deserializer.deserialize_seq(ComponentsVisitor)
+<a href=#303 id=303 data-nosnippet>303</a>}</code></pre></div></section></main></body></html>
