@@ -14,7 +14,7 @@ work.</p>
 <p>A context will only live for the event it was dispatched for. After the event handler finished,
 it is destroyed and will not be re-used.</p>
 </div></details><h2 id="fields" class="fields section-header">Fields<a href="#fields" class="anchor">§</a></h2><span id="structfield.shard_id" class="structfield section-header"><a href="#structfield.shard_id" class="anchor field">§</a><code>shard_id: <a class="struct" href="../../model/id/struct.ShardId.html" title="struct serenity::model::id::ShardId">ShardId</a></code></span><div class="docblock"><p>The ID of the shard this context is related to.</p>
-</div><span id="structfield.http" class="structfield section-header"><a href="#structfield.http" class="anchor field">§</a><code>http: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="../../http/struct.Http.html" title="struct serenity::http::Http">Http</a>&gt;</code></span><span id="structfield.cache" class="structfield section-header"><a href="#structfield.cache" class="anchor field">§</a><code>cache: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="../../cache/struct.Cache.html" title="struct serenity::cache::Cache">Cache</a>&gt;</code></span><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>cache</code></strong> only.</div></span><span id="structfield.runner_info" class="structfield section-header"><a href="#structfield.runner_info" class="anchor field">§</a><code>runner_info: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/sync/poison/mutex/struct.Mutex.html" title="struct std::sync::poison::mutex::Mutex">Mutex</a>&lt;<a class="struct" href="../sharding/struct.ShardRunnerInfo.html" title="struct serenity::gateway::sharding::ShardRunnerInfo">ShardRunnerInfo</a>&gt;&gt;</code></span><h2 id="implementations" class="section-header">Implementations<a href="#implementations" class="anchor">§</a></h2><div id="implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Context" class="impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#64-560">Source</a><a href="#impl-Context" class="anchor">§</a><h3 class="code-header">impl <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.data" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#77-81">Source</a><h4 class="code-header">pub fn <a href="#method.data" class="fn">data</a>&lt;Data: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static&gt;(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;Data&gt;</h4></section></summary><div class="docblock"><p>A container for a data type that can be used across contexts.</p>
+</div><span id="structfield.http" class="structfield section-header"><a href="#structfield.http" class="anchor field">§</a><code>http: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="../../http/struct.Http.html" title="struct serenity::http::Http">Http</a>&gt;</code></span><span id="structfield.cache" class="structfield section-header"><a href="#structfield.cache" class="anchor field">§</a><code>cache: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="../../cache/struct.Cache.html" title="struct serenity::cache::Cache">Cache</a>&gt;</code></span><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>cache</code></strong> only.</div></span><span id="structfield.runner_info" class="structfield section-header"><a href="#structfield.runner_info" class="anchor field">§</a><code>runner_info: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/sync/poison/mutex/struct.Mutex.html" title="struct std::sync::poison::mutex::Mutex">Mutex</a>&lt;<a class="struct" href="../sharding/struct.ShardRunnerInfo.html" title="struct serenity::gateway::sharding::ShardRunnerInfo">ShardRunnerInfo</a>&gt;&gt;</code></span><h2 id="implementations" class="section-header">Implementations<a href="#implementations" class="anchor">§</a></h2><div id="implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-Context" class="impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#64-366">Source</a><a href="#impl-Context" class="anchor">§</a><h3 class="code-header">impl <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.data" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#77-81">Source</a><h4 class="code-header">pub fn <a href="#method.data" class="fn">data</a>&lt;Data: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static&gt;(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;Data&gt;</h4></section></summary><div class="docblock"><p>A container for a data type that can be used across contexts.</p>
 <p>The purpose of the data field is to be accessible and persistent across contexts; that is,
 data can be modified by one context, and will persist through the future and be accessible
 through other contexts. This is useful for anything that should “live” through the program:
@@ -24,126 +24,19 @@ counters, database connections, custom user caches, etc.</p>
 </div></details><details class="toggle method-toggle" open><summary><section id="method.data_ref" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#89-93">Source</a><h4 class="code-header">pub fn <a href="#method.data_ref" class="fn">data_ref</a>&lt;'a, Data: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static&gt;(&amp;'a self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a Data</a></h4></section></summary><div class="docblock"><p>A version of <a href="struct.Context.html#method.data" title="method serenity::gateway::client::Context::data"><code>Self::data</code></a> which returns a reference to the Data.</p>
 <p>This is useful if you need to borrow <code>Data</code> with the lifetime of <code>Context</code>, but otherwise
 <a href="struct.Context.html#method.data" title="method serenity::gateway::client::Context::data"><code>Self::data</code></a> should be used.</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.online" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#118-120">Source</a><h4 class="code-header">pub fn <a href="#method.online" class="fn">online</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.Online" title="variant serenity::model::user::OnlineStatus::Online"><code>Online</code></a>. This maintains the current activity.</p>
-<h5 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h5>
-<p>Set the current user to being online on the shard:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, msg: Message) {
-        <span class="kw">if </span>msg.content == <span class="string">"!online" </span>{
-            ctx.online();
-        }
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.idle" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#145-147">Source</a><h4 class="code-header">pub fn <a href="#method.idle" class="fn">idle</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.Idle" title="variant serenity::model::user::OnlineStatus::Idle"><code>Idle</code></a>. This maintains the current activity.</p>
-<h5 id="examples-1"><a class="doc-anchor" href="#examples-1">§</a>Examples</h5>
-<p>Set the current user to being idle on the shard:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, msg: Message) {
-        <span class="kw">if </span>msg.content == <span class="string">"!idle" </span>{
-            ctx.idle();
-        }
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.dnd" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#172-174">Source</a><h4 class="code-header">pub fn <a href="#method.dnd" class="fn">dnd</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.DoNotDisturb" title="variant serenity::model::user::OnlineStatus::DoNotDisturb"><code>DoNotDisturb</code></a>. This maintains the current activity.</p>
-<h5 id="examples-2"><a class="doc-anchor" href="#examples-2">§</a>Examples</h5>
-<p>Set the current user to being Do Not Disturb on the shard:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, msg: Message) {
-        <span class="kw">if </span>msg.content == <span class="string">"!dnd" </span>{
-            ctx.dnd();
-        }
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.invisible" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#199-201">Source</a><h4 class="code-header">pub fn <a href="#method.invisible" class="fn">invisible</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.Invisible" title="variant serenity::model::user::OnlineStatus::Invisible"><code>Invisible</code></a>. This maintains the current activity.</p>
-<h5 id="examples-3"><a class="doc-anchor" href="#examples-3">§</a>Examples</h5>
-<p>Set the current user to being invisible on the shard:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, msg: Message) {
-        <span class="kw">if </span>msg.content == <span class="string">"!invisible" </span>{
-            ctx.invisible();
-        }
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.set_status" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#232-241">Source</a><h4 class="code-header">pub fn <a href="#method.set_status" class="fn">set_status</a>(&amp;self, online_status: <a class="enum" href="../../model/user/enum.OnlineStatus.html" title="enum serenity::model::user::OnlineStatus">OnlineStatus</a>)</h4></section></summary><div class="docblock"><p>Sets the user’s current online status.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.online" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#98-100">Source</a><h4 class="code-header">pub fn <a href="#method.online" class="fn">online</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.Online" title="variant serenity::model::user::OnlineStatus::Online"><code>Online</code></a>. This maintains the current activity.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.idle" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#105-107">Source</a><h4 class="code-header">pub fn <a href="#method.idle" class="fn">idle</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.Idle" title="variant serenity::model::user::OnlineStatus::Idle"><code>Idle</code></a>. This maintains the current activity.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.dnd" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#113-115">Source</a><h4 class="code-header">pub fn <a href="#method.dnd" class="fn">dnd</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.DoNotDisturb" title="variant serenity::model::user::OnlineStatus::DoNotDisturb"><code>DoNotDisturb</code></a>. This maintains the current activity.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.invisible" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#120-122">Source</a><h4 class="code-header">pub fn <a href="#method.invisible" class="fn">invisible</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sets the current user as being <a href="../../model/user/enum.OnlineStatus.html#variant.Invisible" title="variant serenity::model::user::OnlineStatus::Invisible"><code>Invisible</code></a>. This maintains the current activity.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.set_status" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#131-140">Source</a><h4 class="code-header">pub fn <a href="#method.set_status" class="fn">set_status</a>(&amp;self, online_status: <a class="enum" href="../../model/user/enum.OnlineStatus.html" title="enum serenity::model::user::OnlineStatus">OnlineStatus</a>)</h4></section></summary><div class="docblock"><p>Sets the user’s current online status.</p>
 <p>Note that <a href="../../model/user/enum.OnlineStatus.html#variant.Offline" title="variant serenity::model::user::OnlineStatus::Offline"><code>Offline</code></a> is not a valid online status, so it is automatically converted to
 <a href="../../model/user/enum.OnlineStatus.html#variant.Invisible" title="variant serenity::model::user::OnlineStatus::Invisible"><code>Invisible</code></a>.</p>
-<p>Other presence settings are maintained.</p>
-<h5 id="examples-4"><a class="doc-anchor" href="#examples-4">§</a>Examples</h5>
-<p>Setting the current online status to <a href="../../model/user/enum.OnlineStatus.html#variant.DoNotDisturb" title="variant serenity::model::user::OnlineStatus::DoNotDisturb"><code>DoNotDisturb</code></a>:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, <span class="kw">_</span>: Ready) {
-        <span class="kw">use </span>serenity::model::user::OnlineStatus;
-
-        ctx.set_status(OnlineStatus::DoNotDisturb);
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.reset_presence" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#270-272">Source</a><h4 class="code-header">pub fn <a href="#method.reset_presence" class="fn">reset_presence</a>(&amp;self)</h4></section></summary><div class="docblock"><p>“Resets” the current user’s presence, by setting the activity to <a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None" title="variant core::option::Option::None"><code>None</code></a> and the online
+</div></details><details class="toggle method-toggle" open><summary><section id="method.reset_presence" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#148-150">Source</a><h4 class="code-header">pub fn <a href="#method.reset_presence" class="fn">reset_presence</a>(&amp;self)</h4></section></summary><div class="docblock"><p>“Resets” the current user’s presence, by setting the activity to <a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None" title="variant core::option::Option::None"><code>None</code></a> and the online
 status to <a href="../../model/user/enum.OnlineStatus.html#variant.Online" title="variant serenity::model::user::OnlineStatus::Online"><code>Online</code></a>.</p>
 <p>Use <a href="struct.Context.html#method.set_presence" title="method serenity::gateway::client::Context::set_presence"><code>Self::set_presence</code></a> for fine-grained control over individual details.</p>
-<h5 id="examples-5"><a class="doc-anchor" href="#examples-5">§</a>Examples</h5>
-<p>Reset the current user’s presence on the shard:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, msg: Message) {
-        <span class="kw">if </span>msg.content == <span class="string">"!reset_presence" </span>{
-            ctx.reset_presence();
-        }
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.set_activity" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#298-303">Source</a><h4 class="code-header">pub fn <a href="#method.set_activity" class="fn">set_activity</a>(&amp;self, activity: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../struct.ActivityData.html" title="struct serenity::gateway::ActivityData">ActivityData</a>&gt;)</h4></section></summary><div class="docblock"><p>Sets the current activity.</p>
-<h5 id="examples-6"><a class="doc-anchor" href="#examples-6">§</a>Examples</h5>
-<p>Create a command named <code>~setgame</code> that accepts a name of a game to be playing:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>serenity::gateway::ActivityData;
-
-<span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, msg: Message) {
-        <span class="kw">let </span><span class="kw-2">mut </span>args = msg.content.splitn(<span class="number">2</span>, <span class="string">' '</span>);
-
-        <span class="kw">if let </span>(<span class="prelude-val">Some</span>(<span class="string">"~setgame"</span>), <span class="prelude-val">Some</span>(game)) = (args.next(), args.next()) {
-            ctx.set_activity(<span class="prelude-val">Some</span>(ActivityData::playing(game)));
-        }
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.set_presence" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#349-358">Source</a><h4 class="code-header">pub fn <a href="#method.set_presence" class="fn">set_presence</a>(&amp;self, activity: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../struct.ActivityData.html" title="struct serenity::gateway::ActivityData">ActivityData</a>&gt;, status: <a class="enum" href="../../model/user/enum.OnlineStatus.html" title="enum serenity::model::user::OnlineStatus">OnlineStatus</a>)</h4></section></summary><div class="docblock"><p>Sets the current user’s presence, providing all fields to be passed.</p>
-<h5 id="examples-7"><a class="doc-anchor" href="#examples-7">§</a>Examples</h5>
-<p>Setting the current user as having no activity and being <a href="../../model/user/enum.OnlineStatus.html#variant.Idle" title="variant serenity::model::user::OnlineStatus::Idle"><code>Idle</code></a>:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Context, <span class="kw">_</span>: Ready) {
-        <span class="kw">use </span>serenity::model::user::OnlineStatus;
-
-        ctx.set_presence(<span class="prelude-val">None</span>, OnlineStatus::Idle);
-    }
-}</code></pre></div>
-<p>Setting the current user as playing <code>"Heroes of the Storm"</code>, while being <a href="../../model/user/enum.OnlineStatus.html#variant.DoNotDisturb" title="variant serenity::model::user::OnlineStatus::DoNotDisturb"><code>DoNotDisturb</code></a>:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, context: Context, <span class="kw">_</span>: Ready) {
-        <span class="kw">use </span>serenity::gateway::ActivityData;
-        <span class="kw">use </span>serenity::model::user::OnlineStatus;
-
-        <span class="kw">let </span>activity = ActivityData::playing(<span class="string">"Heroes of the Storm"</span>);
-        <span class="kw">let </span>status = OnlineStatus::DoNotDisturb;
-
-        context.set_presence(<span class="prelude-val">Some</span>(activity), status);
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.chunk_guild" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#421-436">Source</a><h4 class="code-header">pub fn <a href="#method.chunk_guild" class="fn">chunk_guild</a>(
+</div></details><details class="toggle method-toggle" open><summary><section id="method.set_activity" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#153-158">Source</a><h4 class="code-header">pub fn <a href="#method.set_activity" class="fn">set_activity</a>(&amp;self, activity: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../struct.ActivityData.html" title="struct serenity::gateway::ActivityData">ActivityData</a>&gt;)</h4></section></summary><div class="docblock"><p>Sets the current activity.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.set_presence" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#161-170">Source</a><h4 class="code-header">pub fn <a href="#method.set_presence" class="fn">set_presence</a>(&amp;self, activity: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../struct.ActivityData.html" title="struct serenity::gateway::ActivityData">ActivityData</a>&gt;, status: <a class="enum" href="../../model/user/enum.OnlineStatus.html" title="enum serenity::model::user::OnlineStatus">OnlineStatus</a>)</h4></section></summary><div class="docblock"><p>Sets the current user’s presence, providing all fields to be passed.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.chunk_guild" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#251-266">Source</a><h4 class="code-header">pub fn <a href="#method.chunk_guild" class="fn">chunk_guild</a>(
     &amp;self,
     guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
     limit: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;,
@@ -157,42 +50,56 @@ instead be requested directly. The full list will be sent in “chunks” until 
 matching the request have been sent.</p>
 <p>Member chunks are sent as the <a href="../../model/event/enum.Event.html#variant.GuildMembersChunk" title="variant serenity::model::event::Event::GuildMembersChunk"><code>Event::GuildMembersChunk</code></a> event. Each chunk only contains
 a partial amount of the total members.</p>
-<h5 id="examples-8"><a class="doc-anchor" href="#examples-8">§</a>Examples</h5>
+<h5 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h5>
 <p>Chunk a single guild, limiting to 2000 <a href="../../model/guild/struct.Member.html" title="struct serenity::model::guild::Member"><code>Member</code></a>s, and not specifying a query
 parameter:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, context: Context, <span class="kw">_</span>: Ready) {
-        <span class="kw">use </span>serenity::model::id::GuildId;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
 
-        context.chunk_guild(
-            GuildId::new(<span class="number">81384788765712384</span>),
-            <span class="prelude-val">Some</span>(<span class="number">2000</span>),
-            <span class="bool-val">false</span>,
-            ChunkGuildFilter::None,
-            <span class="prelude-val">None</span>,
-        );
+<span class="attr">#[serenity::async_trait]
+</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
+    <span class="kw">async fn </span>dispatch(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: <span class="kw-2">&amp;</span>Context, event: <span class="kw-2">&amp;</span>FullEvent) {
+        <span class="kw">match </span>event {
+            FullEvent::Ready {
+                ..
+            } =&gt; {
+                ctx.chunk_guild(
+                    GuildId::new(<span class="number">81384788765712384</span>),
+                    <span class="prelude-val">Some</span>(<span class="number">2000</span>),
+                    <span class="bool-val">false</span>,
+                    ChunkGuildFilter::None,
+                    <span class="prelude-val">None</span>,
+                );
+            },
+            <span class="kw">_ </span>=&gt; {},
+        }
     }
 }</code></pre></div>
 <p>Chunk a single guild by Id, limiting to 20 members, specifying a query parameter of <code>"do"</code>
 and a nonce of <code>"request"</code>:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, context: Context, <span class="kw">_</span>: Ready) {
-        <span class="kw">use </span>serenity::model::id::GuildId;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
 
-        context.chunk_guild(
-            GuildId::new(<span class="number">81384788765712384</span>),
-            <span class="prelude-val">Some</span>(<span class="number">20</span>),
-            <span class="bool-val">false</span>,
-            ChunkGuildFilter::Query(<span class="string">"do"</span>.to_owned()),
-            <span class="prelude-val">Some</span>(<span class="string">"request"</span>.to_string()),
-        );
+<span class="attr">#[serenity::async_trait]
+</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
+    <span class="kw">async fn </span>dispatch(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: <span class="kw-2">&amp;</span>Context, event: <span class="kw-2">&amp;</span>FullEvent) {
+        <span class="kw">match </span>event {
+            FullEvent::Ready {
+                ..
+            } =&gt; {
+                ctx.chunk_guild(
+                    GuildId::new(<span class="number">81384788765712384</span>),
+                    <span class="prelude-val">Some</span>(<span class="number">20</span>),
+                    <span class="bool-val">false</span>,
+                    ChunkGuildFilter::Query(<span class="string">"do"</span>.to_owned()),
+                    <span class="prelude-val">Some</span>(<span class="string">"request"</span>.to_string()),
+                );
+            },
+            <span class="kw">_ </span>=&gt; {},
+        }
     }
 }</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.update_voice_state" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#465-478">Source</a><h4 class="code-header">pub fn <a href="#method.update_voice_state" class="fn">update_voice_state</a>(
+</div></details><details class="toggle method-toggle" open><summary><section id="method.update_voice_state" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#271-284">Source</a><h4 class="code-header">pub fn <a href="#method.update_voice_state" class="fn">update_voice_state</a>(
     &amp;self,
     guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
     channel_id: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/id/struct.ChannelId.html" title="struct serenity::model::id::ChannelId">ChannelId</a>&gt;,
@@ -200,31 +107,15 @@ and a nonce of <code>"request"</code>:</p>
     self_deaf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
 )</h4></section><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>voice</code></strong> only.</div></span></summary><div class="docblock"><p>Indicates to the gateway that the client wants to join, move, or disconnect from a voice
 channel.</p>
-<h5 id="examples-9"><a class="doc-anchor" href="#examples-9">§</a>Examples</h5>
-<p>Join a voice channel, while staying muted:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[serenity::async_trait]
-</span><span class="kw">impl </span>EventHandler <span class="kw">for </span>Handler {
-    <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, context: Context, <span class="kw">_</span>: Ready) {
-        <span class="kw">use </span>serenity::model::id::{ChannelId, GuildId};
-
-        context.update_voice_state(
-            GuildId::new(<span class="number">81384788765712384</span>),
-            <span class="prelude-val">Some</span>(ChannelId::new(<span class="number">111880193700067777</span>)),
-            <span class="bool-val">true</span>,
-            <span class="bool-val">false</span>,
-        )
-    }
-}</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.shutdown_all" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#489-493">Source</a><h4 class="code-header">pub fn <a href="#method.shutdown_all" class="fn">shutdown_all</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sends a message back to the shard manager to shutdown all currently running shards,
+</div></details><details class="toggle method-toggle" open><summary><section id="method.shutdown_all" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#295-299">Source</a><h4 class="code-header">pub fn <a href="#method.shutdown_all" class="fn">shutdown_all</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Sends a message back to the shard manager to shutdown all currently running shards,
 including this one.</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.get_application_emojis" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#500-502">Source</a><h4 class="code-header">pub async fn <a href="#method.get_application_emojis" class="fn">get_application_emojis</a>(&amp;self) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../model/guild/struct.Emoji.html" title="struct serenity::model::guild::Emoji">Emoji</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Gets all emojis for the current application.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.get_application_emojis" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#306-308">Source</a><h4 class="code-header">pub async fn <a href="#method.get_application_emojis" class="fn">get_application_emojis</a>(&amp;self) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../model/guild/struct.Emoji.html" title="struct serenity::model::guild::Emoji">Emoji</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Gets all emojis for the current application.</p>
 <h5 id="errors"><a class="doc-anchor" href="#errors">§</a>Errors</h5>
 <p>Returns an error if the Application ID is not known.</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.get_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#509-511">Source</a><h4 class="code-header">pub async fn <a href="#method.get_application_emoji" class="fn">get_application_emoji</a>(&amp;self, emoji_id: <a class="struct" href="../../model/id/struct.EmojiId.html" title="struct serenity::model::id::EmojiId">EmojiId</a>) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="struct" href="../../model/guild/struct.Emoji.html" title="struct serenity::model::guild::Emoji">Emoji</a>&gt;</h4></section></summary><div class="docblock"><p>Gets information about an application emoji.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.get_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#315-317">Source</a><h4 class="code-header">pub async fn <a href="#method.get_application_emoji" class="fn">get_application_emoji</a>(&amp;self, emoji_id: <a class="struct" href="../../model/id/struct.EmojiId.html" title="struct serenity::model::id::EmojiId">EmojiId</a>) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="struct" href="../../model/guild/struct.Emoji.html" title="struct serenity::model::guild::Emoji">Emoji</a>&gt;</h4></section></summary><div class="docblock"><p>Gets information about an application emoji.</p>
 <h5 id="errors-1"><a class="doc-anchor" href="#errors-1">§</a>Errors</h5>
 <p>Returns an error if the emoji does not exist.</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.create_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#519-532">Source</a><h4 class="code-header">pub async fn <a href="#method.create_application_emoji" class="fn">create_application_emoji</a>(
+</div></details><details class="toggle method-toggle" open><summary><section id="method.create_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#325-338">Source</a><h4 class="code-header">pub async fn <a href="#method.create_application_emoji" class="fn">create_application_emoji</a>(
     &amp;self,
     name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
     image: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
@@ -232,14 +123,14 @@ including this one.</p>
 <h5 id="errors-2"><a class="doc-anchor" href="#errors-2">§</a>Errors</h5>
 <p>See <a href="../../model/id/struct.GuildId.html#method.create_emoji" title="method serenity::model::id::GuildId::create_emoji"><code>GuildId::create_emoji</code></a> for information about name and filesize requirements. This
 method will error if said requirements are not met.</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.edit_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#539-550">Source</a><h4 class="code-header">pub async fn <a href="#method.edit_application_emoji" class="fn">edit_application_emoji</a>(
+</div></details><details class="toggle method-toggle" open><summary><section id="method.edit_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#345-356">Source</a><h4 class="code-header">pub async fn <a href="#method.edit_application_emoji" class="fn">edit_application_emoji</a>(
     &amp;self,
     emoji_id: <a class="struct" href="../../model/id/struct.EmojiId.html" title="struct serenity::model::id::EmojiId">EmojiId</a>,
     name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 ) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="struct" href="../../model/guild/struct.Emoji.html" title="struct serenity::model::guild::Emoji">Emoji</a>&gt;</h4></section></summary><div class="docblock"><p>Changes the name of an application emoji.</p>
 <h5 id="errors-3"><a class="doc-anchor" href="#errors-3">§</a>Errors</h5>
 <p>Returns an error if the emoji does not exist.</p>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.delete_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#557-559">Source</a><h4 class="code-header">pub async fn <a href="#method.delete_application_emoji" class="fn">delete_application_emoji</a>(&amp;self, emoji_id: <a class="struct" href="../../model/id/struct.EmojiId.html" title="struct serenity::model::id::EmojiId">EmojiId</a>) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Deletes an application emoji.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.delete_application_emoji" class="method"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#363-365">Source</a><h4 class="code-header">pub async fn <a href="#method.delete_application_emoji" class="fn">delete_application_emoji</a>(&amp;self, emoji_id: <a class="struct" href="../../model/id/struct.EmojiId.html" title="struct serenity::model::id::EmojiId">EmojiId</a>) -&gt; <a class="type" href="../../type.Result.html" title="type serenity::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Deletes an application emoji.</p>
 <h5 id="errors-4"><a class="doc-anchor" href="#errors-4">§</a>Errors</h5>
 <p>Returns an error if the emoji does not exist.</p>
 </div></details></div></details></div><h2 id="trait-implementations" class="section-header">Trait Implementations<a href="#trait-implementations" class="anchor">§</a></h2><div id="trait-implementations-list"><details class="toggle implementors-toggle" open><summary><section id="impl-CacheHttp-for-Context" class="impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#54-62">Source</a><a href="#impl-CacheHttp-for-Context" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="../../http/trait.CacheHttp.html" title="trait serenity::http::CacheHttp">CacheHttp</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.http" class="method trait-impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#55-57">Source</a><a href="#method.http" class="anchor">§</a><h4 class="code-header">fn <a href="../../http/trait.CacheHttp.html#tymethod.http" class="fn">http</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../http/struct.Http.html" title="struct serenity::http::Http">Http</a></h4></section></summary><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>http</code></strong> only.</div></span></details><details class="toggle method-toggle" open><summary><section id="method.cache" class="method trait-impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#59-61">Source</a><a href="#method.cache" class="anchor">§</a><h4 class="code-header">fn <a href="../../http/trait.CacheHttp.html#method.cache" class="fn">cache</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/sync/struct.Arc.html" title="struct alloc::sync::Arc">Arc</a>&lt;<a class="struct" href="../../cache/struct.Cache.html" title="struct serenity::cache::Cache">Cache</a>&gt;&gt;</h4></section></summary><span class="item-info"><div class="stab portability">Available on <strong>crate features <code>http</code> and <code>cache</code></strong> only.</div></span></details></div></details><details class="toggle implementors-toggle" open><summary><section id="impl-Clone-for-Context" class="impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#34">Source</a><a href="#impl-Clone-for-Context" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.clone" class="method trait-impl"><a class="src rightside" href="../../../src/serenity/gateway/client/context.rs.html#34">Source</a><a href="#method.clone" class="anchor">§</a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone" class="fn">clone</a>(&amp;self) -&gt; <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h4></section></summary><div class='docblock'>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></div></details><details class="toggle method-toggle" open><summary><section id="method.clone_from" class="method trait-impl"><span class="rightside"><span class="since" title="Stable since Rust version 1.0.0">1.0.0</span> · <a class="src" href="https://doc.rust-lang.org/nightly/src/core/clone.rs.html#174">Source</a></span><a href="#method.clone_from" class="anchor">§</a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from" class="fn">clone_from</a>(&amp;mut self, source: &amp;Self)</h4></section></summary><div class='docblock'>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></div></details></div></details></div><h2 id="synthetic-implementations" class="section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor">§</a></h2><div id="synthetic-implementations-list"><section id="impl-Freeze-for-Context" class="impl"><a href="#impl-Freeze-for-Context" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Freeze.html" title="trait core::marker::Freeze">Freeze</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section><section id="impl-RefUnwindSafe-for-Context" class="impl"><a href="#impl-RefUnwindSafe-for-Context" class="anchor">§</a><h3 class="code-header">impl !<a class="trait" href="https://doc.rust-lang.org/nightly/core/panic/unwind_safe/trait.RefUnwindSafe.html" title="trait core::panic::unwind_safe::RefUnwindSafe">RefUnwindSafe</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section><section id="impl-Send-for-Context" class="impl"><a href="#impl-Send-for-Context" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section><section id="impl-Sync-for-Context" class="impl"><a href="#impl-Sync-for-Context" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section><section id="impl-Unpin-for-Context" class="impl"><a href="#impl-Unpin-for-Context" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Unpin.html" title="trait core::marker::Unpin">Unpin</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section><section id="impl-UnwindSafe-for-Context" class="impl"><a href="#impl-UnwindSafe-for-Context" class="anchor">§</a><h3 class="code-header">impl !<a class="trait" href="https://doc.rust-lang.org/nightly/core/panic/unwind_safe/trait.UnwindSafe.html" title="trait core::panic::unwind_safe::UnwindSafe">UnwindSafe</a> for <a class="struct" href="struct.Context.html" title="struct serenity::gateway::client::Context">Context</a></h3></section></div><h2 id="blanket-implementations" class="section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor">§</a></h2><div id="blanket-implementations-list"><details class="toggle implementors-toggle"><summary><section id="impl-Any-for-T" class="impl"><a class="src rightside" href="https://doc.rust-lang.org/nightly/src/core/any.rs.html#138">Source</a><a href="#impl-Any-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> for T<div class="where">where

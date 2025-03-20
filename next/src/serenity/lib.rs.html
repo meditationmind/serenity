@@ -4,41 +4,41 @@
 <a href=#4 id=4 data-nosnippet>4</a>//!
 <a href=#5 id=5 data-nosnippet>5</a>//! Serenity supports bot user authentication via the use of [`Client::builder`].
 <a href=#6 id=6 data-nosnippet>6</a>//!
-<a href=#7 id=7 data-nosnippet>7</a>//! Once logged in, you may add handlers to your client to dispatch [`Event`]s, such as
-<a href=#8 id=8 data-nosnippet>8</a>//! [`EventHandler::message`]. This will cause your handler to be called when a
-<a href=#9 id=9 data-nosnippet>9</a>//! [`Event::MessageCreate`] is received. Each handler is given a [`Context`], giving information
-<a href=#10 id=10 data-nosnippet>10</a>//! about the event. See the [client's module-level documentation].
-<a href=#11 id=11 data-nosnippet>11</a>//!
-<a href=#12 id=12 data-nosnippet>12</a>//! The [`Shard`] is transparently handled by the library, removing unnecessary complexity. Sharded
-<a href=#13 id=13 data-nosnippet>13</a>//! connections are automatically handled for you. See the [gateway's documentation][gateway docs]
-<a href=#14 id=14 data-nosnippet>14</a>//! for more information.
-<a href=#15 id=15 data-nosnippet>15</a>//!
-<a href=#16 id=16 data-nosnippet>16</a>//! A [`Cache`] is also provided for you. This will be updated automatically for you as data is
-<a href=#17 id=17 data-nosnippet>17</a>//! received from the Discord API via events. When calling a method on a [`Context`], the cache
-<a href=#18 id=18 data-nosnippet>18</a>//! will first be searched for relevant data to avoid unnecessary HTTP requests to the Discord API.
-<a href=#19 id=19 data-nosnippet>19</a>//! For more information, see the [cache's module-level documentation][cache docs].
-<a href=#20 id=20 data-nosnippet>20</a>//!
-<a href=#21 id=21 data-nosnippet>21</a>//! Note that, although this documentation will try to be as up-to-date and accurate as possible,
-<a href=#22 id=22 data-nosnippet>22</a>//! Discord hosts [official documentation][docs]. If you need to be sure that some information
-<a href=#23 id=23 data-nosnippet>23</a>//! piece is sanctioned by Discord, refer to their own documentation.
-<a href=#24 id=24 data-nosnippet>24</a>//!
-<a href=#25 id=25 data-nosnippet>25</a>//! ### Full Examples
-<a href=#26 id=26 data-nosnippet>26</a>//!
-<a href=#27 id=27 data-nosnippet>27</a>//! Full examples, detailing and explaining usage of the basic functionality of the library, can be
-<a href=#28 id=28 data-nosnippet>28</a>//! found in the [`examples`] directory.
-<a href=#29 id=29 data-nosnippet>29</a>//!
-<a href=#30 id=30 data-nosnippet>30</a>//! # Installation
-<a href=#31 id=31 data-nosnippet>31</a>//!
-<a href=#32 id=32 data-nosnippet>32</a>//! Add the following to your `Cargo.toml` file:
-<a href=#33 id=33 data-nosnippet>33</a>//!
-<a href=#34 id=34 data-nosnippet>34</a>//! ```toml
-<a href=#35 id=35 data-nosnippet>35</a>//! [dependencies]
-<a href=#36 id=36 data-nosnippet>36</a>//! serenity = "0.12"
-<a href=#37 id=37 data-nosnippet>37</a>//! ```
-<a href=#38 id=38 data-nosnippet>38</a>//!
-<a href=#39 id=39 data-nosnippet>39</a>//! [`Cache`]: crate::cache::Cache
-<a href=#40 id=40 data-nosnippet>40</a>//! [`Context`]: crate::gateway::client::Context
-<a href=#41 id=41 data-nosnippet>41</a>//! [`EventHandler::message`]: crate::gateway::client::EventHandler::message
+<a href=#7 id=7 data-nosnippet>7</a>//! Once logged in, you can add an event handler to your client to dispatch [`Event`]s.
+<a href=#8 id=8 data-nosnippet>8</a>//! This will allow you to recieve and handle events as you see fit. For example, an
+<a href=#9 id=9 data-nosnippet>9</a>//! [`Event::MessageCreate`] event will be dispatched to you when a message is sent.
+<a href=#10 id=10 data-nosnippet>10</a>//! Every event will give you access to a [`Context`], giving information about the event.
+<a href=#11 id=11 data-nosnippet>11</a>//! See the [client's module-level documentation].
+<a href=#12 id=12 data-nosnippet>12</a>//!
+<a href=#13 id=13 data-nosnippet>13</a>//! The [`Shard`] is transparently handled by the library, removing unnecessary complexity. Sharded
+<a href=#14 id=14 data-nosnippet>14</a>//! connections are automatically handled for you. See the [gateway's documentation][gateway docs]
+<a href=#15 id=15 data-nosnippet>15</a>//! for more information.
+<a href=#16 id=16 data-nosnippet>16</a>//!
+<a href=#17 id=17 data-nosnippet>17</a>//! A [`Cache`] is also provided for you. This will be updated automatically for you as data is
+<a href=#18 id=18 data-nosnippet>18</a>//! received from the Discord API via events. When calling a method on a [`Context`], the cache
+<a href=#19 id=19 data-nosnippet>19</a>//! will first be searched for relevant data to avoid unnecessary HTTP requests to the Discord API.
+<a href=#20 id=20 data-nosnippet>20</a>//! For more information, see the [cache's module-level documentation][cache docs].
+<a href=#21 id=21 data-nosnippet>21</a>//!
+<a href=#22 id=22 data-nosnippet>22</a>//! Note that, although this documentation will try to be as up-to-date and accurate as possible,
+<a href=#23 id=23 data-nosnippet>23</a>//! Discord hosts [official documentation][docs]. If you need to be sure that some information
+<a href=#24 id=24 data-nosnippet>24</a>//! piece is sanctioned by Discord, refer to their own documentation.
+<a href=#25 id=25 data-nosnippet>25</a>//!
+<a href=#26 id=26 data-nosnippet>26</a>//! ### Full Examples
+<a href=#27 id=27 data-nosnippet>27</a>//!
+<a href=#28 id=28 data-nosnippet>28</a>//! Full examples, detailing and explaining usage of the basic functionality of the library, can be
+<a href=#29 id=29 data-nosnippet>29</a>//! found in the [`examples`] directory.
+<a href=#30 id=30 data-nosnippet>30</a>//!
+<a href=#31 id=31 data-nosnippet>31</a>//! # Installation
+<a href=#32 id=32 data-nosnippet>32</a>//!
+<a href=#33 id=33 data-nosnippet>33</a>//! Add the following to your `Cargo.toml` file:
+<a href=#34 id=34 data-nosnippet>34</a>//!
+<a href=#35 id=35 data-nosnippet>35</a>//! ```toml
+<a href=#36 id=36 data-nosnippet>36</a>//! [dependencies]
+<a href=#37 id=37 data-nosnippet>37</a>//! serenity = "0.12"
+<a href=#38 id=38 data-nosnippet>38</a>//! ```
+<a href=#39 id=39 data-nosnippet>39</a>//!
+<a href=#40 id=40 data-nosnippet>40</a>//! [`Cache`]: crate::cache::Cache
+<a href=#41 id=41 data-nosnippet>41</a>//! [`Context`]: crate::gateway::client::Context
 <a href=#42 id=42 data-nosnippet>42</a>//! [`Event`]: crate::model::event::Event
 <a href=#43 id=43 data-nosnippet>43</a>//! [`Event::MessageCreate`]: crate::model::event::Event::MessageCreate
 <a href=#44 id=44 data-nosnippet>44</a>//! [`Shard`]: crate::gateway::Shard
