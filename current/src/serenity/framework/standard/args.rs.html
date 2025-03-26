@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/framework/standard/args.rs`."><title>args.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (75530e9f7 2025-03-18)" data-channel="nightly" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../../static.files/storage-d8ac8691.js"></script><script defer src="../../../../static.files/src-script-b8d3f215.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-fb8c74a8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/framework/standard/</div>args.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::borrow::Cow;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/framework/standard/args.rs`."><title>args.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (43f0014ef 2025-03-25)" data-channel="nightly" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../../../static.files/storage-82c7156e.js"></script><script defer src="../../../../static.files/src-script-63605ae7.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-fb8c74a8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/framework/standard/</div>args.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::borrow::Cow;
 <a href=#2 id=2 data-nosnippet>2</a><span class="kw">use </span>std::error::Error <span class="kw">as </span>StdError;
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span>std::fmt;
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>std::marker::PhantomData;
@@ -317,7 +317,7 @@
 <a href=#317 id=317 data-nosnippet>317</a></span><span class="attr">#[derive(Clone, Debug)]
 <a href=#318 id=318 data-nosnippet>318</a></span><span class="kw">pub struct </span>Args {
 <a href=#319 id=319 data-nosnippet>319</a>    message: String,
-<a href=#320 id=320 data-nosnippet>320</a>    args: Vec&lt;Token&gt;,
+<a href=#320 id=320 data-nosnippet>320</a>    tokens: Vec&lt;Token&gt;,
 <a href=#321 id=321 data-nosnippet>321</a>    offset: usize,
 <a href=#322 id=322 data-nosnippet>322</a>    state: State,
 <a href=#323 id=323 data-nosnippet>323</a>}
@@ -359,7 +359,7 @@
 <a href=#359 id=359 data-nosnippet>359</a>            .map(Delimiter::to_str)
 <a href=#360 id=360 data-nosnippet>360</a>            .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
 <a href=#361 id=361 data-nosnippet>361</a>
-<a href=#362 id=362 data-nosnippet>362</a>        <span class="kw">let </span>args = <span class="kw">if </span>delims.is_empty() {
+<a href=#362 id=362 data-nosnippet>362</a>        <span class="kw">let </span>tokens = <span class="kw">if </span>delims.is_empty() {
 <a href=#363 id=363 data-nosnippet>363</a>            <span class="kw">let </span>msg = message.trim();
 <a href=#364 id=364 data-nosnippet>364</a>            <span class="kw">let </span>kind = <span class="kw">if </span>is_quoted(msg) { TokenKind::QuotedArgument } <span class="kw">else </span>{ TokenKind::Argument };
 <a href=#365 id=365 data-nosnippet>365</a>
@@ -387,7 +387,7 @@
 <a href=#387 id=387 data-nosnippet>387</a>        };
 <a href=#388 id=388 data-nosnippet>388</a>
 <a href=#389 id=389 data-nosnippet>389</a>        Args {
-<a href=#390 id=390 data-nosnippet>390</a>            args,
+<a href=#390 id=390 data-nosnippet>390</a>            tokens,
 <a href=#391 id=391 data-nosnippet>391</a>            message: message.to_string(),
 <a href=#392 id=392 data-nosnippet>392</a>            offset: <span class="number">0</span>,
 <a href=#393 id=393 data-nosnippet>393</a>            state: State::None,
@@ -396,7 +396,7 @@
 <a href=#396 id=396 data-nosnippet>396</a>
 <a href=#397 id=397 data-nosnippet>397</a>    <span class="attr">#[inline]
 <a href=#398 id=398 data-nosnippet>398</a>    </span><span class="kw">fn </span>span(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (usize, usize) {
-<a href=#399 id=399 data-nosnippet>399</a>        <span class="self">self</span>.args[<span class="self">self</span>.offset].span
+<a href=#399 id=399 data-nosnippet>399</a>        <span class="self">self</span>.tokens[<span class="self">self</span>.offset].span
 <a href=#400 id=400 data-nosnippet>400</a>    }
 <a href=#401 id=401 data-nosnippet>401</a>
 <a href=#402 id=402 data-nosnippet>402</a>    <span class="attr">#[inline]
@@ -574,7 +574,7 @@
 <a href=#574 id=574 data-nosnippet>574</a>            <span class="kw">return </span><span class="self">self</span>;
 <a href=#575 id=575 data-nosnippet>575</a>        }
 <a href=#576 id=576 data-nosnippet>576</a>
-<a href=#577 id=577 data-nosnippet>577</a>        <span class="kw">let </span>is_quoted = <span class="self">self</span>.args[<span class="self">self</span>.offset].kind == TokenKind::QuotedArgument;
+<a href=#577 id=577 data-nosnippet>577</a>        <span class="kw">let </span>is_quoted = <span class="self">self</span>.tokens[<span class="self">self</span>.offset].kind == TokenKind::QuotedArgument;
 <a href=#578 id=578 data-nosnippet>578</a>
 <a href=#579 id=579 data-nosnippet>579</a>        <span class="kw">if </span>is_quoted {
 <a href=#580 id=580 data-nosnippet>580</a>            <span class="kw">match </span><span class="self">self</span>.state {
@@ -733,7 +733,7 @@
 <a href=#733 id=733 data-nosnippet>733</a>    #[must_use]
 <a href=#734 id=734 data-nosnippet>734</a>    </span><span class="kw">pub fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawArguments&lt;<span class="lifetime">'_</span>&gt; {
 <a href=#735 id=735 data-nosnippet>735</a>        RawArguments {
-<a href=#736 id=736 data-nosnippet>736</a>            tokens: <span class="kw-2">&amp;</span><span class="self">self</span>.args,
+<a href=#736 id=736 data-nosnippet>736</a>            tokens: <span class="kw-2">&amp;</span><span class="self">self</span>.tokens,
 <a href=#737 id=737 data-nosnippet>737</a>            msg: <span class="kw-2">&amp;</span><span class="self">self</span>.message,
 <a href=#738 id=738 data-nosnippet>738</a>            quoted: <span class="bool-val">false</span>,
 <a href=#739 id=739 data-nosnippet>739</a>        }
@@ -802,7 +802,7 @@
 <a href=#802 id=802 data-nosnippet>802</a>        <span class="self">self</span>.offset = pos;
 <a href=#803 id=803 data-nosnippet>803</a>        <span class="kw">let </span>parsed = <span class="self">self</span>.single_quoted::&lt;T&gt;()<span class="question-mark">?</span>;
 <a href=#804 id=804 data-nosnippet>804</a>
-<a href=#805 id=805 data-nosnippet>805</a>        <span class="self">self</span>.args.remove(pos);
+<a href=#805 id=805 data-nosnippet>805</a>        <span class="self">self</span>.tokens.remove(pos);
 <a href=#806 id=806 data-nosnippet>806</a>        <span class="self">self</span>.offset = before;
 <a href=#807 id=807 data-nosnippet>807</a>        <span class="self">self</span>.rewind();
 <a href=#808 id=808 data-nosnippet>808</a>
@@ -888,7 +888,7 @@
 <a href=#888 id=888 data-nosnippet>888</a>    </span><span class="attr">#[inline]
 <a href=#889 id=889 data-nosnippet>889</a>    #[must_use]
 <a href=#890 id=890 data-nosnippet>890</a>    </span><span class="kw">pub fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-<a href=#891 id=891 data-nosnippet>891</a>        <span class="self">self</span>.args.len()
+<a href=#891 id=891 data-nosnippet>891</a>        <span class="self">self</span>.tokens.len()
 <a href=#892 id=892 data-nosnippet>892</a>    }
 <a href=#893 id=893 data-nosnippet>893</a>
 <a href=#894 id=894 data-nosnippet>894</a>    <span class="doccomment">/// Assert that there are no more arguments left.
