@@ -87,7 +87,7 @@
 <a href=#87 id=87 data-nosnippet>87</a>    </span><span class="kw">pub fn </span>everyone(guild_id: GuildId, allow: bool) -&gt; <span class="self">Self </span>{
 <a href=#88 id=88 data-nosnippet>88</a>        <span class="self">Self</span>(CommandPermission {
 <a href=#89 id=89 data-nosnippet>89</a>            id: guild_id.get().into(),
-<a href=#90 id=90 data-nosnippet>90</a>            kind: CommandPermissionType::User,
+<a href=#90 id=90 data-nosnippet>90</a>            kind: CommandPermissionType::Role,
 <a href=#91 id=91 data-nosnippet>91</a>            permission: allow,
 <a href=#92 id=92 data-nosnippet>92</a>        })
 <a href=#93 id=93 data-nosnippet>93</a>    }
