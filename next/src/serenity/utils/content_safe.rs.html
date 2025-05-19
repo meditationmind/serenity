@@ -248,79 +248,84 @@
 <a href=#248 id=248 data-nosnippet>248</a>        <span class="kw">let </span><span class="kw-2">mut </span>options = ContentSafeOptions::default();
 <a href=#249 id=249 data-nosnippet>249</a>        <span class="macro">assert_eq!</span>(
 <a href=#250 id=250 data-nosnippet>250</a>            <span class="macro">format!</span>(<span class="string">"@{}"</span>, user.name),
-<a href=#251 id=251 data-nosnippet>251</a>            content_safe(<span class="kw-2">&amp;</span>no_member_guild, <span class="string">"&lt;@!100000000000000000&gt;"</span>, options, <span class="kw-2">&amp;</span>[user.clone()])
-<a href=#252 id=252 data-nosnippet>252</a>        );
-<a href=#253 id=253 data-nosnippet>253</a>
-<a href=#254 id=254 data-nosnippet>254</a>        <span class="macro">assert_eq!</span>(
-<a href=#255 id=255 data-nosnippet>255</a>            <span class="string">"@invalid-user"</span>,
-<a href=#256 id=256 data-nosnippet>256</a>            content_safe(<span class="kw-2">&amp;</span>no_member_guild, <span class="string">"&lt;@!100000000000000000&gt;"</span>, options, <span class="kw-2">&amp;</span>[])
+<a href=#251 id=251 data-nosnippet>251</a>            content_safe(
+<a href=#252 id=252 data-nosnippet>252</a>                <span class="kw-2">&amp;</span>no_member_guild,
+<a href=#253 id=253 data-nosnippet>253</a>                <span class="string">"&lt;@!100000000000000000&gt;"</span>,
+<a href=#254 id=254 data-nosnippet>254</a>                options,
+<a href=#255 id=255 data-nosnippet>255</a>                std::slice::from_ref(<span class="kw-2">&amp;</span>user)
+<a href=#256 id=256 data-nosnippet>256</a>            )
 <a href=#257 id=257 data-nosnippet>257</a>        );
 <a href=#258 id=258 data-nosnippet>258</a>
 <a href=#259 id=259 data-nosnippet>259</a>        <span class="macro">assert_eq!</span>(
-<a href=#260 id=260 data-nosnippet>260</a>            <span class="macro">format!</span>(<span class="string">"@{}"</span>, member.nick.as_ref().unwrap()),
-<a href=#261 id=261 data-nosnippet>261</a>            content_safe(<span class="kw-2">&amp;</span>guild, <span class="string">"&lt;@100000000000000000&gt;"</span>, options, <span class="kw-2">&amp;</span>[])
+<a href=#260 id=260 data-nosnippet>260</a>            <span class="string">"@invalid-user"</span>,
+<a href=#261 id=261 data-nosnippet>261</a>            content_safe(<span class="kw-2">&amp;</span>no_member_guild, <span class="string">"&lt;@!100000000000000000&gt;"</span>, options, <span class="kw-2">&amp;</span>[])
 <a href=#262 id=262 data-nosnippet>262</a>        );
 <a href=#263 id=263 data-nosnippet>263</a>
-<a href=#264 id=264 data-nosnippet>264</a>        options = options.clean_user(<span class="bool-val">false</span>);
-<a href=#265 id=265 data-nosnippet>265</a>        <span class="macro">assert_eq!</span>(with_user_mentions, content_safe(<span class="kw-2">&amp;</span>guild, with_user_mentions, options, <span class="kw-2">&amp;</span>[]));
-<a href=#266 id=266 data-nosnippet>266</a>
-<a href=#267 id=267 data-nosnippet>267</a>        <span class="comment">// Channel mentions
-<a href=#268 id=268 data-nosnippet>268</a>        </span><span class="kw">let </span>with_channel_mentions = <span class="string">"&lt;#&gt; &lt;#deleted-channel&gt; #deleted-channel &lt;#1&gt; \
-<a href=#269 id=269 data-nosnippet>269</a>        #unsafe-club &lt;#111880193700067777&gt; &lt;#ferrisferrisferris&gt; \
-<a href=#270 id=270 data-nosnippet>270</a>        &lt;#000000000000000001&gt;"</span>;
+<a href=#264 id=264 data-nosnippet>264</a>        <span class="macro">assert_eq!</span>(
+<a href=#265 id=265 data-nosnippet>265</a>            <span class="macro">format!</span>(<span class="string">"@{}"</span>, member.nick.as_ref().unwrap()),
+<a href=#266 id=266 data-nosnippet>266</a>            content_safe(<span class="kw-2">&amp;</span>guild, <span class="string">"&lt;@100000000000000000&gt;"</span>, options, <span class="kw-2">&amp;</span>[])
+<a href=#267 id=267 data-nosnippet>267</a>        );
+<a href=#268 id=268 data-nosnippet>268</a>
+<a href=#269 id=269 data-nosnippet>269</a>        options = options.clean_user(<span class="bool-val">false</span>);
+<a href=#270 id=270 data-nosnippet>270</a>        <span class="macro">assert_eq!</span>(with_user_mentions, content_safe(<span class="kw-2">&amp;</span>guild, with_user_mentions, options, <span class="kw-2">&amp;</span>[]));
 <a href=#271 id=271 data-nosnippet>271</a>
-<a href=#272 id=272 data-nosnippet>272</a>        <span class="kw">let </span>without_channel_mentions = <span class="string">"&lt;#&gt; &lt;#deleted-channel&gt; #deleted-channel \
-<a href=#273 id=273 data-nosnippet>273</a>        #deleted-channel #unsafe-club #general &lt;#ferrisferrisferris&gt; \
-<a href=#274 id=274 data-nosnippet>274</a>        #deleted-channel"</span>;
-<a href=#275 id=275 data-nosnippet>275</a>
-<a href=#276 id=276 data-nosnippet>276</a>        <span class="macro">assert_eq!</span>(
-<a href=#277 id=277 data-nosnippet>277</a>            without_channel_mentions,
-<a href=#278 id=278 data-nosnippet>278</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_channel_mentions, options, <span class="kw-2">&amp;</span>[])
-<a href=#279 id=279 data-nosnippet>279</a>        );
+<a href=#272 id=272 data-nosnippet>272</a>        <span class="comment">// Channel mentions
+<a href=#273 id=273 data-nosnippet>273</a>        </span><span class="kw">let </span>with_channel_mentions = <span class="string">"&lt;#&gt; &lt;#deleted-channel&gt; #deleted-channel &lt;#1&gt; \
+<a href=#274 id=274 data-nosnippet>274</a>        #unsafe-club &lt;#111880193700067777&gt; &lt;#ferrisferrisferris&gt; \
+<a href=#275 id=275 data-nosnippet>275</a>        &lt;#000000000000000001&gt;"</span>;
+<a href=#276 id=276 data-nosnippet>276</a>
+<a href=#277 id=277 data-nosnippet>277</a>        <span class="kw">let </span>without_channel_mentions = <span class="string">"&lt;#&gt; &lt;#deleted-channel&gt; #deleted-channel \
+<a href=#278 id=278 data-nosnippet>278</a>        #deleted-channel #unsafe-club #general &lt;#ferrisferrisferris&gt; \
+<a href=#279 id=279 data-nosnippet>279</a>        #deleted-channel"</span>;
 <a href=#280 id=280 data-nosnippet>280</a>
-<a href=#281 id=281 data-nosnippet>281</a>        options = options.clean_channel(<span class="bool-val">false</span>);
-<a href=#282 id=282 data-nosnippet>282</a>        <span class="macro">assert_eq!</span>(
-<a href=#283 id=283 data-nosnippet>283</a>            with_channel_mentions,
-<a href=#284 id=284 data-nosnippet>284</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_channel_mentions, options, <span class="kw-2">&amp;</span>[])
-<a href=#285 id=285 data-nosnippet>285</a>        );
-<a href=#286 id=286 data-nosnippet>286</a>
-<a href=#287 id=287 data-nosnippet>287</a>        <span class="comment">// Role mentions
-<a href=#288 id=288 data-nosnippet>288</a>        </span><span class="kw">let </span>with_role_mentions = <span class="string">"&lt;@&amp;&gt; @deleted-role &lt;@&amp;9829&gt; \
-<a href=#289 id=289 data-nosnippet>289</a>        &lt;@&amp;333333333333333333&gt; &lt;@&amp;000000000000000001&gt; \
-<a href=#290 id=290 data-nosnippet>290</a>        &lt;@&amp;111111111111111111111111111111&gt; &lt;@&amp;&lt;@&amp;1234&gt;"</span>;
+<a href=#281 id=281 data-nosnippet>281</a>        <span class="macro">assert_eq!</span>(
+<a href=#282 id=282 data-nosnippet>282</a>            without_channel_mentions,
+<a href=#283 id=283 data-nosnippet>283</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_channel_mentions, options, <span class="kw-2">&amp;</span>[])
+<a href=#284 id=284 data-nosnippet>284</a>        );
+<a href=#285 id=285 data-nosnippet>285</a>
+<a href=#286 id=286 data-nosnippet>286</a>        options = options.clean_channel(<span class="bool-val">false</span>);
+<a href=#287 id=287 data-nosnippet>287</a>        <span class="macro">assert_eq!</span>(
+<a href=#288 id=288 data-nosnippet>288</a>            with_channel_mentions,
+<a href=#289 id=289 data-nosnippet>289</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_channel_mentions, options, <span class="kw-2">&amp;</span>[])
+<a href=#290 id=290 data-nosnippet>290</a>        );
 <a href=#291 id=291 data-nosnippet>291</a>
-<a href=#292 id=292 data-nosnippet>292</a>        <span class="kw">let </span>without_role_mentions = <span class="string">"&lt;@&amp;&gt; @deleted-role @deleted-role \
-<a href=#293 id=293 data-nosnippet>293</a>        @ferris-club-member @deleted-role \
-<a href=#294 id=294 data-nosnippet>294</a>        &lt;@&amp;111111111111111111111111111111&gt; &lt;@&amp;@deleted-role"</span>;
-<a href=#295 id=295 data-nosnippet>295</a>
-<a href=#296 id=296 data-nosnippet>296</a>        <span class="macro">assert_eq!</span>(without_role_mentions, content_safe(<span class="kw-2">&amp;</span>guild, with_role_mentions, options, <span class="kw-2">&amp;</span>[]));
-<a href=#297 id=297 data-nosnippet>297</a>
-<a href=#298 id=298 data-nosnippet>298</a>        options = options.clean_role(<span class="bool-val">false</span>);
-<a href=#299 id=299 data-nosnippet>299</a>        <span class="macro">assert_eq!</span>(with_role_mentions, content_safe(<span class="kw-2">&amp;</span>guild, with_role_mentions, options, <span class="kw-2">&amp;</span>[]));
+<a href=#292 id=292 data-nosnippet>292</a>        <span class="comment">// Role mentions
+<a href=#293 id=293 data-nosnippet>293</a>        </span><span class="kw">let </span>with_role_mentions = <span class="string">"&lt;@&amp;&gt; @deleted-role &lt;@&amp;9829&gt; \
+<a href=#294 id=294 data-nosnippet>294</a>        &lt;@&amp;333333333333333333&gt; &lt;@&amp;000000000000000001&gt; \
+<a href=#295 id=295 data-nosnippet>295</a>        &lt;@&amp;111111111111111111111111111111&gt; &lt;@&amp;&lt;@&amp;1234&gt;"</span>;
+<a href=#296 id=296 data-nosnippet>296</a>
+<a href=#297 id=297 data-nosnippet>297</a>        <span class="kw">let </span>without_role_mentions = <span class="string">"&lt;@&amp;&gt; @deleted-role @deleted-role \
+<a href=#298 id=298 data-nosnippet>298</a>        @ferris-club-member @deleted-role \
+<a href=#299 id=299 data-nosnippet>299</a>        &lt;@&amp;111111111111111111111111111111&gt; &lt;@&amp;@deleted-role"</span>;
 <a href=#300 id=300 data-nosnippet>300</a>
-<a href=#301 id=301 data-nosnippet>301</a>        <span class="comment">// Everyone mentions
-<a href=#302 id=302 data-nosnippet>302</a>        </span><span class="kw">let </span>with_everyone_mention = <span class="string">"@everyone"</span>;
-<a href=#303 id=303 data-nosnippet>303</a>        <span class="kw">let </span>without_everyone_mention = <span class="string">"@\u{200B}everyone"</span>;
-<a href=#304 id=304 data-nosnippet>304</a>
-<a href=#305 id=305 data-nosnippet>305</a>        <span class="macro">assert_eq!</span>(
-<a href=#306 id=306 data-nosnippet>306</a>            without_everyone_mention,
-<a href=#307 id=307 data-nosnippet>307</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_everyone_mention, options, <span class="kw-2">&amp;</span>[])
-<a href=#308 id=308 data-nosnippet>308</a>        );
+<a href=#301 id=301 data-nosnippet>301</a>        <span class="macro">assert_eq!</span>(without_role_mentions, content_safe(<span class="kw-2">&amp;</span>guild, with_role_mentions, options, <span class="kw-2">&amp;</span>[]));
+<a href=#302 id=302 data-nosnippet>302</a>
+<a href=#303 id=303 data-nosnippet>303</a>        options = options.clean_role(<span class="bool-val">false</span>);
+<a href=#304 id=304 data-nosnippet>304</a>        <span class="macro">assert_eq!</span>(with_role_mentions, content_safe(<span class="kw-2">&amp;</span>guild, with_role_mentions, options, <span class="kw-2">&amp;</span>[]));
+<a href=#305 id=305 data-nosnippet>305</a>
+<a href=#306 id=306 data-nosnippet>306</a>        <span class="comment">// Everyone mentions
+<a href=#307 id=307 data-nosnippet>307</a>        </span><span class="kw">let </span>with_everyone_mention = <span class="string">"@everyone"</span>;
+<a href=#308 id=308 data-nosnippet>308</a>        <span class="kw">let </span>without_everyone_mention = <span class="string">"@\u{200B}everyone"</span>;
 <a href=#309 id=309 data-nosnippet>309</a>
-<a href=#310 id=310 data-nosnippet>310</a>        options = options.clean_everyone(<span class="bool-val">false</span>);
-<a href=#311 id=311 data-nosnippet>311</a>        <span class="macro">assert_eq!</span>(
-<a href=#312 id=312 data-nosnippet>312</a>            with_everyone_mention,
-<a href=#313 id=313 data-nosnippet>313</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_everyone_mention, options, <span class="kw-2">&amp;</span>[])
-<a href=#314 id=314 data-nosnippet>314</a>        );
-<a href=#315 id=315 data-nosnippet>315</a>
-<a href=#316 id=316 data-nosnippet>316</a>        <span class="comment">// Here mentions
-<a href=#317 id=317 data-nosnippet>317</a>        </span><span class="kw">let </span>with_here_mention = <span class="string">"@here"</span>;
-<a href=#318 id=318 data-nosnippet>318</a>
-<a href=#319 id=319 data-nosnippet>319</a>        <span class="kw">let </span>without_here_mention = <span class="string">"@\u{200B}here"</span>;
+<a href=#310 id=310 data-nosnippet>310</a>        <span class="macro">assert_eq!</span>(
+<a href=#311 id=311 data-nosnippet>311</a>            without_everyone_mention,
+<a href=#312 id=312 data-nosnippet>312</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_everyone_mention, options, <span class="kw-2">&amp;</span>[])
+<a href=#313 id=313 data-nosnippet>313</a>        );
+<a href=#314 id=314 data-nosnippet>314</a>
+<a href=#315 id=315 data-nosnippet>315</a>        options = options.clean_everyone(<span class="bool-val">false</span>);
+<a href=#316 id=316 data-nosnippet>316</a>        <span class="macro">assert_eq!</span>(
+<a href=#317 id=317 data-nosnippet>317</a>            with_everyone_mention,
+<a href=#318 id=318 data-nosnippet>318</a>            content_safe(<span class="kw-2">&amp;</span>guild, with_everyone_mention, options, <span class="kw-2">&amp;</span>[])
+<a href=#319 id=319 data-nosnippet>319</a>        );
 <a href=#320 id=320 data-nosnippet>320</a>
-<a href=#321 id=321 data-nosnippet>321</a>        <span class="macro">assert_eq!</span>(without_here_mention, content_safe(<span class="kw-2">&amp;</span>guild, with_here_mention, options, <span class="kw-2">&amp;</span>[]));
-<a href=#322 id=322 data-nosnippet>322</a>
-<a href=#323 id=323 data-nosnippet>323</a>        options = options.clean_here(<span class="bool-val">false</span>);
-<a href=#324 id=324 data-nosnippet>324</a>        <span class="macro">assert_eq!</span>(with_here_mention, content_safe(<span class="kw-2">&amp;</span>guild, with_here_mention, options, <span class="kw-2">&amp;</span>[]));
-<a href=#325 id=325 data-nosnippet>325</a>    }
-<a href=#326 id=326 data-nosnippet>326</a>}</code></pre></div></section></main></body></html>
+<a href=#321 id=321 data-nosnippet>321</a>        <span class="comment">// Here mentions
+<a href=#322 id=322 data-nosnippet>322</a>        </span><span class="kw">let </span>with_here_mention = <span class="string">"@here"</span>;
+<a href=#323 id=323 data-nosnippet>323</a>
+<a href=#324 id=324 data-nosnippet>324</a>        <span class="kw">let </span>without_here_mention = <span class="string">"@\u{200B}here"</span>;
+<a href=#325 id=325 data-nosnippet>325</a>
+<a href=#326 id=326 data-nosnippet>326</a>        <span class="macro">assert_eq!</span>(without_here_mention, content_safe(<span class="kw-2">&amp;</span>guild, with_here_mention, options, <span class="kw-2">&amp;</span>[]));
+<a href=#327 id=327 data-nosnippet>327</a>
+<a href=#328 id=328 data-nosnippet>328</a>        options = options.clean_here(<span class="bool-val">false</span>);
+<a href=#329 id=329 data-nosnippet>329</a>        <span class="macro">assert_eq!</span>(with_here_mention, content_safe(<span class="kw-2">&amp;</span>guild, with_here_mention, options, <span class="kw-2">&amp;</span>[]));
+<a href=#330 id=330 data-nosnippet>330</a>    }
+<a href=#331 id=331 data-nosnippet>331</a>}</code></pre></div></section></main></body></html>

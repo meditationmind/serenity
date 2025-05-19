@@ -6,7 +6,7 @@
 <a href=#6 id=6 data-nosnippet>6</a>) -&gt; String {
 <a href=#7 id=7 data-nosnippet>7</a>    <span class="kw">let </span><span class="kw-2">mut </span>buf = String::new();
 <a href=#8 id=8 data-nosnippet>8</a>    <span class="kw">for </span>item <span class="kw">in </span>iter {
-<a href=#9 id=9 data-nosnippet>9</a>        <span class="macro">write!</span>(buf, <span class="string">"{item}{sep}"</span>).unwrap();
+<a href=#9 id=9 data-nosnippet>9</a>        <span class="macro">write!</span>(buf, <span class="string">"{item}{sep}"</span>).expect(<span class="string">"writing to a string should never fail"</span>);
 <a href=#10 id=10 data-nosnippet>10</a>    }
 <a href=#11 id=11 data-nosnippet>11</a>
 <a href=#12 id=12 data-nosnippet>12</a>    buf.truncate(buf.len() - <span class="number">1</span>);
