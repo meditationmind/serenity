@@ -923,7 +923,7 @@
 <a href=#923 id=923 data-nosnippet>923</a>    /// See [`CreateMessage::execute`] for a list of possible errors, and their corresponding
 <a href=#924 id=924 data-nosnippet>924</a>    /// reasons.
 <a href=#925 id=925 data-nosnippet>925</a>    </span><span class="kw">pub async fn </span>send_message(<span class="self">self</span>, http: <span class="kw-2">&amp;</span>Http, builder: CreateMessage&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
-<a href=#926 id=926 data-nosnippet>926</a>        builder.execute(http, <span class="self">self</span>, <span class="prelude-val">None</span>).<span class="kw">await
+<a href=#926 id=926 data-nosnippet>926</a>        builder.execute(http, <span class="self">self</span>).<span class="kw">await
 <a href=#927 id=927 data-nosnippet>927</a>    </span>}
 <a href=#928 id=928 data-nosnippet>928</a>
 <a href=#929 id=929 data-nosnippet>929</a>    <span class="doccomment">/// Starts typing in the channel for an indefinite period of time.

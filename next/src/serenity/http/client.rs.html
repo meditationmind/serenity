@@ -4381,7 +4381,7 @@
 <a href=#4381 id=4381 data-nosnippet>4381</a>    </span><span class="kw">pub async fn </span>request(<span class="kw-2">&amp;</span><span class="self">self</span>, req: Request&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;ReqwestResponse&gt; {
 <a href=#4382 id=4382 data-nosnippet>4382</a>        <span class="kw">let </span>method = req.method.reqwest_method();
 <a href=#4383 id=4383 data-nosnippet>4383</a>        <span class="kw">let </span>response = <span class="kw">if let </span><span class="prelude-val">Some</span>(ratelimiter) = <span class="kw-2">&amp;</span><span class="self">self</span>.ratelimiter {
-<a href=#4384 id=4384 data-nosnippet>4384</a>            ratelimiter.perform(req).<span class="kw">await</span><span class="question-mark">?
+<a href=#4384 id=4384 data-nosnippet>4384</a>            ratelimiter.perform(<span class="kw-2">&amp;</span>req).<span class="kw">await</span><span class="question-mark">?
 <a href=#4385 id=4385 data-nosnippet>4385</a>        </span>} <span class="kw">else </span>{
 <a href=#4386 id=4386 data-nosnippet>4386</a>            <span class="kw">let </span>request = req
 <a href=#4387 id=4387 data-nosnippet>4387</a>                .build(

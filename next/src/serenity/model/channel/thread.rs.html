@@ -210,114 +210,116 @@
 <a href=#210 id=210 data-nosnippet>210</a>    /// See [`CreateMessage::execute`] for a list of possible errors, and their corresponding
 <a href=#211 id=211 data-nosnippet>211</a>    /// reasons.
 <a href=#212 id=212 data-nosnippet>212</a>    </span><span class="kw">pub async fn </span>send_message(<span class="kw-2">&amp;</span><span class="self">self</span>, http: <span class="kw-2">&amp;</span>Http, builder: CreateMessage&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
-<a href=#213 id=213 data-nosnippet>213</a>        builder.execute(http, <span class="self">self</span>.id.widen(), <span class="prelude-val">Some</span>(<span class="self">self</span>.base.guild_id)).<span class="kw">await
-<a href=#214 id=214 data-nosnippet>214</a>    </span>}
-<a href=#215 id=215 data-nosnippet>215</a>}
-<a href=#216 id=216 data-nosnippet>216</a>
-<a href=#217 id=217 data-nosnippet>217</a><span class="kw">impl </span>ExtractKey&lt;ThreadId&gt; <span class="kw">for </span>GuildThread {
-<a href=#218 id=218 data-nosnippet>218</a>    <span class="kw">fn </span>extract_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ThreadId {
-<a href=#219 id=219 data-nosnippet>219</a>        <span class="kw-2">&amp;</span><span class="self">self</span>.id
-<a href=#220 id=220 data-nosnippet>220</a>    }
-<a href=#221 id=221 data-nosnippet>221</a>}
-<a href=#222 id=222 data-nosnippet>222</a>
-<a href=#223 id=223 data-nosnippet>223</a><span class="doccomment">/// A thread data.
-<a href=#224 id=224 data-nosnippet>224</a>///
-<a href=#225 id=225 data-nosnippet>225</a>/// [Discord docs](https://discord.com/developers/docs/resources/channel#thread-metadata-object).
-<a href=#226 id=226 data-nosnippet>226</a></span><span class="attr">#[bool_to_bitflags::bool_to_bitflags]
-<a href=#227 id=227 data-nosnippet>227</a>#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
-<a href=#228 id=228 data-nosnippet>228</a>#[derive(Clone, Copy, Debug, Default, serde::Deserialize, serde::Serialize)]
-<a href=#229 id=229 data-nosnippet>229</a>#[non_exhaustive]
-<a href=#230 id=230 data-nosnippet>230</a></span><span class="kw">pub struct </span>ThreadMetadata {
-<a href=#231 id=231 data-nosnippet>231</a>    <span class="doccomment">/// Whether the thread is archived.
-<a href=#232 id=232 data-nosnippet>232</a>    </span><span class="kw">pub </span>archived: bool,
-<a href=#233 id=233 data-nosnippet>233</a>    <span class="doccomment">/// Duration in minutes to automatically archive the thread after recent activity.
-<a href=#234 id=234 data-nosnippet>234</a>    </span><span class="kw">pub </span>auto_archive_duration: AutoArchiveDuration,
-<a href=#235 id=235 data-nosnippet>235</a>    <span class="doccomment">/// The last time the thread's archive status was last changed; used for calculating recent
-<a href=#236 id=236 data-nosnippet>236</a>    /// activity.
-<a href=#237 id=237 data-nosnippet>237</a>    </span><span class="kw">pub </span>archive_timestamp: <span class="prelude-ty">Option</span>&lt;Timestamp&gt;,
-<a href=#238 id=238 data-nosnippet>238</a>    <span class="doccomment">/// When a thread is locked, only users with `MANAGE_THREADS` permission can unarchive it.
-<a href=#239 id=239 data-nosnippet>239</a>    </span><span class="attr">#[serde(default)]
-<a href=#240 id=240 data-nosnippet>240</a>    </span><span class="kw">pub </span>locked: bool,
-<a href=#241 id=241 data-nosnippet>241</a>    <span class="doccomment">/// Timestamp when the thread was created.
-<a href=#242 id=242 data-nosnippet>242</a>    ///
-<a href=#243 id=243 data-nosnippet>243</a>    /// **Note**: only populated for threads created after 2022-01-09
-<a href=#244 id=244 data-nosnippet>244</a>    </span><span class="kw">pub </span>create_timestamp: <span class="prelude-ty">Option</span>&lt;Timestamp&gt;,
-<a href=#245 id=245 data-nosnippet>245</a>    <span class="doccomment">/// Whether non-moderators can add other non-moderators to a thread.
-<a href=#246 id=246 data-nosnippet>246</a>    ///
-<a href=#247 id=247 data-nosnippet>247</a>    /// **Note**: Only available on private threads.
-<a href=#248 id=248 data-nosnippet>248</a>    </span><span class="attr">#[serde(default, skip_serializing_if = <span class="string">"is_false"</span>)]
-<a href=#249 id=249 data-nosnippet>249</a>    </span><span class="kw">pub </span>invitable: bool,
-<a href=#250 id=250 data-nosnippet>250</a>}
-<a href=#251 id=251 data-nosnippet>251</a>
-<a href=#252 id=252 data-nosnippet>252</a><span class="doccomment">/// A partial guild thread.
-<a href=#253 id=253 data-nosnippet>253</a>///
-<a href=#254 id=254 data-nosnippet>254</a>/// [Discord docs](https://discord.com/developers/docs/resources/channel#channel-object),
-<a href=#255 id=255 data-nosnippet>255</a>/// [subset description](https://discord.com/developers/docs/topics/gateway#thread-delete)
-<a href=#256 id=256 data-nosnippet>256</a></span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
-<a href=#257 id=257 data-nosnippet>257</a>#[derive(Clone, Debug, Deserialize, Serialize)]
-<a href=#258 id=258 data-nosnippet>258</a>#[non_exhaustive]
-<a href=#259 id=259 data-nosnippet>259</a></span><span class="kw">pub struct </span>PartialGuildThread {
-<a href=#260 id=260 data-nosnippet>260</a>    <span class="doccomment">/// The thread Id.
-<a href=#261 id=261 data-nosnippet>261</a>    </span><span class="kw">pub </span>id: ThreadId,
-<a href=#262 id=262 data-nosnippet>262</a>    <span class="doccomment">/// The thread guild Id.
-<a href=#263 id=263 data-nosnippet>263</a>    </span><span class="kw">pub </span>guild_id: GuildId,
-<a href=#264 id=264 data-nosnippet>264</a>    <span class="doccomment">/// The parent text channel Id.
-<a href=#265 id=265 data-nosnippet>265</a>    </span><span class="kw">pub </span>parent_id: ChannelId,
-<a href=#266 id=266 data-nosnippet>266</a>    <span class="doccomment">/// The channel type.
-<a href=#267 id=267 data-nosnippet>267</a>    </span><span class="attr">#[serde(rename = <span class="string">"type"</span>)]
-<a href=#268 id=268 data-nosnippet>268</a>    </span><span class="kw">pub </span>kind: ChannelType,
-<a href=#269 id=269 data-nosnippet>269</a>}
-<a href=#270 id=270 data-nosnippet>270</a>
-<a href=#271 id=271 data-nosnippet>271</a><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
-<a href=#272 id=272 data-nosnippet>272</a>#[derive(Clone, Debug, Deserialize, Serialize)]
-<a href=#273 id=273 data-nosnippet>273</a>#[non_exhaustive]
-<a href=#274 id=274 data-nosnippet>274</a></span><span class="kw">pub struct </span>PartialThreadMember {
-<a href=#275 id=275 data-nosnippet>275</a>    <span class="doccomment">/// The time the current user last joined the thread.
-<a href=#276 id=276 data-nosnippet>276</a>    </span><span class="kw">pub </span>join_timestamp: Timestamp,
-<a href=#277 id=277 data-nosnippet>277</a>    <span class="doccomment">/// Any user-thread settings, currently only used for notifications
-<a href=#278 id=278 data-nosnippet>278</a>    </span><span class="kw">pub </span>flags: ThreadMemberFlags,
-<a href=#279 id=279 data-nosnippet>279</a>}
-<a href=#280 id=280 data-nosnippet>280</a>
-<a href=#281 id=281 data-nosnippet>281</a><span class="doccomment">/// A model representing a user in a Guild Thread.
-<a href=#282 id=282 data-nosnippet>282</a>///
-<a href=#283 id=283 data-nosnippet>283</a>/// [Discord docs], [extra fields].
+<a href=#213 id=213 data-nosnippet>213</a>        <span class="kw">let </span><span class="kw-2">mut </span>message = <span class="self">self</span>.id.widen().send_message(http, builder).<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#214 id=214 data-nosnippet>214</a>        message.guild_id = <span class="prelude-val">Some</span>(<span class="self">self</span>.base.guild_id);
+<a href=#215 id=215 data-nosnippet>215</a>        <span class="prelude-val">Ok</span>(message)
+<a href=#216 id=216 data-nosnippet>216</a>    }
+<a href=#217 id=217 data-nosnippet>217</a>}
+<a href=#218 id=218 data-nosnippet>218</a>
+<a href=#219 id=219 data-nosnippet>219</a><span class="kw">impl </span>ExtractKey&lt;ThreadId&gt; <span class="kw">for </span>GuildThread {
+<a href=#220 id=220 data-nosnippet>220</a>    <span class="kw">fn </span>extract_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ThreadId {
+<a href=#221 id=221 data-nosnippet>221</a>        <span class="kw-2">&amp;</span><span class="self">self</span>.id
+<a href=#222 id=222 data-nosnippet>222</a>    }
+<a href=#223 id=223 data-nosnippet>223</a>}
+<a href=#224 id=224 data-nosnippet>224</a>
+<a href=#225 id=225 data-nosnippet>225</a><span class="doccomment">/// A thread data.
+<a href=#226 id=226 data-nosnippet>226</a>///
+<a href=#227 id=227 data-nosnippet>227</a>/// [Discord docs](https://discord.com/developers/docs/resources/channel#thread-metadata-object).
+<a href=#228 id=228 data-nosnippet>228</a></span><span class="attr">#[bool_to_bitflags::bool_to_bitflags]
+<a href=#229 id=229 data-nosnippet>229</a>#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
+<a href=#230 id=230 data-nosnippet>230</a>#[derive(Clone, Copy, Debug, Default, serde::Deserialize, serde::Serialize)]
+<a href=#231 id=231 data-nosnippet>231</a>#[non_exhaustive]
+<a href=#232 id=232 data-nosnippet>232</a></span><span class="kw">pub struct </span>ThreadMetadata {
+<a href=#233 id=233 data-nosnippet>233</a>    <span class="doccomment">/// Whether the thread is archived.
+<a href=#234 id=234 data-nosnippet>234</a>    </span><span class="kw">pub </span>archived: bool,
+<a href=#235 id=235 data-nosnippet>235</a>    <span class="doccomment">/// Duration in minutes to automatically archive the thread after recent activity.
+<a href=#236 id=236 data-nosnippet>236</a>    </span><span class="kw">pub </span>auto_archive_duration: AutoArchiveDuration,
+<a href=#237 id=237 data-nosnippet>237</a>    <span class="doccomment">/// The last time the thread's archive status was last changed; used for calculating recent
+<a href=#238 id=238 data-nosnippet>238</a>    /// activity.
+<a href=#239 id=239 data-nosnippet>239</a>    </span><span class="kw">pub </span>archive_timestamp: <span class="prelude-ty">Option</span>&lt;Timestamp&gt;,
+<a href=#240 id=240 data-nosnippet>240</a>    <span class="doccomment">/// When a thread is locked, only users with `MANAGE_THREADS` permission can unarchive it.
+<a href=#241 id=241 data-nosnippet>241</a>    </span><span class="attr">#[serde(default)]
+<a href=#242 id=242 data-nosnippet>242</a>    </span><span class="kw">pub </span>locked: bool,
+<a href=#243 id=243 data-nosnippet>243</a>    <span class="doccomment">/// Timestamp when the thread was created.
+<a href=#244 id=244 data-nosnippet>244</a>    ///
+<a href=#245 id=245 data-nosnippet>245</a>    /// **Note**: only populated for threads created after 2022-01-09
+<a href=#246 id=246 data-nosnippet>246</a>    </span><span class="kw">pub </span>create_timestamp: <span class="prelude-ty">Option</span>&lt;Timestamp&gt;,
+<a href=#247 id=247 data-nosnippet>247</a>    <span class="doccomment">/// Whether non-moderators can add other non-moderators to a thread.
+<a href=#248 id=248 data-nosnippet>248</a>    ///
+<a href=#249 id=249 data-nosnippet>249</a>    /// **Note**: Only available on private threads.
+<a href=#250 id=250 data-nosnippet>250</a>    </span><span class="attr">#[serde(default, skip_serializing_if = <span class="string">"is_false"</span>)]
+<a href=#251 id=251 data-nosnippet>251</a>    </span><span class="kw">pub </span>invitable: bool,
+<a href=#252 id=252 data-nosnippet>252</a>}
+<a href=#253 id=253 data-nosnippet>253</a>
+<a href=#254 id=254 data-nosnippet>254</a><span class="doccomment">/// A partial guild thread.
+<a href=#255 id=255 data-nosnippet>255</a>///
+<a href=#256 id=256 data-nosnippet>256</a>/// [Discord docs](https://discord.com/developers/docs/resources/channel#channel-object),
+<a href=#257 id=257 data-nosnippet>257</a>/// [subset description](https://discord.com/developers/docs/topics/gateway#thread-delete)
+<a href=#258 id=258 data-nosnippet>258</a></span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
+<a href=#259 id=259 data-nosnippet>259</a>#[derive(Clone, Debug, Deserialize, Serialize)]
+<a href=#260 id=260 data-nosnippet>260</a>#[non_exhaustive]
+<a href=#261 id=261 data-nosnippet>261</a></span><span class="kw">pub struct </span>PartialGuildThread {
+<a href=#262 id=262 data-nosnippet>262</a>    <span class="doccomment">/// The thread Id.
+<a href=#263 id=263 data-nosnippet>263</a>    </span><span class="kw">pub </span>id: ThreadId,
+<a href=#264 id=264 data-nosnippet>264</a>    <span class="doccomment">/// The thread guild Id.
+<a href=#265 id=265 data-nosnippet>265</a>    </span><span class="kw">pub </span>guild_id: GuildId,
+<a href=#266 id=266 data-nosnippet>266</a>    <span class="doccomment">/// The parent text channel Id.
+<a href=#267 id=267 data-nosnippet>267</a>    </span><span class="kw">pub </span>parent_id: ChannelId,
+<a href=#268 id=268 data-nosnippet>268</a>    <span class="doccomment">/// The channel type.
+<a href=#269 id=269 data-nosnippet>269</a>    </span><span class="attr">#[serde(rename = <span class="string">"type"</span>)]
+<a href=#270 id=270 data-nosnippet>270</a>    </span><span class="kw">pub </span>kind: ChannelType,
+<a href=#271 id=271 data-nosnippet>271</a>}
+<a href=#272 id=272 data-nosnippet>272</a>
+<a href=#273 id=273 data-nosnippet>273</a><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
+<a href=#274 id=274 data-nosnippet>274</a>#[derive(Clone, Debug, Deserialize, Serialize)]
+<a href=#275 id=275 data-nosnippet>275</a>#[non_exhaustive]
+<a href=#276 id=276 data-nosnippet>276</a></span><span class="kw">pub struct </span>PartialThreadMember {
+<a href=#277 id=277 data-nosnippet>277</a>    <span class="doccomment">/// The time the current user last joined the thread.
+<a href=#278 id=278 data-nosnippet>278</a>    </span><span class="kw">pub </span>join_timestamp: Timestamp,
+<a href=#279 id=279 data-nosnippet>279</a>    <span class="doccomment">/// Any user-thread settings, currently only used for notifications
+<a href=#280 id=280 data-nosnippet>280</a>    </span><span class="kw">pub </span>flags: ThreadMemberFlags,
+<a href=#281 id=281 data-nosnippet>281</a>}
+<a href=#282 id=282 data-nosnippet>282</a>
+<a href=#283 id=283 data-nosnippet>283</a><span class="doccomment">/// A model representing a user in a Guild Thread.
 <a href=#284 id=284 data-nosnippet>284</a>///
-<a href=#285 id=285 data-nosnippet>285</a>/// [Discord docs]: https://discord.com/developers/docs/resources/channel#thread-member-object,
-<a href=#286 id=286 data-nosnippet>286</a>/// [extra fields]: https://discord.com/developers/docs/topics/gateway-events#thread-member-update-thread-member-update-event-extra-fields
-<a href=#287 id=287 data-nosnippet>287</a></span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
-<a href=#288 id=288 data-nosnippet>288</a>#[derive(Clone, Debug, Deserialize, Serialize)]
-<a href=#289 id=289 data-nosnippet>289</a>#[non_exhaustive]
-<a href=#290 id=290 data-nosnippet>290</a></span><span class="kw">pub struct </span>ThreadMember {
-<a href=#291 id=291 data-nosnippet>291</a>    <span class="attr">#[serde(flatten)]
-<a href=#292 id=292 data-nosnippet>292</a>    </span><span class="kw">pub </span>inner: PartialThreadMember,
-<a href=#293 id=293 data-nosnippet>293</a>    <span class="doccomment">/// The id of the thread.
-<a href=#294 id=294 data-nosnippet>294</a>    </span><span class="kw">pub </span>id: ThreadId,
-<a href=#295 id=295 data-nosnippet>295</a>    <span class="doccomment">/// The id of the user.
-<a href=#296 id=296 data-nosnippet>296</a>    </span><span class="kw">pub </span>user_id: UserId,
-<a href=#297 id=297 data-nosnippet>297</a>    <span class="doccomment">/// Additional information about the user.
-<a href=#298 id=298 data-nosnippet>298</a>    ///
-<a href=#299 id=299 data-nosnippet>299</a>    /// This field is only present when `with_member` is set to `true` when calling
-<a href=#300 id=300 data-nosnippet>300</a>    /// List Thread Members or Get Thread Member, or inside [`ThreadMembersUpdateEvent`].
-<a href=#301 id=301 data-nosnippet>301</a>    </span><span class="kw">pub </span>member: <span class="prelude-ty">Option</span>&lt;Member&gt;,
-<a href=#302 id=302 data-nosnippet>302</a>    <span class="doccomment">/// ID of the guild.
-<a href=#303 id=303 data-nosnippet>303</a>    ///
-<a href=#304 id=304 data-nosnippet>304</a>    /// Always present in [`ThreadMemberUpdateEvent`], otherwise `None`.
-<a href=#305 id=305 data-nosnippet>305</a>    </span><span class="kw">pub </span>guild_id: <span class="prelude-ty">Option</span>&lt;GuildId&gt;,
-<a href=#306 id=306 data-nosnippet>306</a>    <span class="comment">// According to https://discord.com/developers/docs/topics/gateway-events#thread-members-update,
-<a href=#307 id=307 data-nosnippet>307</a>    // &gt; the thread member objects will also include the guild member and nullable presence objects
-<a href=#308 id=308 data-nosnippet>308</a>    // &gt; for each added thread member
-<a href=#309 id=309 data-nosnippet>309</a>    // Which implies that ThreadMember has a presence field. But https://discord.com/developers/docs/resources/channel#thread-member-object
-<a href=#310 id=310 data-nosnippet>310</a>    // says that's not true. I'm not adding the presence field here for now
-<a href=#311 id=311 data-nosnippet>311</a></span>}
-<a href=#312 id=312 data-nosnippet>312</a>
-<a href=#313 id=313 data-nosnippet>313</a><span class="macro">bitflags!</span> {
-<a href=#314 id=314 data-nosnippet>314</a>    <span class="doccomment">/// Describes extra features of the message.
-<a href=#315 id=315 data-nosnippet>315</a>    ///
-<a href=#316 id=316 data-nosnippet>316</a>    /// Discord docs: flags field on [Thread Member](https://discord.com/developers/docs/resources/channel#thread-member-object).
-<a href=#317 id=317 data-nosnippet>317</a>    </span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
-<a href=#318 id=318 data-nosnippet>318</a>    #[derive(Copy, Clone, Default, Debug, Eq, Hash, PartialEq)]
-<a href=#319 id=319 data-nosnippet>319</a>    </span><span class="kw">pub struct </span>ThreadMemberFlags: u64 {
-<a href=#320 id=320 data-nosnippet>320</a>        <span class="comment">// Not documented.
-<a href=#321 id=321 data-nosnippet>321</a>        </span><span class="kw">const </span>NOTIFICATIONS = <span class="number">1 </span>&lt;&lt; <span class="number">0</span>;
-<a href=#322 id=322 data-nosnippet>322</a>    }
-<a href=#323 id=323 data-nosnippet>323</a>}</code></pre></div></section></main></body></html>
+<a href=#285 id=285 data-nosnippet>285</a>/// [Discord docs], [extra fields].
+<a href=#286 id=286 data-nosnippet>286</a>///
+<a href=#287 id=287 data-nosnippet>287</a>/// [Discord docs]: https://discord.com/developers/docs/resources/channel#thread-member-object,
+<a href=#288 id=288 data-nosnippet>288</a>/// [extra fields]: https://discord.com/developers/docs/topics/gateway-events#thread-member-update-thread-member-update-event-extra-fields
+<a href=#289 id=289 data-nosnippet>289</a></span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
+<a href=#290 id=290 data-nosnippet>290</a>#[derive(Clone, Debug, Deserialize, Serialize)]
+<a href=#291 id=291 data-nosnippet>291</a>#[non_exhaustive]
+<a href=#292 id=292 data-nosnippet>292</a></span><span class="kw">pub struct </span>ThreadMember {
+<a href=#293 id=293 data-nosnippet>293</a>    <span class="attr">#[serde(flatten)]
+<a href=#294 id=294 data-nosnippet>294</a>    </span><span class="kw">pub </span>inner: PartialThreadMember,
+<a href=#295 id=295 data-nosnippet>295</a>    <span class="doccomment">/// The id of the thread.
+<a href=#296 id=296 data-nosnippet>296</a>    </span><span class="kw">pub </span>id: ThreadId,
+<a href=#297 id=297 data-nosnippet>297</a>    <span class="doccomment">/// The id of the user.
+<a href=#298 id=298 data-nosnippet>298</a>    </span><span class="kw">pub </span>user_id: UserId,
+<a href=#299 id=299 data-nosnippet>299</a>    <span class="doccomment">/// Additional information about the user.
+<a href=#300 id=300 data-nosnippet>300</a>    ///
+<a href=#301 id=301 data-nosnippet>301</a>    /// This field is only present when `with_member` is set to `true` when calling
+<a href=#302 id=302 data-nosnippet>302</a>    /// List Thread Members or Get Thread Member, or inside [`ThreadMembersUpdateEvent`].
+<a href=#303 id=303 data-nosnippet>303</a>    </span><span class="kw">pub </span>member: <span class="prelude-ty">Option</span>&lt;Member&gt;,
+<a href=#304 id=304 data-nosnippet>304</a>    <span class="doccomment">/// ID of the guild.
+<a href=#305 id=305 data-nosnippet>305</a>    ///
+<a href=#306 id=306 data-nosnippet>306</a>    /// Always present in [`ThreadMemberUpdateEvent`], otherwise `None`.
+<a href=#307 id=307 data-nosnippet>307</a>    </span><span class="kw">pub </span>guild_id: <span class="prelude-ty">Option</span>&lt;GuildId&gt;,
+<a href=#308 id=308 data-nosnippet>308</a>    <span class="comment">// According to https://discord.com/developers/docs/topics/gateway-events#thread-members-update,
+<a href=#309 id=309 data-nosnippet>309</a>    // &gt; the thread member objects will also include the guild member and nullable presence objects
+<a href=#310 id=310 data-nosnippet>310</a>    // &gt; for each added thread member
+<a href=#311 id=311 data-nosnippet>311</a>    // Which implies that ThreadMember has a presence field. But https://discord.com/developers/docs/resources/channel#thread-member-object
+<a href=#312 id=312 data-nosnippet>312</a>    // says that's not true. I'm not adding the presence field here for now
+<a href=#313 id=313 data-nosnippet>313</a></span>}
+<a href=#314 id=314 data-nosnippet>314</a>
+<a href=#315 id=315 data-nosnippet>315</a><span class="macro">bitflags!</span> {
+<a href=#316 id=316 data-nosnippet>316</a>    <span class="doccomment">/// Describes extra features of the message.
+<a href=#317 id=317 data-nosnippet>317</a>    ///
+<a href=#318 id=318 data-nosnippet>318</a>    /// Discord docs: flags field on [Thread Member](https://discord.com/developers/docs/resources/channel#thread-member-object).
+<a href=#319 id=319 data-nosnippet>319</a>    </span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
+<a href=#320 id=320 data-nosnippet>320</a>    #[derive(Copy, Clone, Default, Debug, Eq, Hash, PartialEq)]
+<a href=#321 id=321 data-nosnippet>321</a>    </span><span class="kw">pub struct </span>ThreadMemberFlags: u64 {
+<a href=#322 id=322 data-nosnippet>322</a>        <span class="comment">// Not documented.
+<a href=#323 id=323 data-nosnippet>323</a>        </span><span class="kw">const </span>NOTIFICATIONS = <span class="number">1 </span>&lt;&lt; <span class="number">0</span>;
+<a href=#324 id=324 data-nosnippet>324</a>    }
+<a href=#325 id=325 data-nosnippet>325</a>}</code></pre></div></section></main></body></html>
