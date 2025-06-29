@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/builder/edit_webhook_message.rs`."><title>edit_webhook_message.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.89.0-nightly (5526a2f47 2025-06-20)" data-channel="nightly" data-search-js="search-343419c9.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-fd3af306.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/builder/</div>edit_webhook_message.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::borrow::Cow;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/builder/edit_webhook_message.rs`."><title>edit_webhook_message.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (11ad40bb8 2025-06-28)" data-channel="nightly" data-search-js="search-179e01a3.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-340f468f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/builder/</div>edit_webhook_message.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::borrow::Cow;
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use super</span>::{
-<a href=#4 id=4 data-nosnippet>4</a>    CreateActionRow,
-<a href=#5 id=5 data-nosnippet>5</a>    CreateAllowedMentions,
-<a href=#6 id=6 data-nosnippet>6</a>    CreateAttachment,
+<a href=#4 id=4 data-nosnippet>4</a>    CreateAllowedMentions,
+<a href=#5 id=5 data-nosnippet>5</a>    CreateAttachment,
+<a href=#6 id=6 data-nosnippet>6</a>    CreateComponent,
 <a href=#7 id=7 data-nosnippet>7</a>    CreateEmbed,
 <a href=#8 id=8 data-nosnippet>8</a>    EditAttachments,
 <a href=#9 id=9 data-nosnippet>9</a>};
@@ -26,7 +26,7 @@
 <a href=#26 id=26 data-nosnippet>26</a>    <span class="attr">#[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
 <a href=#27 id=27 data-nosnippet>27</a>    </span>allowed_mentions: <span class="prelude-ty">Option</span>&lt;CreateAllowedMentions&lt;<span class="lifetime">'a</span>&gt;&gt;,
 <a href=#28 id=28 data-nosnippet>28</a>    <span class="attr">#[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
-<a href=#29 id=29 data-nosnippet>29</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) components: <span class="prelude-ty">Option</span>&lt;Cow&lt;<span class="lifetime">'a</span>, [CreateActionRow&lt;<span class="lifetime">'a</span>&gt;]&gt;&gt;,
+<a href=#29 id=29 data-nosnippet>29</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) components: <span class="prelude-ty">Option</span>&lt;Cow&lt;<span class="lifetime">'a</span>, [CreateComponent&lt;<span class="lifetime">'a</span>&gt;]&gt;&gt;,
 <a href=#30 id=30 data-nosnippet>30</a>    <span class="attr">#[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
 <a href=#31 id=31 data-nosnippet>31</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) attachments: <span class="prelude-ty">Option</span>&lt;EditAttachments&lt;<span class="lifetime">'a</span>&gt;&gt;,
 <a href=#32 id=32 data-nosnippet>32</a>
@@ -107,77 +107,78 @@
 <a href=#107 id=107 data-nosnippet>107</a>    ///
 <a href=#108 id=108 data-nosnippet>108</a>    /// [`WebhookType::Application`]: crate::model::webhook::WebhookType
 <a href=#109 id=109 data-nosnippet>109</a>    /// [`WebhookType::Incoming`]: crate::model::webhook::WebhookType
-<a href=#110 id=110 data-nosnippet>110</a>    </span><span class="kw">pub fn </span>components(<span class="kw-2">mut </span><span class="self">self</span>, components: <span class="kw">impl </span>Into&lt;Cow&lt;<span class="lifetime">'a</span>, [CreateActionRow&lt;<span class="lifetime">'a</span>&gt;]&gt;&gt;) -&gt; <span class="self">Self </span>{
+<a href=#110 id=110 data-nosnippet>110</a>    </span><span class="kw">pub fn </span>components(<span class="kw-2">mut </span><span class="self">self</span>, components: <span class="kw">impl </span>Into&lt;Cow&lt;<span class="lifetime">'a</span>, [CreateComponent&lt;<span class="lifetime">'a</span>&gt;]&gt;&gt;) -&gt; <span class="self">Self </span>{
 <a href=#111 id=111 data-nosnippet>111</a>        <span class="self">self</span>.components = <span class="prelude-val">Some</span>(components.into());
 <a href=#112 id=112 data-nosnippet>112</a>        <span class="self">self
 <a href=#113 id=113 data-nosnippet>113</a>    </span>}
-<a href=#114 id=114 data-nosnippet>114</a>    <span class="macro">super::button_and_select_menu_convenience_methods!</span>(<span class="self">self</span>.components);
-<a href=#115 id=115 data-nosnippet>115</a>
-<a href=#116 id=116 data-nosnippet>116</a>    <span class="doccomment">/// Sets attachments, see [`EditAttachments`] for more details.
-<a href=#117 id=117 data-nosnippet>117</a>    </span><span class="kw">pub fn </span>attachments(<span class="kw-2">mut </span><span class="self">self</span>, attachments: EditAttachments&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
-<a href=#118 id=118 data-nosnippet>118</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(attachments);
-<a href=#119 id=119 data-nosnippet>119</a>        <span class="self">self
-<a href=#120 id=120 data-nosnippet>120</a>    </span>}
-<a href=#121 id=121 data-nosnippet>121</a>
-<a href=#122 id=122 data-nosnippet>122</a>    <span class="doccomment">/// Adds a new attachment to the message.
-<a href=#123 id=123 data-nosnippet>123</a>    ///
-<a href=#124 id=124 data-nosnippet>124</a>    /// Resets existing attachments. See the documentation for [`EditAttachments`] for details.
-<a href=#125 id=125 data-nosnippet>125</a>    </span><span class="kw">pub fn </span>new_attachment(<span class="kw-2">mut </span><span class="self">self</span>, attachment: CreateAttachment&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
-<a href=#126 id=126 data-nosnippet>126</a>        <span class="kw">let </span>attachments = <span class="self">self</span>.attachments.get_or_insert_with(Default::default);
-<a href=#127 id=127 data-nosnippet>127</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(std::mem::take(attachments).add(attachment));
-<a href=#128 id=128 data-nosnippet>128</a>        <span class="self">self
-<a href=#129 id=129 data-nosnippet>129</a>    </span>}
-<a href=#130 id=130 data-nosnippet>130</a>
-<a href=#131 id=131 data-nosnippet>131</a>    <span class="doccomment">/// Shorthand for [`EditAttachments::keep`].
-<a href=#132 id=132 data-nosnippet>132</a>    </span><span class="kw">pub fn </span>keep_existing_attachment(<span class="kw-2">mut </span><span class="self">self</span>, id: AttachmentId) -&gt; <span class="self">Self </span>{
-<a href=#133 id=133 data-nosnippet>133</a>        <span class="kw">let </span>attachments = <span class="self">self</span>.attachments.get_or_insert_with(Default::default);
-<a href=#134 id=134 data-nosnippet>134</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(std::mem::take(attachments).keep(id));
-<a href=#135 id=135 data-nosnippet>135</a>        <span class="self">self
-<a href=#136 id=136 data-nosnippet>136</a>    </span>}
-<a href=#137 id=137 data-nosnippet>137</a>
-<a href=#138 id=138 data-nosnippet>138</a>    <span class="doccomment">/// Shorthand for calling [`Self::attachments`] with [`EditAttachments::new`].
-<a href=#139 id=139 data-nosnippet>139</a>    </span><span class="kw">pub fn </span>clear_attachments(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-<a href=#140 id=140 data-nosnippet>140</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(EditAttachments::new());
-<a href=#141 id=141 data-nosnippet>141</a>        <span class="self">self
-<a href=#142 id=142 data-nosnippet>142</a>    </span>}
-<a href=#143 id=143 data-nosnippet>143</a>
-<a href=#144 id=144 data-nosnippet>144</a>    <span class="doccomment">/// Edits the webhook's message.
-<a href=#145 id=145 data-nosnippet>145</a>    ///
-<a href=#146 id=146 data-nosnippet>146</a>    /// **Note**: Message contents must be under 2000 unicode code points, and embeds must be under
-<a href=#147 id=147 data-nosnippet>147</a>    /// 6000 code points.
-<a href=#148 id=148 data-nosnippet>148</a>    ///
-<a href=#149 id=149 data-nosnippet>149</a>    /// # Errors
-<a href=#150 id=150 data-nosnippet>150</a>    ///
-<a href=#151 id=151 data-nosnippet>151</a>    /// Returns an [`Error::Model`] if the message content is too long.
-<a href=#152 id=152 data-nosnippet>152</a>    ///
-<a href=#153 id=153 data-nosnippet>153</a>    /// May also return an [`Error::Http`] if the content is malformed, the webhook's token is
-<a href=#154 id=154 data-nosnippet>154</a>    /// invalid, or the given message Id does not belong to the webhook.
-<a href=#155 id=155 data-nosnippet>155</a>    ///
-<a href=#156 id=156 data-nosnippet>156</a>    /// Or may return an [`Error::Json`] if there is an error deserialising Discord's response.
-<a href=#157 id=157 data-nosnippet>157</a>    </span><span class="attr">#[cfg(feature = <span class="string">"http"</span>)]
-<a href=#158 id=158 data-nosnippet>158</a>    </span><span class="kw">pub async fn </span>execute(
-<a href=#159 id=159 data-nosnippet>159</a>        <span class="kw-2">mut </span><span class="self">self</span>,
-<a href=#160 id=160 data-nosnippet>160</a>        http: <span class="kw-2">&amp;</span>Http,
-<a href=#161 id=161 data-nosnippet>161</a>        webhook_id: WebhookId,
-<a href=#162 id=162 data-nosnippet>162</a>        webhook_token: <span class="kw-2">&amp;</span>str,
-<a href=#163 id=163 data-nosnippet>163</a>        message_id: MessageId,
-<a href=#164 id=164 data-nosnippet>164</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
-<a href=#165 id=165 data-nosnippet>165</a>        <span class="self">self</span>.check_length()<span class="question-mark">?</span>;
-<a href=#166 id=166 data-nosnippet>166</a>
-<a href=#167 id=167 data-nosnippet>167</a>        <span class="kw">let </span>files = <span class="self">self</span>.attachments.as_ref().map_or(Vec::new(), EditAttachments::new_attachments);
-<a href=#168 id=168 data-nosnippet>168</a>
-<a href=#169 id=169 data-nosnippet>169</a>        <span class="kw">if </span><span class="self">self</span>.allowed_mentions.is_none() {
-<a href=#170 id=170 data-nosnippet>170</a>            <span class="self">self</span>.allowed_mentions.clone_from(<span class="kw-2">&amp;</span>http.default_allowed_mentions);
-<a href=#171 id=171 data-nosnippet>171</a>        }
-<a href=#172 id=172 data-nosnippet>172</a>
-<a href=#173 id=173 data-nosnippet>173</a>        http.edit_webhook_message(
-<a href=#174 id=174 data-nosnippet>174</a>            webhook_id,
-<a href=#175 id=175 data-nosnippet>175</a>            <span class="self">self</span>.thread_id,
-<a href=#176 id=176 data-nosnippet>176</a>            webhook_token,
-<a href=#177 id=177 data-nosnippet>177</a>            message_id,
-<a href=#178 id=178 data-nosnippet>178</a>            <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#179 id=179 data-nosnippet>179</a>            files,
-<a href=#180 id=180 data-nosnippet>180</a>        )
-<a href=#181 id=181 data-nosnippet>181</a>        .<span class="kw">await
-<a href=#182 id=182 data-nosnippet>182</a>    </span>}
-<a href=#183 id=183 data-nosnippet>183</a>}</code></pre></div></section></main></body></html>
+<a href=#114 id=114 data-nosnippet>114</a>
+<a href=#115 id=115 data-nosnippet>115</a>    <span class="macro">super::button_and_select_menu_convenience_methods!</span>(<span class="self">self</span>.components);
+<a href=#116 id=116 data-nosnippet>116</a>
+<a href=#117 id=117 data-nosnippet>117</a>    <span class="doccomment">/// Sets attachments, see [`EditAttachments`] for more details.
+<a href=#118 id=118 data-nosnippet>118</a>    </span><span class="kw">pub fn </span>attachments(<span class="kw-2">mut </span><span class="self">self</span>, attachments: EditAttachments&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
+<a href=#119 id=119 data-nosnippet>119</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(attachments);
+<a href=#120 id=120 data-nosnippet>120</a>        <span class="self">self
+<a href=#121 id=121 data-nosnippet>121</a>    </span>}
+<a href=#122 id=122 data-nosnippet>122</a>
+<a href=#123 id=123 data-nosnippet>123</a>    <span class="doccomment">/// Adds a new attachment to the message.
+<a href=#124 id=124 data-nosnippet>124</a>    ///
+<a href=#125 id=125 data-nosnippet>125</a>    /// Resets existing attachments. See the documentation for [`EditAttachments`] for details.
+<a href=#126 id=126 data-nosnippet>126</a>    </span><span class="kw">pub fn </span>new_attachment(<span class="kw-2">mut </span><span class="self">self</span>, attachment: CreateAttachment&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
+<a href=#127 id=127 data-nosnippet>127</a>        <span class="kw">let </span>attachments = <span class="self">self</span>.attachments.get_or_insert_with(Default::default);
+<a href=#128 id=128 data-nosnippet>128</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(std::mem::take(attachments).add(attachment));
+<a href=#129 id=129 data-nosnippet>129</a>        <span class="self">self
+<a href=#130 id=130 data-nosnippet>130</a>    </span>}
+<a href=#131 id=131 data-nosnippet>131</a>
+<a href=#132 id=132 data-nosnippet>132</a>    <span class="doccomment">/// Shorthand for [`EditAttachments::keep`].
+<a href=#133 id=133 data-nosnippet>133</a>    </span><span class="kw">pub fn </span>keep_existing_attachment(<span class="kw-2">mut </span><span class="self">self</span>, id: AttachmentId) -&gt; <span class="self">Self </span>{
+<a href=#134 id=134 data-nosnippet>134</a>        <span class="kw">let </span>attachments = <span class="self">self</span>.attachments.get_or_insert_with(Default::default);
+<a href=#135 id=135 data-nosnippet>135</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(std::mem::take(attachments).keep(id));
+<a href=#136 id=136 data-nosnippet>136</a>        <span class="self">self
+<a href=#137 id=137 data-nosnippet>137</a>    </span>}
+<a href=#138 id=138 data-nosnippet>138</a>
+<a href=#139 id=139 data-nosnippet>139</a>    <span class="doccomment">/// Shorthand for calling [`Self::attachments`] with [`EditAttachments::new`].
+<a href=#140 id=140 data-nosnippet>140</a>    </span><span class="kw">pub fn </span>clear_attachments(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+<a href=#141 id=141 data-nosnippet>141</a>        <span class="self">self</span>.attachments = <span class="prelude-val">Some</span>(EditAttachments::new());
+<a href=#142 id=142 data-nosnippet>142</a>        <span class="self">self
+<a href=#143 id=143 data-nosnippet>143</a>    </span>}
+<a href=#144 id=144 data-nosnippet>144</a>
+<a href=#145 id=145 data-nosnippet>145</a>    <span class="doccomment">/// Edits the webhook's message.
+<a href=#146 id=146 data-nosnippet>146</a>    ///
+<a href=#147 id=147 data-nosnippet>147</a>    /// **Note**: Message contents must be under 2000 unicode code points, and embeds must be under
+<a href=#148 id=148 data-nosnippet>148</a>    /// 6000 code points.
+<a href=#149 id=149 data-nosnippet>149</a>    ///
+<a href=#150 id=150 data-nosnippet>150</a>    /// # Errors
+<a href=#151 id=151 data-nosnippet>151</a>    ///
+<a href=#152 id=152 data-nosnippet>152</a>    /// Returns an [`Error::Model`] if the message content is too long.
+<a href=#153 id=153 data-nosnippet>153</a>    ///
+<a href=#154 id=154 data-nosnippet>154</a>    /// May also return an [`Error::Http`] if the content is malformed, the webhook's token is
+<a href=#155 id=155 data-nosnippet>155</a>    /// invalid, or the given message Id does not belong to the webhook.
+<a href=#156 id=156 data-nosnippet>156</a>    ///
+<a href=#157 id=157 data-nosnippet>157</a>    /// Or may return an [`Error::Json`] if there is an error deserialising Discord's response.
+<a href=#158 id=158 data-nosnippet>158</a>    </span><span class="attr">#[cfg(feature = <span class="string">"http"</span>)]
+<a href=#159 id=159 data-nosnippet>159</a>    </span><span class="kw">pub async fn </span>execute(
+<a href=#160 id=160 data-nosnippet>160</a>        <span class="kw-2">mut </span><span class="self">self</span>,
+<a href=#161 id=161 data-nosnippet>161</a>        http: <span class="kw-2">&amp;</span>Http,
+<a href=#162 id=162 data-nosnippet>162</a>        webhook_id: WebhookId,
+<a href=#163 id=163 data-nosnippet>163</a>        webhook_token: <span class="kw-2">&amp;</span>str,
+<a href=#164 id=164 data-nosnippet>164</a>        message_id: MessageId,
+<a href=#165 id=165 data-nosnippet>165</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt; {
+<a href=#166 id=166 data-nosnippet>166</a>        <span class="self">self</span>.check_length()<span class="question-mark">?</span>;
+<a href=#167 id=167 data-nosnippet>167</a>
+<a href=#168 id=168 data-nosnippet>168</a>        <span class="kw">let </span>files = <span class="self">self</span>.attachments.as_ref().map_or(Vec::new(), EditAttachments::new_attachments);
+<a href=#169 id=169 data-nosnippet>169</a>
+<a href=#170 id=170 data-nosnippet>170</a>        <span class="kw">if </span><span class="self">self</span>.allowed_mentions.is_none() {
+<a href=#171 id=171 data-nosnippet>171</a>            <span class="self">self</span>.allowed_mentions.clone_from(<span class="kw-2">&amp;</span>http.default_allowed_mentions);
+<a href=#172 id=172 data-nosnippet>172</a>        }
+<a href=#173 id=173 data-nosnippet>173</a>
+<a href=#174 id=174 data-nosnippet>174</a>        http.edit_webhook_message(
+<a href=#175 id=175 data-nosnippet>175</a>            webhook_id,
+<a href=#176 id=176 data-nosnippet>176</a>            <span class="self">self</span>.thread_id,
+<a href=#177 id=177 data-nosnippet>177</a>            webhook_token,
+<a href=#178 id=178 data-nosnippet>178</a>            message_id,
+<a href=#179 id=179 data-nosnippet>179</a>            <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#180 id=180 data-nosnippet>180</a>            files,
+<a href=#181 id=181 data-nosnippet>181</a>        )
+<a href=#182 id=182 data-nosnippet>182</a>        .<span class="kw">await
+<a href=#183 id=183 data-nosnippet>183</a>    </span>}
+<a href=#184 id=184 data-nosnippet>184</a>}</code></pre></div></section></main></body></html>
