@@ -1,253 +1,325 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This enum stores every possible event that an `EventHandler` can receive."><title>FullEvent in serenity::gateway::client - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (11ad40bb8 2025-06-28)" data-channel="nightly" data-search-js="search-179e01a3.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-340f468f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc enum"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../serenity/index.html">serenity</a><span class="version">0.12.4</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Full<wbr>Event</a></h2><h3><a href="#variants">Variants</a></h3><ul class="block variant"><li><a href="#variant.AutoModActionExecution" title="AutoModActionExecution">AutoModActionExecution</a></li><li><a href="#variant.AutoModRuleCreate" title="AutoModRuleCreate">AutoModRuleCreate</a></li><li><a href="#variant.AutoModRuleDelete" title="AutoModRuleDelete">AutoModRuleDelete</a></li><li><a href="#variant.AutoModRuleUpdate" title="AutoModRuleUpdate">AutoModRuleUpdate</a></li><li><a href="#variant.CacheReady" title="CacheReady">CacheReady</a></li><li><a href="#variant.CategoryCreate" title="CategoryCreate">CategoryCreate</a></li><li><a href="#variant.CategoryDelete" title="CategoryDelete">CategoryDelete</a></li><li><a href="#variant.ChannelCreate" title="ChannelCreate">ChannelCreate</a></li><li><a href="#variant.ChannelDelete" title="ChannelDelete">ChannelDelete</a></li><li><a href="#variant.ChannelPinsUpdate" title="ChannelPinsUpdate">ChannelPinsUpdate</a></li><li><a href="#variant.ChannelUpdate" title="ChannelUpdate">ChannelUpdate</a></li><li><a href="#variant.CommandPermissionsUpdate" title="CommandPermissionsUpdate">CommandPermissionsUpdate</a></li><li><a href="#variant.EntitlementCreate" title="EntitlementCreate">EntitlementCreate</a></li><li><a href="#variant.EntitlementDelete" title="EntitlementDelete">EntitlementDelete</a></li><li><a href="#variant.EntitlementUpdate" title="EntitlementUpdate">EntitlementUpdate</a></li><li><a href="#variant.GuildAuditLogEntryCreate" title="GuildAuditLogEntryCreate">GuildAuditLogEntryCreate</a></li><li><a href="#variant.GuildBanAddition" title="GuildBanAddition">GuildBanAddition</a></li><li><a href="#variant.GuildBanRemoval" title="GuildBanRemoval">GuildBanRemoval</a></li><li><a href="#variant.GuildCreate" title="GuildCreate">GuildCreate</a></li><li><a href="#variant.GuildDelete" title="GuildDelete">GuildDelete</a></li><li><a href="#variant.GuildEmojisUpdate" title="GuildEmojisUpdate">GuildEmojisUpdate</a></li><li><a href="#variant.GuildIntegrationsUpdate" title="GuildIntegrationsUpdate">GuildIntegrationsUpdate</a></li><li><a href="#variant.GuildMemberAddition" title="GuildMemberAddition">GuildMemberAddition</a></li><li><a href="#variant.GuildMemberRemoval" title="GuildMemberRemoval">GuildMemberRemoval</a></li><li><a href="#variant.GuildMemberUpdate" title="GuildMemberUpdate">GuildMemberUpdate</a></li><li><a href="#variant.GuildMembersChunk" title="GuildMembersChunk">GuildMembersChunk</a></li><li><a href="#variant.GuildRoleCreate" title="GuildRoleCreate">GuildRoleCreate</a></li><li><a href="#variant.GuildRoleDelete" title="GuildRoleDelete">GuildRoleDelete</a></li><li><a href="#variant.GuildRoleUpdate" title="GuildRoleUpdate">GuildRoleUpdate</a></li><li><a href="#variant.GuildScheduledEventCreate" title="GuildScheduledEventCreate">GuildScheduledEventCreate</a></li><li><a href="#variant.GuildScheduledEventDelete" title="GuildScheduledEventDelete">GuildScheduledEventDelete</a></li><li><a href="#variant.GuildScheduledEventUpdate" title="GuildScheduledEventUpdate">GuildScheduledEventUpdate</a></li><li><a href="#variant.GuildScheduledEventUserAdd" title="GuildScheduledEventUserAdd">GuildScheduledEventUserAdd</a></li><li><a href="#variant.GuildScheduledEventUserRemove" title="GuildScheduledEventUserRemove">GuildScheduledEventUserRemove</a></li><li><a href="#variant.GuildStickersUpdate" title="GuildStickersUpdate">GuildStickersUpdate</a></li><li><a href="#variant.GuildUpdate" title="GuildUpdate">GuildUpdate</a></li><li><a href="#variant.IntegrationCreate" title="IntegrationCreate">IntegrationCreate</a></li><li><a href="#variant.IntegrationDelete" title="IntegrationDelete">IntegrationDelete</a></li><li><a href="#variant.IntegrationUpdate" title="IntegrationUpdate">IntegrationUpdate</a></li><li><a href="#variant.InteractionCreate" title="InteractionCreate">InteractionCreate</a></li><li><a href="#variant.InviteCreate" title="InviteCreate">InviteCreate</a></li><li><a href="#variant.InviteDelete" title="InviteDelete">InviteDelete</a></li><li><a href="#variant.Message" title="Message">Message</a></li><li><a href="#variant.MessageDelete" title="MessageDelete">MessageDelete</a></li><li><a href="#variant.MessageDeleteBulk" title="MessageDeleteBulk">MessageDeleteBulk</a></li><li><a href="#variant.MessagePollVoteAdd" title="MessagePollVoteAdd">MessagePollVoteAdd</a></li><li><a href="#variant.MessagePollVoteRemove" title="MessagePollVoteRemove">MessagePollVoteRemove</a></li><li><a href="#variant.MessageUpdate" title="MessageUpdate">MessageUpdate</a></li><li><a href="#variant.PresenceUpdate" title="PresenceUpdate">PresenceUpdate</a></li><li><a href="#variant.ReactionAdd" title="ReactionAdd">ReactionAdd</a></li><li><a href="#variant.ReactionRemove" title="ReactionRemove">ReactionRemove</a></li><li><a href="#variant.ReactionRemoveAll" title="ReactionRemoveAll">ReactionRemoveAll</a></li><li><a href="#variant.ReactionRemoveEmoji" title="ReactionRemoveEmoji">ReactionRemoveEmoji</a></li><li><a href="#variant.Ready" title="Ready">Ready</a></li><li><a href="#variant.Resume" title="Resume">Resume</a></li><li><a href="#variant.ShardStageUpdate" title="ShardStageUpdate">ShardStageUpdate</a></li><li><a href="#variant.ShardsReady" title="ShardsReady">ShardsReady</a></li><li><a href="#variant.StageInstanceCreate" title="StageInstanceCreate">StageInstanceCreate</a></li><li><a href="#variant.StageInstanceDelete" title="StageInstanceDelete">StageInstanceDelete</a></li><li><a href="#variant.StageInstanceUpdate" title="StageInstanceUpdate">StageInstanceUpdate</a></li><li><a href="#variant.ThreadCreate" title="ThreadCreate">ThreadCreate</a></li><li><a href="#variant.ThreadDelete" title="ThreadDelete">ThreadDelete</a></li><li><a href="#variant.ThreadListSync" title="ThreadListSync">ThreadListSync</a></li><li><a href="#variant.ThreadMemberUpdate" title="ThreadMemberUpdate">ThreadMemberUpdate</a></li><li><a href="#variant.ThreadMembersUpdate" title="ThreadMembersUpdate">ThreadMembersUpdate</a></li><li><a href="#variant.ThreadUpdate" title="ThreadUpdate">ThreadUpdate</a></li><li><a href="#variant.TypingStart" title="TypingStart">TypingStart</a></li><li><a href="#variant.UserUpdate" title="UserUpdate">UserUpdate</a></li><li><a href="#variant.VoiceChannelStatusUpdate" title="VoiceChannelStatusUpdate">VoiceChannelStatusUpdate</a></li><li><a href="#variant.VoiceServerUpdate" title="VoiceServerUpdate">VoiceServerUpdate</a></li><li><a href="#variant.VoiceStateUpdate" title="VoiceStateUpdate">VoiceStateUpdate</a></li><li><a href="#variant.WebhookUpdate" title="WebhookUpdate">WebhookUpdate</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-FullEvent" title="Clone">Clone</a></li><li><a href="#impl-Debug-for-FullEvent" title="Debug">Debug</a></li><li><a href="#impl-EnumCount-for-FullEvent" title="EnumCount">EnumCount</a></li><li><a href="#impl-From%3C%26FullEvent%3E-for-%26str" title="From&#60;&#38;&#39;_derivative_strum FullEvent&#62;">From&#60;&#38;&#39;_derivative_strum FullEvent&#62;</a></li><li><a href="#impl-From%3CFullEvent%3E-for-%26str" title="From&#60;FullEvent&#62;">From&#60;FullEvent&#62;</a></li><li><a href="#impl-Serialize-for-FullEvent" title="Serialize">Serialize</a></li><li><a href="#impl-VariantNames-for-FullEvent" title="VariantNames">VariantNames</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-Freeze-for-FullEvent" title="Freeze">Freeze</a></li><li><a href="#impl-RefUnwindSafe-for-FullEvent" title="RefUnwindSafe">RefUnwindSafe</a></li><li><a href="#impl-Send-for-FullEvent" title="Send">Send</a></li><li><a href="#impl-Sync-for-FullEvent" title="Sync">Sync</a></li><li><a href="#impl-Unpin-for-FullEvent" title="Unpin">Unpin</a></li><li><a href="#impl-UnwindSafe-for-FullEvent" title="UnwindSafe">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T" title="Any">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T" title="Borrow&#60;T&#62;">Borrow&#60;T&#62;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T" title="BorrowMut&#60;T&#62;">BorrowMut&#60;T&#62;</a></li><li><a href="#impl-CloneToUninit-for-T" title="CloneToUninit">CloneToUninit</a></li><li><a href="#impl-ErasedDestructor-for-T" title="ErasedDestructor">ErasedDestructor</a></li><li><a href="#impl-From%3CT%3E-for-T" title="From&#60;T&#62;">From&#60;T&#62;</a></li><li><a href="#impl-Instrument-for-T" title="Instrument">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T" title="Into&#60;U&#62;">Into&#60;U&#62;</a></li><li><a href="#impl-PolicyExt-for-T" title="PolicyExt">PolicyExt</a></li><li><a href="#impl-Same-for-T" title="Same">Same</a></li><li><a href="#impl-ToOwned-for-T" title="ToOwned">ToOwned</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T" title="TryFrom&#60;U&#62;">TryFrom&#60;U&#62;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T" title="TryInto&#60;U&#62;">TryInto&#60;U&#62;</a></li><li><a href="#impl-VZip%3CV%3E-for-T" title="VZip&#60;V&#62;">VZip&#60;V&#62;</a></li><li><a href="#impl-WithSubscriber-for-T" title="WithSubscriber">WithSubscriber</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="index.html">In serenity::<wbr>gateway::<wbr>client</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">serenity</a>::<wbr><a href="../index.html">gateway</a>::<wbr><a href="index.html">client</a></div><h1>Enum <span class="enum">FullEvent</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/serenity/gateway/client/event_handler.rs.html#63-414">Source</a> </span></div><pre class="rust item-decl"><code><div class="code-attribute">#[non_exhaustive]</div>pub enum FullEvent {
-<details class="toggle type-contents-toggle"><summary class="hideme"><span>Show 72 variants</span></summary>    CommandPermissionsUpdate {
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This enum stores every possible event that an `EventHandler` can receive."><title>FullEvent in serenity::gateway::client - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (35f603652 2025-06-29)" data-channel="nightly" data-search-js="search-179e01a3.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-340f468f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc enum"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../serenity/index.html">serenity</a><span class="version">0.12.4</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Full<wbr>Event</a></h2><h3><a href="#variants">Variants</a></h3><ul class="block variant"><li><a href="#variant.AutoModActionExecution" title="AutoModActionExecution">AutoModActionExecution</a></li><li><a href="#variant.AutoModRuleCreate" title="AutoModRuleCreate">AutoModRuleCreate</a></li><li><a href="#variant.AutoModRuleDelete" title="AutoModRuleDelete">AutoModRuleDelete</a></li><li><a href="#variant.AutoModRuleUpdate" title="AutoModRuleUpdate">AutoModRuleUpdate</a></li><li><a href="#variant.CacheReady" title="CacheReady">CacheReady</a></li><li><a href="#variant.CategoryCreate" title="CategoryCreate">CategoryCreate</a></li><li><a href="#variant.CategoryDelete" title="CategoryDelete">CategoryDelete</a></li><li><a href="#variant.ChannelCreate" title="ChannelCreate">ChannelCreate</a></li><li><a href="#variant.ChannelDelete" title="ChannelDelete">ChannelDelete</a></li><li><a href="#variant.ChannelPinsUpdate" title="ChannelPinsUpdate">ChannelPinsUpdate</a></li><li><a href="#variant.ChannelUpdate" title="ChannelUpdate">ChannelUpdate</a></li><li><a href="#variant.CommandPermissionsUpdate" title="CommandPermissionsUpdate">CommandPermissionsUpdate</a></li><li><a href="#variant.EntitlementCreate" title="EntitlementCreate">EntitlementCreate</a></li><li><a href="#variant.EntitlementDelete" title="EntitlementDelete">EntitlementDelete</a></li><li><a href="#variant.EntitlementUpdate" title="EntitlementUpdate">EntitlementUpdate</a></li><li><a href="#variant.GuildAuditLogEntryCreate" title="GuildAuditLogEntryCreate">GuildAuditLogEntryCreate</a></li><li><a href="#variant.GuildBanAddition" title="GuildBanAddition">GuildBanAddition</a></li><li><a href="#variant.GuildBanRemoval" title="GuildBanRemoval">GuildBanRemoval</a></li><li><a href="#variant.GuildCreate" title="GuildCreate">GuildCreate</a></li><li><a href="#variant.GuildDelete" title="GuildDelete">GuildDelete</a></li><li><a href="#variant.GuildEmojisUpdate" title="GuildEmojisUpdate">GuildEmojisUpdate</a></li><li><a href="#variant.GuildIntegrationsUpdate" title="GuildIntegrationsUpdate">GuildIntegrationsUpdate</a></li><li><a href="#variant.GuildMemberAddition" title="GuildMemberAddition">GuildMemberAddition</a></li><li><a href="#variant.GuildMemberRemoval" title="GuildMemberRemoval">GuildMemberRemoval</a></li><li><a href="#variant.GuildMemberUpdate" title="GuildMemberUpdate">GuildMemberUpdate</a></li><li><a href="#variant.GuildMembersChunk" title="GuildMembersChunk">GuildMembersChunk</a></li><li><a href="#variant.GuildRoleCreate" title="GuildRoleCreate">GuildRoleCreate</a></li><li><a href="#variant.GuildRoleDelete" title="GuildRoleDelete">GuildRoleDelete</a></li><li><a href="#variant.GuildRoleUpdate" title="GuildRoleUpdate">GuildRoleUpdate</a></li><li><a href="#variant.GuildScheduledEventCreate" title="GuildScheduledEventCreate">GuildScheduledEventCreate</a></li><li><a href="#variant.GuildScheduledEventDelete" title="GuildScheduledEventDelete">GuildScheduledEventDelete</a></li><li><a href="#variant.GuildScheduledEventUpdate" title="GuildScheduledEventUpdate">GuildScheduledEventUpdate</a></li><li><a href="#variant.GuildScheduledEventUserAdd" title="GuildScheduledEventUserAdd">GuildScheduledEventUserAdd</a></li><li><a href="#variant.GuildScheduledEventUserRemove" title="GuildScheduledEventUserRemove">GuildScheduledEventUserRemove</a></li><li><a href="#variant.GuildStickersUpdate" title="GuildStickersUpdate">GuildStickersUpdate</a></li><li><a href="#variant.GuildUpdate" title="GuildUpdate">GuildUpdate</a></li><li><a href="#variant.IntegrationCreate" title="IntegrationCreate">IntegrationCreate</a></li><li><a href="#variant.IntegrationDelete" title="IntegrationDelete">IntegrationDelete</a></li><li><a href="#variant.IntegrationUpdate" title="IntegrationUpdate">IntegrationUpdate</a></li><li><a href="#variant.InteractionCreate" title="InteractionCreate">InteractionCreate</a></li><li><a href="#variant.InviteCreate" title="InviteCreate">InviteCreate</a></li><li><a href="#variant.InviteDelete" title="InviteDelete">InviteDelete</a></li><li><a href="#variant.Message" title="Message">Message</a></li><li><a href="#variant.MessageDelete" title="MessageDelete">MessageDelete</a></li><li><a href="#variant.MessageDeleteBulk" title="MessageDeleteBulk">MessageDeleteBulk</a></li><li><a href="#variant.MessagePollVoteAdd" title="MessagePollVoteAdd">MessagePollVoteAdd</a></li><li><a href="#variant.MessagePollVoteRemove" title="MessagePollVoteRemove">MessagePollVoteRemove</a></li><li><a href="#variant.MessageUpdate" title="MessageUpdate">MessageUpdate</a></li><li><a href="#variant.PresenceUpdate" title="PresenceUpdate">PresenceUpdate</a></li><li><a href="#variant.ReactionAdd" title="ReactionAdd">ReactionAdd</a></li><li><a href="#variant.ReactionRemove" title="ReactionRemove">ReactionRemove</a></li><li><a href="#variant.ReactionRemoveAll" title="ReactionRemoveAll">ReactionRemoveAll</a></li><li><a href="#variant.ReactionRemoveEmoji" title="ReactionRemoveEmoji">ReactionRemoveEmoji</a></li><li><a href="#variant.Ready" title="Ready">Ready</a></li><li><a href="#variant.Resume" title="Resume">Resume</a></li><li><a href="#variant.ShardStageUpdate" title="ShardStageUpdate">ShardStageUpdate</a></li><li><a href="#variant.ShardsReady" title="ShardsReady">ShardsReady</a></li><li><a href="#variant.StageInstanceCreate" title="StageInstanceCreate">StageInstanceCreate</a></li><li><a href="#variant.StageInstanceDelete" title="StageInstanceDelete">StageInstanceDelete</a></li><li><a href="#variant.StageInstanceUpdate" title="StageInstanceUpdate">StageInstanceUpdate</a></li><li><a href="#variant.ThreadCreate" title="ThreadCreate">ThreadCreate</a></li><li><a href="#variant.ThreadDelete" title="ThreadDelete">ThreadDelete</a></li><li><a href="#variant.ThreadListSync" title="ThreadListSync">ThreadListSync</a></li><li><a href="#variant.ThreadMemberUpdate" title="ThreadMemberUpdate">ThreadMemberUpdate</a></li><li><a href="#variant.ThreadMembersUpdate" title="ThreadMembersUpdate">ThreadMembersUpdate</a></li><li><a href="#variant.ThreadUpdate" title="ThreadUpdate">ThreadUpdate</a></li><li><a href="#variant.TypingStart" title="TypingStart">TypingStart</a></li><li><a href="#variant.UserUpdate" title="UserUpdate">UserUpdate</a></li><li><a href="#variant.VoiceChannelStatusUpdate" title="VoiceChannelStatusUpdate">VoiceChannelStatusUpdate</a></li><li><a href="#variant.VoiceServerUpdate" title="VoiceServerUpdate">VoiceServerUpdate</a></li><li><a href="#variant.VoiceStateUpdate" title="VoiceStateUpdate">VoiceStateUpdate</a></li><li><a href="#variant.WebhookUpdate" title="WebhookUpdate">WebhookUpdate</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-FullEvent" title="Clone">Clone</a></li><li><a href="#impl-Debug-for-FullEvent" title="Debug">Debug</a></li><li><a href="#impl-EnumCount-for-FullEvent" title="EnumCount">EnumCount</a></li><li><a href="#impl-From%3C%26FullEvent%3E-for-%26str" title="From&#60;&#38;&#39;_derivative_strum FullEvent&#62;">From&#60;&#38;&#39;_derivative_strum FullEvent&#62;</a></li><li><a href="#impl-From%3CFullEvent%3E-for-%26str" title="From&#60;FullEvent&#62;">From&#60;FullEvent&#62;</a></li><li><a href="#impl-Serialize-for-FullEvent" title="Serialize">Serialize</a></li><li><a href="#impl-VariantNames-for-FullEvent" title="VariantNames">VariantNames</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-Freeze-for-FullEvent" title="Freeze">Freeze</a></li><li><a href="#impl-RefUnwindSafe-for-FullEvent" title="RefUnwindSafe">RefUnwindSafe</a></li><li><a href="#impl-Send-for-FullEvent" title="Send">Send</a></li><li><a href="#impl-Sync-for-FullEvent" title="Sync">Sync</a></li><li><a href="#impl-Unpin-for-FullEvent" title="Unpin">Unpin</a></li><li><a href="#impl-UnwindSafe-for-FullEvent" title="UnwindSafe">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T" title="Any">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T" title="Borrow&#60;T&#62;">Borrow&#60;T&#62;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T" title="BorrowMut&#60;T&#62;">BorrowMut&#60;T&#62;</a></li><li><a href="#impl-CloneToUninit-for-T" title="CloneToUninit">CloneToUninit</a></li><li><a href="#impl-ErasedDestructor-for-T" title="ErasedDestructor">ErasedDestructor</a></li><li><a href="#impl-From%3CT%3E-for-T" title="From&#60;T&#62;">From&#60;T&#62;</a></li><li><a href="#impl-Instrument-for-T" title="Instrument">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-T" title="Into&#60;U&#62;">Into&#60;U&#62;</a></li><li><a href="#impl-PolicyExt-for-T" title="PolicyExt">PolicyExt</a></li><li><a href="#impl-Same-for-T" title="Same">Same</a></li><li><a href="#impl-ToOwned-for-T" title="ToOwned">ToOwned</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T" title="TryFrom&#60;U&#62;">TryFrom&#60;U&#62;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T" title="TryInto&#60;U&#62;">TryInto&#60;U&#62;</a></li><li><a href="#impl-VZip%3CV%3E-for-T" title="VZip&#60;V&#62;">VZip&#60;V&#62;</a></li><li><a href="#impl-WithSubscriber-for-T" title="WithSubscriber">WithSubscriber</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="index.html">In serenity::<wbr>gateway::<wbr>client</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">serenity</a>::<wbr><a href="../index.html">gateway</a>::<wbr><a href="index.html">client</a></div><h1>Enum <span class="enum">FullEvent</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/serenity/gateway/client/event_handler.rs.html#63-414">Source</a> </span></div><pre class="rust item-decl"><code><div class="code-attribute">#[non_exhaustive]</div>pub enum FullEvent {
+<details class="toggle type-contents-toggle"><summary class="hideme"><span>Show 72 variants</span></summary>    #[non_exhaustive]
+    CommandPermissionsUpdate {
         permission: <a class="struct" href="../../model/application/struct.CommandPermissions.html" title="struct serenity::model::application::CommandPermissions">CommandPermissions</a>,
     },
+    #[non_exhaustive]
     AutoModRuleCreate {
         rule: <a class="struct" href="../../model/guild/automod/struct.AutoModRule.html" title="struct serenity::model::guild::automod::AutoModRule">AutoModRule</a>,
     },
+    #[non_exhaustive]
     AutoModRuleUpdate {
         rule: <a class="struct" href="../../model/guild/automod/struct.AutoModRule.html" title="struct serenity::model::guild::automod::AutoModRule">AutoModRule</a>,
     },
+    #[non_exhaustive]
     AutoModRuleDelete {
         rule: <a class="struct" href="../../model/guild/automod/struct.AutoModRule.html" title="struct serenity::model::guild::automod::AutoModRule">AutoModRule</a>,
     },
+    #[non_exhaustive]
     AutoModActionExecution {
         execution: <a class="struct" href="../../model/guild/automod/struct.ActionExecution.html" title="struct serenity::model::guild::automod::ActionExecution">ActionExecution</a>,
     },
+    #[non_exhaustive]
     CacheReady {
         guilds: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>&gt;,
     },
+    #[non_exhaustive]
     ShardsReady {
         total_shards: <a class="type" href="https://doc.rust-lang.org/nightly/core/num/nonzero/type.NonZeroU16.html" title="type core::num::nonzero::NonZeroU16">NonZeroU16</a>,
     },
+    #[non_exhaustive]
     ChannelCreate {
         channel: <a class="struct" href="../../model/channel/struct.GuildChannel.html" title="struct serenity::model::channel::GuildChannel">GuildChannel</a>,
     },
+    #[non_exhaustive]
     CategoryCreate {
         category: <a class="struct" href="../../model/channel/struct.GuildChannel.html" title="struct serenity::model::channel::GuildChannel">GuildChannel</a>,
     },
+    #[non_exhaustive]
     CategoryDelete {
         category: <a class="struct" href="../../model/channel/struct.GuildChannel.html" title="struct serenity::model::channel::GuildChannel">GuildChannel</a>,
     },
+    #[non_exhaustive]
     ChannelDelete {
         channel: <a class="struct" href="../../model/channel/struct.GuildChannel.html" title="struct serenity::model::channel::GuildChannel">GuildChannel</a>,
         messages: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/collections/vec_deque/struct.VecDeque.html" title="struct alloc::collections::vec_deque::VecDeque">VecDeque</a>&lt;<a class="struct" href="../../model/channel/struct.Message.html" title="struct serenity::model::channel::Message">Message</a>&gt;&gt;,
     },
+    #[non_exhaustive]
     ChannelPinsUpdate {
         pin: <a class="struct" href="../../model/event/struct.ChannelPinsUpdateEvent.html" title="struct serenity::model::event::ChannelPinsUpdateEvent">ChannelPinsUpdateEvent</a>,
     },
+    #[non_exhaustive]
     ChannelUpdate {
         old: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/channel/struct.GuildChannel.html" title="struct serenity::model::channel::GuildChannel">GuildChannel</a>&gt;,
         new: <a class="struct" href="../../model/channel/struct.GuildChannel.html" title="struct serenity::model::channel::GuildChannel">GuildChannel</a>,
     },
+    #[non_exhaustive]
     GuildAuditLogEntryCreate {
         entry: <a class="struct" href="../../model/guild/audit_log/struct.AuditLogEntry.html" title="struct serenity::model::guild::audit_log::AuditLogEntry">AuditLogEntry</a>,
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
     },
+    #[non_exhaustive]
     GuildBanAddition {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         banned_user: <a class="struct" href="../../model/user/struct.User.html" title="struct serenity::model::user::User">User</a>,
     },
+    #[non_exhaustive]
     GuildBanRemoval {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         unbanned_user: <a class="struct" href="../../model/user/struct.User.html" title="struct serenity::model::user::User">User</a>,
     },
+    #[non_exhaustive]
     GuildCreate {
         guild: <a class="struct" href="../../model/guild/struct.Guild.html" title="struct serenity::model::guild::Guild">Guild</a>,
         is_new: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;,
     },
+    #[non_exhaustive]
     GuildDelete {
         incomplete: <a class="struct" href="../../model/guild/struct.UnavailableGuild.html" title="struct serenity::model::guild::UnavailableGuild">UnavailableGuild</a>,
         full: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Guild.html" title="struct serenity::model::guild::Guild">Guild</a>&gt;,
     },
+    #[non_exhaustive]
     GuildEmojisUpdate {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         current_state: ExtractMap&lt;<a class="struct" href="../../model/id/struct.EmojiId.html" title="struct serenity::model::id::EmojiId">EmojiId</a>, <a class="struct" href="../../model/guild/struct.Emoji.html" title="struct serenity::model::guild::Emoji">Emoji</a>&gt;,
     },
+    #[non_exhaustive]
     GuildIntegrationsUpdate {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
     },
+    #[non_exhaustive]
     GuildMemberAddition {
         new_member: <a class="struct" href="../../model/guild/struct.Member.html" title="struct serenity::model::guild::Member">Member</a>,
     },
+    #[non_exhaustive]
     GuildMemberRemoval {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         user: <a class="struct" href="../../model/user/struct.User.html" title="struct serenity::model::user::User">User</a>,
         member_data_if_available: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Member.html" title="struct serenity::model::guild::Member">Member</a>&gt;,
     },
+    #[non_exhaustive]
     GuildMemberUpdate {
         old_if_available: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Member.html" title="struct serenity::model::guild::Member">Member</a>&gt;,
         new: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Member.html" title="struct serenity::model::guild::Member">Member</a>&gt;,
         event: <a class="struct" href="../../model/event/struct.GuildMemberUpdateEvent.html" title="struct serenity::model::event::GuildMemberUpdateEvent">GuildMemberUpdateEvent</a>,
     },
+    #[non_exhaustive]
     GuildMembersChunk {
         chunk: <a class="struct" href="../../model/event/struct.GuildMembersChunkEvent.html" title="struct serenity::model::event::GuildMembersChunkEvent">GuildMembersChunkEvent</a>,
     },
+    #[non_exhaustive]
     GuildRoleCreate {
         new: <a class="struct" href="../../model/guild/struct.Role.html" title="struct serenity::model::guild::Role">Role</a>,
     },
+    #[non_exhaustive]
     GuildRoleDelete {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         removed_role_id: <a class="struct" href="../../model/id/struct.RoleId.html" title="struct serenity::model::id::RoleId">RoleId</a>,
         removed_role_data_if_available: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Role.html" title="struct serenity::model::guild::Role">Role</a>&gt;,
     },
+    #[non_exhaustive]
     GuildRoleUpdate {
         old_data_if_available: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Role.html" title="struct serenity::model::guild::Role">Role</a>&gt;,
         new: <a class="struct" href="../../model/guild/struct.Role.html" title="struct serenity::model::guild::Role">Role</a>,
     },
+    #[non_exhaustive]
     GuildStickersUpdate {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         current_state: ExtractMap&lt;<a class="struct" href="../../model/id/struct.StickerId.html" title="struct serenity::model::id::StickerId">StickerId</a>, <a class="struct" href="../../model/sticker/struct.Sticker.html" title="struct serenity::model::sticker::Sticker">Sticker</a>&gt;,
     },
+    #[non_exhaustive]
     GuildUpdate {
         old_data_if_available: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/guild/struct.Guild.html" title="struct serenity::model::guild::Guild">Guild</a>&gt;,
         new_data: <a class="struct" href="../../model/guild/struct.PartialGuild.html" title="struct serenity::model::guild::PartialGuild">PartialGuild</a>,
     },
+    #[non_exhaustive]
     InviteCreate {
         data: <a class="struct" href="../../model/event/struct.InviteCreateEvent.html" title="struct serenity::model::event::InviteCreateEvent">InviteCreateEvent</a>,
     },
+    #[non_exhaustive]
     InviteDelete {
         data: <a class="struct" href="../../model/event/struct.InviteDeleteEvent.html" title="struct serenity::model::event::InviteDeleteEvent">InviteDeleteEvent</a>,
     },
+    #[non_exhaustive]
     Message {
         new_message: <a class="struct" href="../../model/channel/struct.Message.html" title="struct serenity::model::channel::Message">Message</a>,
     },
+    #[non_exhaustive]
     MessageDelete {
         channel_id: <a class="struct" href="../../model/id/struct.GenericChannelId.html" title="struct serenity::model::id::GenericChannelId">GenericChannelId</a>,
         deleted_message_id: <a class="struct" href="../../model/id/struct.MessageId.html" title="struct serenity::model::id::MessageId">MessageId</a>,
         guild_id: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>&gt;,
     },
+    #[non_exhaustive]
     MessageDeleteBulk {
         channel_id: <a class="struct" href="../../model/id/struct.GenericChannelId.html" title="struct serenity::model::id::GenericChannelId">GenericChannelId</a>,
         multiple_deleted_messages_ids: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../model/id/struct.MessageId.html" title="struct serenity::model::id::MessageId">MessageId</a>&gt;,
         guild_id: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>&gt;,
     },
+    #[non_exhaustive]
     MessageUpdate {
         old_if_available: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/channel/struct.Message.html" title="struct serenity::model::channel::Message">Message</a>&gt;,
         event: <a class="struct" href="../../model/event/struct.MessageUpdateEvent.html" title="struct serenity::model::event::MessageUpdateEvent">MessageUpdateEvent</a>,
     },
+    #[non_exhaustive]
     ReactionAdd {
         add_reaction: <a class="struct" href="../../model/channel/struct.Reaction.html" title="struct serenity::model::channel::Reaction">Reaction</a>,
     },
+    #[non_exhaustive]
     ReactionRemove {
         removed_reaction: <a class="struct" href="../../model/channel/struct.Reaction.html" title="struct serenity::model::channel::Reaction">Reaction</a>,
     },
+    #[non_exhaustive]
     ReactionRemoveAll {
         guild_id: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>&gt;,
         channel_id: <a class="struct" href="../../model/id/struct.GenericChannelId.html" title="struct serenity::model::id::GenericChannelId">GenericChannelId</a>,
         removed_from_message_id: <a class="struct" href="../../model/id/struct.MessageId.html" title="struct serenity::model::id::MessageId">MessageId</a>,
     },
+    #[non_exhaustive]
     ReactionRemoveEmoji {
         removed_reactions: <a class="struct" href="../../model/channel/struct.Reaction.html" title="struct serenity::model::channel::Reaction">Reaction</a>,
     },
+    #[non_exhaustive]
     PresenceUpdate {
         old_data: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/gateway/struct.Presence.html" title="struct serenity::model::gateway::Presence">Presence</a>&gt;,
         new_data: <a class="struct" href="../../model/gateway/struct.Presence.html" title="struct serenity::model::gateway::Presence">Presence</a>,
     },
+    #[non_exhaustive]
     Ready {
         data_about_bot: <a class="struct" href="../../model/gateway/struct.Ready.html" title="struct serenity::model::gateway::Ready">Ready</a>,
     },
+    #[non_exhaustive]
     Resume {
         event: <a class="struct" href="../../model/event/struct.ResumedEvent.html" title="struct serenity::model::event::ResumedEvent">ResumedEvent</a>,
     },
+    #[non_exhaustive]
     ShardStageUpdate {
         event: <a class="struct" href="../sharding/struct.ShardStageUpdateEvent.html" title="struct serenity::gateway::sharding::ShardStageUpdateEvent">ShardStageUpdateEvent</a>,
     },
+    #[non_exhaustive]
     TypingStart {
         event: <a class="struct" href="../../model/event/struct.TypingStartEvent.html" title="struct serenity::model::event::TypingStartEvent">TypingStartEvent</a>,
     },
+    #[non_exhaustive]
     UserUpdate {
         old_data: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/user/struct.CurrentUser.html" title="struct serenity::model::user::CurrentUser">CurrentUser</a>&gt;,
         new: <a class="struct" href="../../model/user/struct.CurrentUser.html" title="struct serenity::model::user::CurrentUser">CurrentUser</a>,
     },
+    #[non_exhaustive]
     VoiceServerUpdate {
         event: <a class="struct" href="../../model/event/struct.VoiceServerUpdateEvent.html" title="struct serenity::model::event::VoiceServerUpdateEvent">VoiceServerUpdateEvent</a>,
     },
+    #[non_exhaustive]
     VoiceStateUpdate {
         old: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/voice/struct.VoiceState.html" title="struct serenity::model::voice::VoiceState">VoiceState</a>&gt;,
         new: <a class="struct" href="../../model/voice/struct.VoiceState.html" title="struct serenity::model::voice::VoiceState">VoiceState</a>,
     },
+    #[non_exhaustive]
     VoiceChannelStatusUpdate {
         old: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
         status: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
         id: <a class="struct" href="../../model/id/struct.ChannelId.html" title="struct serenity::model::id::ChannelId">ChannelId</a>,
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
     },
+    #[non_exhaustive]
     WebhookUpdate {
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         belongs_to_channel_id: <a class="struct" href="../../model/id/struct.ChannelId.html" title="struct serenity::model::id::ChannelId">ChannelId</a>,
     },
+    #[non_exhaustive]
     InteractionCreate {
         interaction: <a class="enum" href="../../model/application/enum.Interaction.html" title="enum serenity::model::application::Interaction">Interaction</a>,
     },
+    #[non_exhaustive]
     IntegrationCreate {
         integration: <a class="struct" href="../../model/guild/struct.Integration.html" title="struct serenity::model::guild::Integration">Integration</a>,
     },
+    #[non_exhaustive]
     IntegrationUpdate {
         integration: <a class="struct" href="../../model/guild/struct.Integration.html" title="struct serenity::model::guild::Integration">Integration</a>,
     },
+    #[non_exhaustive]
     IntegrationDelete {
         integration_id: <a class="struct" href="../../model/id/struct.IntegrationId.html" title="struct serenity::model::id::IntegrationId">IntegrationId</a>,
         guild_id: <a class="struct" href="../../model/id/struct.GuildId.html" title="struct serenity::model::id::GuildId">GuildId</a>,
         application_id: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/id/struct.ApplicationId.html" title="struct serenity::model::id::ApplicationId">ApplicationId</a>&gt;,
     },
+    #[non_exhaustive]
     StageInstanceCreate {
         stage_instance: <a class="struct" href="../../model/channel/struct.StageInstance.html" title="struct serenity::model::channel::StageInstance">StageInstance</a>,
     },
+    #[non_exhaustive]
     StageInstanceUpdate {
         stage_instance: <a class="struct" href="../../model/channel/struct.StageInstance.html" title="struct serenity::model::channel::StageInstance">StageInstance</a>,
     },
+    #[non_exhaustive]
     StageInstanceDelete {
         stage_instance: <a class="struct" href="../../model/channel/struct.StageInstance.html" title="struct serenity::model::channel::StageInstance">StageInstance</a>,
     },
+    #[non_exhaustive]
     ThreadCreate {
         thread: <a class="struct" href="../../model/channel/struct.GuildThread.html" title="struct serenity::model::channel::GuildThread">GuildThread</a>,
         newly_created: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;,
     },
+    #[non_exhaustive]
     ThreadUpdate {
         old: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/channel/struct.GuildThread.html" title="struct serenity::model::channel::GuildThread">GuildThread</a>&gt;,
         new: <a class="struct" href="../../model/channel/struct.GuildThread.html" title="struct serenity::model::channel::GuildThread">GuildThread</a>,
     },
+    #[non_exhaustive]
     ThreadDelete {
         thread: <a class="struct" href="../../model/channel/struct.PartialGuildThread.html" title="struct serenity::model::channel::PartialGuildThread">PartialGuildThread</a>,
         full_thread_data: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../model/channel/struct.GuildThread.html" title="struct serenity::model::channel::GuildThread">GuildThread</a>&gt;,
     },
+    #[non_exhaustive]
     ThreadListSync {
         thread_list_sync: <a class="struct" href="../../model/event/struct.ThreadListSyncEvent.html" title="struct serenity::model::event::ThreadListSyncEvent">ThreadListSyncEvent</a>,
     },
+    #[non_exhaustive]
     ThreadMemberUpdate {
         thread_member: <a class="struct" href="../../model/channel/struct.ThreadMember.html" title="struct serenity::model::channel::ThreadMember">ThreadMember</a>,
     },
+    #[non_exhaustive]
     ThreadMembersUpdate {
         thread_members_update: <a class="struct" href="../../model/event/struct.ThreadMembersUpdateEvent.html" title="struct serenity::model::event::ThreadMembersUpdateEvent">ThreadMembersUpdateEvent</a>,
     },
+    #[non_exhaustive]
     GuildScheduledEventCreate {
         event: <a class="struct" href="../../model/guild/struct.ScheduledEvent.html" title="struct serenity::model::guild::ScheduledEvent">ScheduledEvent</a>,
     },
+    #[non_exhaustive]
     GuildScheduledEventUpdate {
         event: <a class="struct" href="../../model/guild/struct.ScheduledEvent.html" title="struct serenity::model::guild::ScheduledEvent">ScheduledEvent</a>,
     },
+    #[non_exhaustive]
     GuildScheduledEventDelete {
         event: <a class="struct" href="../../model/guild/struct.ScheduledEvent.html" title="struct serenity::model::guild::ScheduledEvent">ScheduledEvent</a>,
     },
+    #[non_exhaustive]
     GuildScheduledEventUserAdd {
         subscribed: <a class="struct" href="../../model/event/struct.GuildScheduledEventUserAddEvent.html" title="struct serenity::model::event::GuildScheduledEventUserAddEvent">GuildScheduledEventUserAddEvent</a>,
     },
+    #[non_exhaustive]
     GuildScheduledEventUserRemove {
         unsubscribed: <a class="struct" href="../../model/event/struct.GuildScheduledEventUserRemoveEvent.html" title="struct serenity::model::event::GuildScheduledEventUserRemoveEvent">GuildScheduledEventUserRemoveEvent</a>,
     },
+    #[non_exhaustive]
     EntitlementCreate {
         entitlement: <a class="struct" href="../../model/monetization/struct.Entitlement.html" title="struct serenity::model::monetization::Entitlement">Entitlement</a>,
     },
+    #[non_exhaustive]
     EntitlementUpdate {
         entitlement: <a class="struct" href="../../model/monetization/struct.Entitlement.html" title="struct serenity::model::monetization::Entitlement">Entitlement</a>,
     },
+    #[non_exhaustive]
     EntitlementDelete {
         entitlement: <a class="struct" href="../../model/monetization/struct.Entitlement.html" title="struct serenity::model::monetization::Entitlement">Entitlement</a>,
     },
+    #[non_exhaustive]
     MessagePollVoteAdd {
         event: <a class="struct" href="../../model/event/struct.MessagePollVoteAddEvent.html" title="struct serenity::model::event::MessagePollVoteAddEvent">MessagePollVoteAddEvent</a>,
     },
+    #[non_exhaustive]
     MessagePollVoteRemove {
         event: <a class="struct" href="../../model/event/struct.MessagePollVoteRemoveEvent.html" title="struct serenity::model::event::MessagePollVoteRemoveEvent">MessagePollVoteRemoveEvent</a>,
     },
