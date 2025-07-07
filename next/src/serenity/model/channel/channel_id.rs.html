@@ -56,7 +56,7 @@
 <a href=#56 id=56 data-nosnippet>56</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;GuildChannel&gt; {
 <a href=#57 id=57 data-nosnippet>57</a>        <span class="attr">#[cfg(feature = <span class="string">"cache"</span>)]
 <a href=#58 id=58 data-nosnippet>58</a>        </span><span class="comment">// Ignore clippy, the two `if let`s must be separated
-<a href=#59 id=59 data-nosnippet>59</a>        </span><span class="attr">#[allow(clippy::collapsible_if)]
+<a href=#59 id=59 data-nosnippet>59</a>        </span><span class="attr">#[expect(clippy::collapsible_if)]
 <a href=#60 id=60 data-nosnippet>60</a>        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache) = cache_http.cache() {
 <a href=#61 id=61 data-nosnippet>61</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(guild_id) = guild_id
 <a href=#62 id=62 data-nosnippet>62</a>                &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(guild) = cache.guild(guild_id)
