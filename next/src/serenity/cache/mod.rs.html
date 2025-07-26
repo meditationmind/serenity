@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/cache/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (b56aaec52 2025-07-24)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-673ee1e0.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/cache/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! A cache containing data received from [`Shard`]s.
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/cache/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (430d6eddf 2025-07-25)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-673ee1e0.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/cache/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! A cache containing data received from [`Shard`]s.
 <a href=#2 id=2 data-nosnippet>2</a>//!
 <a href=#3 id=3 data-nosnippet>3</a>//! Using the cache allows to avoid REST API requests via the [`http`] module where possible.
 <a href=#4 id=4 data-nosnippet>4</a>//! Issuing too many requests will lead to ratelimits.
@@ -119,10 +119,10 @@
 <a href=#119 id=119 data-nosnippet>119</a>
 <a href=#120 id=120 data-nosnippet>120</a><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
 <a href=#121 id=121 data-nosnippet>121</a>#[derive(Debug)]
-<a href=#122 id=122 data-nosnippet>122</a></span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>CachedShardData {
-<a href=#123 id=123 data-nosnippet>123</a>    <span class="kw">pub </span>total: NonZeroU16,
-<a href=#124 id=124 data-nosnippet>124</a>    <span class="kw">pub </span>connected: HashSet&lt;ShardId&gt;,
-<a href=#125 id=125 data-nosnippet>125</a>    <span class="kw">pub </span>has_sent_shards_ready: bool,
+<a href=#122 id=122 data-nosnippet>122</a></span><span class="kw">struct </span>CachedShardData {
+<a href=#123 id=123 data-nosnippet>123</a>    total: NonZeroU16,
+<a href=#124 id=124 data-nosnippet>124</a>    connected: HashSet&lt;ShardId&gt;,
+<a href=#125 id=125 data-nosnippet>125</a>    has_sent_shards_ready: bool,
 <a href=#126 id=126 data-nosnippet>126</a>}
 <a href=#127 id=127 data-nosnippet>127</a>
 <a href=#128 id=128 data-nosnippet>128</a><span class="doccomment">/// A cache containing data received from [`Shard`]s.
@@ -179,28 +179,28 @@
 <a href=#179 id=179 data-nosnippet>179</a>    // ---
 <a href=#180 id=180 data-nosnippet>180</a>    </span><span class="doccomment">/// A map of guilds with full data available. This includes data like [`Role`]s and [`Emoji`]s
 <a href=#181 id=181 data-nosnippet>181</a>    /// that are not available through the REST API.
-<a href=#182 id=182 data-nosnippet>182</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) guilds: MaybeMap&lt;GuildId, Guild&gt;,
+<a href=#182 id=182 data-nosnippet>182</a>    </span>guilds: MaybeMap&lt;GuildId, Guild&gt;,
 <a href=#183 id=183 data-nosnippet>183</a>    <span class="doccomment">/// A list of guilds which are "unavailable".
 <a href=#184 id=184 data-nosnippet>184</a>    ///
 <a href=#185 id=185 data-nosnippet>185</a>    /// Additionally, guilds are always unavailable for bot users when a Ready is received. Guilds
 <a href=#186 id=186 data-nosnippet>186</a>    /// are "sent in" over time through the receiving of [`Event::GuildCreate`]s.
-<a href=#187 id=187 data-nosnippet>187</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) unavailable_guilds: MaybeMap&lt;GuildId, ()&gt;,
+<a href=#187 id=187 data-nosnippet>187</a>    </span>unavailable_guilds: MaybeMap&lt;GuildId, ()&gt;,
 <a href=#188 id=188 data-nosnippet>188</a>
 <a href=#189 id=189 data-nosnippet>189</a>    <span class="comment">// Messages cache:
 <a href=#190 id=190 data-nosnippet>190</a>    // ---
-<a href=#191 id=191 data-nosnippet>191</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) messages: DashMap&lt;GenericChannelId, VecDeque&lt;Message&gt;, BuildHasher&gt;,
+<a href=#191 id=191 data-nosnippet>191</a>    </span>messages: DashMap&lt;GenericChannelId, VecDeque&lt;Message&gt;, BuildHasher&gt;,
 <a href=#192 id=192 data-nosnippet>192</a>
 <a href=#193 id=193 data-nosnippet>193</a>    <span class="comment">// Miscellanous fixed-size data
 <a href=#194 id=194 data-nosnippet>194</a>    // ---
 <a href=#195 id=195 data-nosnippet>195</a>    </span><span class="doccomment">/// Information about running shards
-<a href=#196 id=196 data-nosnippet>196</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) shard_data: RwLock&lt;CachedShardData&gt;,
+<a href=#196 id=196 data-nosnippet>196</a>    </span>shard_data: RwLock&lt;CachedShardData&gt;,
 <a href=#197 id=197 data-nosnippet>197</a>    <span class="doccomment">/// The current user "logged in" and for which events are being received for.
 <a href=#198 id=198 data-nosnippet>198</a>    ///
 <a href=#199 id=199 data-nosnippet>199</a>    /// The current user contains information that a regular [`User`] does not, such as whether it
 <a href=#200 id=200 data-nosnippet>200</a>    /// is a bot, whether the user is verified, etc.
 <a href=#201 id=201 data-nosnippet>201</a>    ///
 <a href=#202 id=202 data-nosnippet>202</a>    /// Refer to the documentation for [`CurrentUser`] for more information.
-<a href=#203 id=203 data-nosnippet>203</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) user: RwLock&lt;CurrentUser&gt;,
+<a href=#203 id=203 data-nosnippet>203</a>    </span>user: RwLock&lt;CurrentUser&gt;,
 <a href=#204 id=204 data-nosnippet>204</a>    <span class="doccomment">/// The settings for the cache.
 <a href=#205 id=205 data-nosnippet>205</a>    </span>settings: RwLock&lt;Settings&gt;,
 <a href=#206 id=206 data-nosnippet>206</a>}
@@ -595,7 +595,7 @@
 <a href=#595 id=595 data-nosnippet>595</a>                ..Default::default()
 <a href=#596 id=596 data-nosnippet>596</a>            },
 <a href=#597 id=597 data-nosnippet>597</a>        };
-<a href=#598 id=598 data-nosnippet>598</a>        <span class="macro">assert!</span>(cache.update(<span class="kw-2">&amp;mut </span>guild_create).is_none());
+<a href=#598 id=598 data-nosnippet>598</a>        <span class="macro">assert!</span>(cache.update(<span class="kw-2">&amp;mut </span>guild_create).is_some());
 <a href=#599 id=599 data-nosnippet>599</a>        <span class="macro">assert!</span>(cache.update(<span class="kw-2">&amp;mut </span>event).is_none());
 <a href=#600 id=600 data-nosnippet>600</a>
 <a href=#601 id=601 data-nosnippet>601</a>        <span class="kw">let </span><span class="kw-2">mut </span>guild_delete = GuildDeleteEvent {
