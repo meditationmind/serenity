@@ -552,10 +552,10 @@
 <a href=#552 id=552 data-nosnippet>552</a>        }
 <a href=#553 id=553 data-nosnippet>553</a>
 <a href=#554 id=554 data-nosnippet>554</a>        <span class="attr">#[cfg(feature = <span class="string">"temp_cache"</span>)]
-<a href=#555 id=555 data-nosnippet>555</a>        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache) = cache_http.cache() {
-<a href=#556 id=556 data-nosnippet>556</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(private_channel) = cache.temp_private_channels.get(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-<a href=#557 id=557 data-nosnippet>557</a>                <span class="kw">return </span><span class="prelude-val">Ok</span>(PrivateChannel::clone(<span class="kw-2">&amp;</span>private_channel));
-<a href=#558 id=558 data-nosnippet>558</a>            }
+<a href=#555 id=555 data-nosnippet>555</a>        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache) = cache_http.cache()
+<a href=#556 id=556 data-nosnippet>556</a>            &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(private_channel) = cache.temp_private_channels.get(<span class="kw-2">&amp;</span><span class="self">self</span>)
+<a href=#557 id=557 data-nosnippet>557</a>        {
+<a href=#558 id=558 data-nosnippet>558</a>            <span class="kw">return </span><span class="prelude-val">Ok</span>(PrivateChannel::clone(<span class="kw-2">&amp;</span>private_channel));
 <a href=#559 id=559 data-nosnippet>559</a>        }
 <a href=#560 id=560 data-nosnippet>560</a>
 <a href=#561 id=561 data-nosnippet>561</a>        <span class="kw">let </span>body = CreateDmChannel {
@@ -641,10 +641,10 @@
 <a href=#641 id=641 data-nosnippet>641</a>    </span><span class="kw">pub async fn </span>to_user(<span class="self">self</span>, cache_http: <span class="kw">impl </span>CacheHttp) -&gt; <span class="prelude-ty">Result</span>&lt;User&gt; {
 <a href=#642 id=642 data-nosnippet>642</a>        <span class="attr">#[cfg(feature = <span class="string">"temp_cache"</span>)]
 <a href=#643 id=643 data-nosnippet>643</a>        </span>{
-<a href=#644 id=644 data-nosnippet>644</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(cache) = cache_http.cache() {
-<a href=#645 id=645 data-nosnippet>645</a>                <span class="kw">if let </span><span class="prelude-val">Some</span>(user) = cache.temp_users.get(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-<a href=#646 id=646 data-nosnippet>646</a>                    <span class="kw">return </span><span class="prelude-val">Ok</span>(User::clone(<span class="kw-2">&amp;</span>user));
-<a href=#647 id=647 data-nosnippet>647</a>                }
+<a href=#644 id=644 data-nosnippet>644</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(cache) = cache_http.cache()
+<a href=#645 id=645 data-nosnippet>645</a>                &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(user) = cache.temp_users.get(<span class="kw-2">&amp;</span><span class="self">self</span>)
+<a href=#646 id=646 data-nosnippet>646</a>            {
+<a href=#647 id=647 data-nosnippet>647</a>                <span class="kw">return </span><span class="prelude-val">Ok</span>(User::clone(<span class="kw-2">&amp;</span>user));
 <a href=#648 id=648 data-nosnippet>648</a>            }
 <a href=#649 id=649 data-nosnippet>649</a>        }
 <a href=#650 id=650 data-nosnippet>650</a>
