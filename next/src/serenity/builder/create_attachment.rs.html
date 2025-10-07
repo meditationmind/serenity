@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/builder/create_attachment.rs`."><title>create_attachment.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (430d6eddf 2025-07-25)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-4e99c027.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-673ee1e0.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/builder/</div>create_attachment.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::borrow::Cow;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/builder/create_attachment.rs`."><title>create_attachment.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.92.0-nightly (3d8c1c1fc 2025-10-06)" data-channel="nightly" data-search-js="search-de4c8920.js" data-stringdex-js="stringdex-828709d0.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ce535bd0.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/builder/</div>create_attachment.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::borrow::Cow;
 <a href=#2 id=2 data-nosnippet>2</a><span class="kw">use </span>std::path::Path;
 <a href=#3 id=3 data-nosnippet>3</a>
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>bytes::Bytes;
@@ -115,21 +115,21 @@
 <a href=#115 id=115 data-nosnippet>115</a>    /// # Errors
 <a href=#116 id=116 data-nosnippet>116</a>    ///
 <a href=#117 id=117 data-nosnippet>117</a>    /// See [`CreateAttachment::get_data`] for details.
-<a href=#118 id=118 data-nosnippet>118</a>    </span><span class="kw">pub async fn </span>encode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ImageData&lt;<span class="lifetime">'_</span>&gt;&gt; {
+<a href=#118 id=118 data-nosnippet>118</a>    </span><span class="kw">pub async fn </span>encode(<span class="kw-2">&amp;</span><span class="self">self</span>, mimetype: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;DataUri&lt;<span class="lifetime">'_</span>&gt;&gt; {
 <a href=#119 id=119 data-nosnippet>119</a>        <span class="kw">use </span>base64::engine::{Config, Engine};
 <a href=#120 id=120 data-nosnippet>120</a>
-<a href=#121 id=121 data-nosnippet>121</a>        <span class="kw">const </span>PREFIX: <span class="kw-2">&amp;</span>str = <span class="string">"data:image/png;base64,"</span>;
+<a href=#121 id=121 data-nosnippet>121</a>        <span class="kw">let </span>prefix = <span class="macro">format!</span>(<span class="string">"data:{mimetype};base64,"</span>);
 <a href=#122 id=122 data-nosnippet>122</a>        <span class="kw">let </span>data = <span class="self">self</span>.get_data().<span class="kw">await</span><span class="question-mark">?</span>;
 <a href=#123 id=123 data-nosnippet>123</a>
 <a href=#124 id=124 data-nosnippet>124</a>        <span class="kw">let </span>engine = base64::prelude::BASE64_STANDARD;
 <a href=#125 id=125 data-nosnippet>125</a>        <span class="kw">let </span>encoded_size = base64::encoded_len(data.len(), engine.config().encode_padding())
-<a href=#126 id=126 data-nosnippet>126</a>            .and_then(|len| len.checked_add(PREFIX.len()))
+<a href=#126 id=126 data-nosnippet>126</a>            .and_then(|len| len.checked_add(prefix.len()))
 <a href=#127 id=127 data-nosnippet>127</a>            .expect(<span class="string">"buffer capacity overflow"</span>);
 <a href=#128 id=128 data-nosnippet>128</a>
 <a href=#129 id=129 data-nosnippet>129</a>        <span class="kw">let </span><span class="kw-2">mut </span>encoded = String::with_capacity(encoded_size);
-<a href=#130 id=130 data-nosnippet>130</a>        encoded.push_str(PREFIX);
+<a href=#130 id=130 data-nosnippet>130</a>        encoded.push_str(<span class="kw-2">&amp;</span>prefix);
 <a href=#131 id=131 data-nosnippet>131</a>        engine.encode_string(<span class="kw-2">&amp;</span>data, <span class="kw-2">&amp;mut </span>encoded);
-<a href=#132 id=132 data-nosnippet>132</a>        <span class="prelude-val">Ok</span>(ImageData(encoded.into()))
+<a href=#132 id=132 data-nosnippet>132</a>        <span class="prelude-val">Ok</span>(DataUri(encoded.into()))
 <a href=#133 id=133 data-nosnippet>133</a>    }
 <a href=#134 id=134 data-nosnippet>134</a>
 <a href=#135 id=135 data-nosnippet>135</a>    <span class="doccomment">/// Sets a description for the file (max 1024 characters).
@@ -139,27 +139,27 @@
 <a href=#139 id=139 data-nosnippet>139</a>    </span>}
 <a href=#140 id=140 data-nosnippet>140</a>}
 <a href=#141 id=141 data-nosnippet>141</a>
-<a href=#142 id=142 data-nosnippet>142</a><span class="doccomment">/// A wrapper around some base64-encoded image data. Used when an endpoint expects the image
-<a href=#143 id=143 data-nosnippet>143</a>/// payload directly as part of the JSON body, instead of as a multipart upload.
+<a href=#142 id=142 data-nosnippet>142</a><span class="doccomment">/// A wrapper around some base64-encoded data. Used when an endpoint expects a base64 payload
+<a href=#143 id=143 data-nosnippet>143</a>/// directly as part of the JSON body, instead of as a multipart upload.
 <a href=#144 id=144 data-nosnippet>144</a></span><span class="attr">#[derive(Clone, Debug, Serialize)]
 <a href=#145 id=145 data-nosnippet>145</a>#[serde(transparent)]
-<a href=#146 id=146 data-nosnippet>146</a></span><span class="kw">pub struct </span>ImageData&lt;<span class="lifetime">'a</span>&gt;(Cow&lt;<span class="lifetime">'a</span>, str&gt;);
+<a href=#146 id=146 data-nosnippet>146</a></span><span class="kw">pub struct </span>DataUri&lt;<span class="lifetime">'a</span>&gt;(Cow&lt;<span class="lifetime">'a</span>, str&gt;);
 <a href=#147 id=147 data-nosnippet>147</a>
-<a href=#148 id=148 data-nosnippet>148</a><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ImageData&lt;<span class="lifetime">'a</span>&gt; {
-<a href=#149 id=149 data-nosnippet>149</a>    <span class="doccomment">/// Accesses the stored base64-encoded image data.
+<a href=#148 id=148 data-nosnippet>148</a><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DataUri&lt;<span class="lifetime">'a</span>&gt; {
+<a href=#149 id=149 data-nosnippet>149</a>    <span class="doccomment">/// Accesses the stored base64-encoded data.
 <a href=#150 id=150 data-nosnippet>150</a>    </span><span class="attr">#[must_use]
 <a href=#151 id=151 data-nosnippet>151</a>    </span><span class="kw">pub fn </span>as_base64(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
 <a href=#152 id=152 data-nosnippet>152</a>        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
 <a href=#153 id=153 data-nosnippet>153</a>    </span>}
 <a href=#154 id=154 data-nosnippet>154</a>
-<a href=#155 id=155 data-nosnippet>155</a>    <span class="doccomment">/// Constructs image data from a base64-encoded blob of data. The string must be a valid data
+<a href=#155 id=155 data-nosnippet>155</a>    <span class="doccomment">/// Constructs a [`DataUri`] from a base64-encoded blob of data. The string must be a valid data
 <a href=#156 id=156 data-nosnippet>156</a>    /// URI, for example:
 <a href=#157 id=157 data-nosnippet>157</a>    ///
 <a href=#158 id=158 data-nosnippet>158</a>    /// ```
-<a href=#159 id=159 data-nosnippet>159</a>    /// use serenity::builder::ImageData;
+<a href=#159 id=159 data-nosnippet>159</a>    /// use serenity::builder::DataUri;
 <a href=#160 id=160 data-nosnippet>160</a>    ///
 <a href=#161 id=161 data-nosnippet>161</a>    /// let s = "data:image/png;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
-<a href=#162 id=162 data-nosnippet>162</a>    /// assert!(ImageData::from_base64(s).is_ok());
+<a href=#162 id=162 data-nosnippet>162</a>    /// assert!(DataUri::from_base64(s).is_ok());
 <a href=#163 id=163 data-nosnippet>163</a>    /// ```
 <a href=#164 id=164 data-nosnippet>164</a>    ///
 <a href=#165 id=165 data-nosnippet>165</a>    /// # Errors
