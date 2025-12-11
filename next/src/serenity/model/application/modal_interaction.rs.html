@@ -207,7 +207,7 @@
 <a href=#207 id=207 data-nosnippet>207</a>
 <a href=#208 id=208 data-nosnippet>208</a><span class="doccomment">/// A modal submit interaction data, provided by [`ModalInteraction::data`]
 <a href=#209 id=209 data-nosnippet>209</a>///
-<a href=#210 id=210 data-nosnippet>210</a>/// [Discord docs](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data-structure).
+<a href=#210 id=210 data-nosnippet>210</a>/// [Discord docs](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure).
 <a href=#211 id=211 data-nosnippet>211</a></span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
 <a href=#212 id=212 data-nosnippet>212</a>#[derive(Clone, Debug, Deserialize, Serialize)]
 <a href=#213 id=213 data-nosnippet>213</a>#[non_exhaustive]
@@ -215,6 +215,9 @@
 <a href=#215 id=215 data-nosnippet>215</a>    <span class="doccomment">/// The custom id of the modal
 <a href=#216 id=216 data-nosnippet>216</a>    </span><span class="kw">pub </span>custom_id: FixedString,
 <a href=#217 id=217 data-nosnippet>217</a>    <span class="doccomment">/// The components.
-<a href=#218 id=218 data-nosnippet>218</a>    </span><span class="kw">pub </span>components: FixedArray&lt;ActionRow&gt;,
-<a href=#219 id=219 data-nosnippet>219</a>}
+<a href=#218 id=218 data-nosnippet>218</a>    </span><span class="kw">pub </span>components: FixedArray&lt;Component&gt;,
+<a href=#219 id=219 data-nosnippet>219</a>    <span class="doccomment">/// The resolved entities from the selected options.
+<a href=#220 id=220 data-nosnippet>220</a>    </span><span class="attr">#[serde(default)]
+<a href=#221 id=221 data-nosnippet>221</a>    </span><span class="kw">pub </span>resolved: CommandDataResolved,
+<a href=#222 id=222 data-nosnippet>222</a>}
 </code></pre></div></section></main></body></html>
