@@ -214,10 +214,21 @@
 <a href=#214 id=214 data-nosnippet>214</a></span><span class="kw">pub struct </span>ModalInteractionData {
 <a href=#215 id=215 data-nosnippet>215</a>    <span class="doccomment">/// The custom id of the modal
 <a href=#216 id=216 data-nosnippet>216</a>    </span><span class="kw">pub </span>custom_id: FixedString,
-<a href=#217 id=217 data-nosnippet>217</a>    <span class="doccomment">/// The components.
+<a href=#217 id=217 data-nosnippet>217</a>    <span class="doccomment">/// The components of the submitted modal interaction.
 <a href=#218 id=218 data-nosnippet>218</a>    </span><span class="kw">pub </span>components: FixedArray&lt;Component&gt;,
 <a href=#219 id=219 data-nosnippet>219</a>    <span class="doccomment">/// The resolved entities from the selected options.
 <a href=#220 id=220 data-nosnippet>220</a>    </span><span class="attr">#[serde(default)]
 <a href=#221 id=221 data-nosnippet>221</a>    </span><span class="kw">pub </span>resolved: CommandDataResolved,
 <a href=#222 id=222 data-nosnippet>222</a>}
+<a href=#223 id=223 data-nosnippet>223</a>
+<a href=#224 id=224 data-nosnippet>224</a><span class="doccomment">/// A component which can appear inside a modal form submission.
+<a href=#225 id=225 data-nosnippet>225</a>///
+<a href=#226 id=226 data-nosnippet>226</a>/// [Discord docs](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-component-interaction-response-structures)
+<a href=#227 id=227 data-nosnippet>227</a></span><span class="attr">#[cfg_attr(feature = <span class="string">"typesize"</span>, derive(typesize::derive::TypeSize))]
+<a href=#228 id=228 data-nosnippet>228</a>#[derive(Clone, Debug, Serialize)]
+<a href=#229 id=229 data-nosnippet>229</a>#[non_exhaustive]
+<a href=#230 id=230 data-nosnippet>230</a></span><span class="kw">pub enum </span>ModalInteractionComponent {
+<a href=#231 id=231 data-nosnippet>231</a>    TextDisplay(TextDisplay),
+<a href=#232 id=232 data-nosnippet>232</a>    Label(Label),
+<a href=#233 id=233 data-nosnippet>233</a>}
 </code></pre></div></section></main></body></html>
