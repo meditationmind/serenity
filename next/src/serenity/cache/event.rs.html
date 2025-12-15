@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/cache/event.rs`."><title>event.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-80aa586b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0-nightly (fa5eda19b 2025-12-12)" data-channel="nightly" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-a3946164.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-3e30299d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/cache/</div>event.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::collections::VecDeque;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/cache/event.rs`."><title>event.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-80aa586b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serenity" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0-nightly (0208ee09b 2025-12-14)" data-channel="nightly" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-a3946164.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-3e30299d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">serenity/cache/</div>event.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::collections::VecDeque;
 <a href=#2 id=2 data-nosnippet>2</a><span class="kw">use </span>std::num::NonZeroU16;
 <a href=#3 id=3 data-nosnippet>3</a>
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>extract_map::entry::Entry;
@@ -54,7 +54,7 @@
 <a href=#54 id=54 data-nosnippet>54</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ChannelCreateEvent {
 <a href=#55 id=55 data-nosnippet>55</a>    <span class="kw">type </span>Output = GuildChannel;
 <a href=#56 id=56 data-nosnippet>56</a>
-<a href=#57 id=57 data-nosnippet>57</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#57 id=57 data-nosnippet>57</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#58 id=58 data-nosnippet>58</a>        cache
 <a href=#59 id=59 data-nosnippet>59</a>            .guilds
 <a href=#60 id=60 data-nosnippet>60</a>            .get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.channel.base.guild_id)
@@ -65,7 +65,7 @@
 <a href=#65 id=65 data-nosnippet>65</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ChannelDeleteEvent {
 <a href=#66 id=66 data-nosnippet>66</a>    <span class="kw">type </span>Output = VecDeque&lt;Message&gt;;
 <a href=#67 id=67 data-nosnippet>67</a>
-<a href=#68 id=68 data-nosnippet>68</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;VecDeque&lt;Message&gt;&gt; {
+<a href=#68 id=68 data-nosnippet>68</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;VecDeque&lt;Message&gt;&gt; {
 <a href=#69 id=69 data-nosnippet>69</a>        <span class="kw">let </span>(channel_id, guild_id) = (<span class="self">self</span>.channel.id, <span class="self">self</span>.channel.base.guild_id);
 <a href=#70 id=70 data-nosnippet>70</a>
 <a href=#71 id=71 data-nosnippet>71</a>        cache.guilds.get_mut(<span class="kw-2">&amp;</span>guild_id).map(|<span class="kw-2">mut </span>g| g.channels.remove(<span class="kw-2">&amp;</span>channel_id));
@@ -78,7 +78,7 @@
 <a href=#78 id=78 data-nosnippet>78</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ChannelUpdateEvent {
 <a href=#79 id=79 data-nosnippet>79</a>    <span class="kw">type </span>Output = GuildChannel;
 <a href=#80 id=80 data-nosnippet>80</a>
-<a href=#81 id=81 data-nosnippet>81</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;GuildChannel&gt; {
+<a href=#81 id=81 data-nosnippet>81</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;GuildChannel&gt; {
 <a href=#82 id=82 data-nosnippet>82</a>        cache
 <a href=#83 id=83 data-nosnippet>83</a>            .guilds
 <a href=#84 id=84 data-nosnippet>84</a>            .get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.channel.base.guild_id)
@@ -89,7 +89,7 @@
 <a href=#89 id=89 data-nosnippet>89</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ChannelPinsUpdateEvent {
 <a href=#90 id=90 data-nosnippet>90</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#91 id=91 data-nosnippet>91</a>
-<a href=#92 id=92 data-nosnippet>92</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#92 id=92 data-nosnippet>92</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#93 id=93 data-nosnippet>93</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(guild_id) = <span class="self">self</span>.guild_id
 <a href=#94 id=94 data-nosnippet>94</a>            &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span>guild_id)
 <a href=#95 id=95 data-nosnippet>95</a>        {
@@ -111,7 +111,7 @@
 <a href=#111 id=111 data-nosnippet>111</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildCreateEvent {
 <a href=#112 id=112 data-nosnippet>112</a>    <span class="kw">type </span>Output = Vec&lt;GuildId&gt;;
 <a href=#113 id=113 data-nosnippet>113</a>
-<a href=#114 id=114 data-nosnippet>114</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#114 id=114 data-nosnippet>114</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#115 id=115 data-nosnippet>115</a>        cache.unavailable_guilds.remove(<span class="kw-2">&amp;</span><span class="self">self</span>.guild.id);
 <a href=#116 id=116 data-nosnippet>116</a>        <span class="kw">let </span>guild = <span class="self">self</span>.guild.clone();
 <a href=#117 id=117 data-nosnippet>117</a>
@@ -129,7 +129,7 @@
 <a href=#129 id=129 data-nosnippet>129</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildDeleteEvent {
 <a href=#130 id=130 data-nosnippet>130</a>    <span class="kw">type </span>Output = Guild;
 <a href=#131 id=131 data-nosnippet>131</a>
-<a href=#132 id=132 data-nosnippet>132</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#132 id=132 data-nosnippet>132</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#133 id=133 data-nosnippet>133</a>        <span class="kw">if </span><span class="self">self</span>.guild.unavailable {
 <a href=#134 id=134 data-nosnippet>134</a>            cache.unavailable_guilds.insert(<span class="self">self</span>.guild.id, ());
 <a href=#135 id=135 data-nosnippet>135</a>            cache.guilds.remove(<span class="kw-2">&amp;</span><span class="self">self</span>.guild.id);
@@ -154,7 +154,7 @@
 <a href=#154 id=154 data-nosnippet>154</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildEmojisUpdateEvent {
 <a href=#155 id=155 data-nosnippet>155</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#156 id=156 data-nosnippet>156</a>
-<a href=#157 id=157 data-nosnippet>157</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#157 id=157 data-nosnippet>157</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#158 id=158 data-nosnippet>158</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id) {
 <a href=#159 id=159 data-nosnippet>159</a>            guild.emojis.clone_from(<span class="kw-2">&amp;</span><span class="self">self</span>.emojis);
 <a href=#160 id=160 data-nosnippet>160</a>        }
@@ -166,7 +166,7 @@
 <a href=#166 id=166 data-nosnippet>166</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildMemberAddEvent {
 <a href=#167 id=167 data-nosnippet>167</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#168 id=168 data-nosnippet>168</a>
-<a href=#169 id=169 data-nosnippet>169</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#169 id=169 data-nosnippet>169</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#170 id=170 data-nosnippet>170</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.member.guild_id) {
 <a href=#171 id=171 data-nosnippet>171</a>            guild.member_count += <span class="number">1</span>;
 <a href=#172 id=172 data-nosnippet>172</a>            guild.members.insert(<span class="self">self</span>.member.clone());
@@ -179,7 +179,7 @@
 <a href=#179 id=179 data-nosnippet>179</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildMemberRemoveEvent {
 <a href=#180 id=180 data-nosnippet>180</a>    <span class="kw">type </span>Output = Member;
 <a href=#181 id=181 data-nosnippet>181</a>
-<a href=#182 id=182 data-nosnippet>182</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#182 id=182 data-nosnippet>182</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#183 id=183 data-nosnippet>183</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id) {
 <a href=#184 id=184 data-nosnippet>184</a>            guild.member_count -= <span class="number">1</span>;
 <a href=#185 id=185 data-nosnippet>185</a>            <span class="kw">return </span>guild.members.remove(<span class="kw-2">&amp;</span><span class="self">self</span>.user.id);
@@ -192,7 +192,7 @@
 <a href=#192 id=192 data-nosnippet>192</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildMemberUpdateEvent {
 <a href=#193 id=193 data-nosnippet>193</a>    <span class="kw">type </span>Output = Member;
 <a href=#194 id=194 data-nosnippet>194</a>
-<a href=#195 id=195 data-nosnippet>195</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#195 id=195 data-nosnippet>195</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#196 id=196 data-nosnippet>196</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id) {
 <a href=#197 id=197 data-nosnippet>197</a>            <span class="kw">let </span>item = <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>member) = guild.members.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.user.id) {
 <a href=#198 id=198 data-nosnippet>198</a>                <span class="kw">let </span>item = <span class="prelude-val">Some</span>(member.clone());
@@ -250,7 +250,7 @@
 <a href=#250 id=250 data-nosnippet>250</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildMembersChunkEvent {
 <a href=#251 id=251 data-nosnippet>251</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#252 id=252 data-nosnippet>252</a>
-<a href=#253 id=253 data-nosnippet>253</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#253 id=253 data-nosnippet>253</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#254 id=254 data-nosnippet>254</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>g) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id) {
 <a href=#255 id=255 data-nosnippet>255</a>            g.members.extend(<span class="self">self</span>.members.clone());
 <a href=#256 id=256 data-nosnippet>256</a>        }
@@ -262,7 +262,7 @@
 <a href=#262 id=262 data-nosnippet>262</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildRoleCreateEvent {
 <a href=#263 id=263 data-nosnippet>263</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#264 id=264 data-nosnippet>264</a>
-<a href=#265 id=265 data-nosnippet>265</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#265 id=265 data-nosnippet>265</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#266 id=266 data-nosnippet>266</a>        cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.role.guild_id).map(|<span class="kw-2">mut </span>g| g.roles.insert(<span class="self">self</span>.role.clone()));
 <a href=#267 id=267 data-nosnippet>267</a>        <span class="prelude-val">None
 <a href=#268 id=268 data-nosnippet>268</a>    </span>}
@@ -271,7 +271,7 @@
 <a href=#271 id=271 data-nosnippet>271</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildRoleDeleteEvent {
 <a href=#272 id=272 data-nosnippet>272</a>    <span class="kw">type </span>Output = Role;
 <a href=#273 id=273 data-nosnippet>273</a>
-<a href=#274 id=274 data-nosnippet>274</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#274 id=274 data-nosnippet>274</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#275 id=275 data-nosnippet>275</a>        cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id).and_then(|<span class="kw-2">mut </span>g| g.roles.remove(<span class="kw-2">&amp;</span><span class="self">self</span>.role_id))
 <a href=#276 id=276 data-nosnippet>276</a>    }
 <a href=#277 id=277 data-nosnippet>277</a>}
@@ -279,7 +279,7 @@
 <a href=#279 id=279 data-nosnippet>279</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildRoleUpdateEvent {
 <a href=#280 id=280 data-nosnippet>280</a>    <span class="kw">type </span>Output = Role;
 <a href=#281 id=281 data-nosnippet>281</a>
-<a href=#282 id=282 data-nosnippet>282</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#282 id=282 data-nosnippet>282</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#283 id=283 data-nosnippet>283</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.role.guild_id)
 <a href=#284 id=284 data-nosnippet>284</a>            &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>role) = guild.roles.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.role.id)
 <a href=#285 id=285 data-nosnippet>285</a>        {
@@ -293,7 +293,7 @@
 <a href=#293 id=293 data-nosnippet>293</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildStickersUpdateEvent {
 <a href=#294 id=294 data-nosnippet>294</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#295 id=295 data-nosnippet>295</a>
-<a href=#296 id=296 data-nosnippet>296</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#296 id=296 data-nosnippet>296</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#297 id=297 data-nosnippet>297</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id) {
 <a href=#298 id=298 data-nosnippet>298</a>            guild.stickers.clone_from(<span class="kw-2">&amp;</span><span class="self">self</span>.stickers);
 <a href=#299 id=299 data-nosnippet>299</a>        }
@@ -305,7 +305,7 @@
 <a href=#305 id=305 data-nosnippet>305</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildUpdateEvent {
 <a href=#306 id=306 data-nosnippet>306</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#307 id=307 data-nosnippet>307</a>
-<a href=#308 id=308 data-nosnippet>308</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#308 id=308 data-nosnippet>308</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#309 id=309 data-nosnippet>309</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild.id) {
 <a href=#310 id=310 data-nosnippet>310</a>            guild.afk_metadata.clone_from(<span class="kw-2">&amp;</span><span class="self">self</span>.guild.afk_metadata);
 <a href=#311 id=311 data-nosnippet>311</a>            guild.banner.clone_from(<span class="kw-2">&amp;</span><span class="self">self</span>.guild.banner);
@@ -354,7 +354,7 @@
 <a href=#354 id=354 data-nosnippet>354</a>    <span class="doccomment">/// The oldest message, if the channel's message cache was already full.
 <a href=#355 id=355 data-nosnippet>355</a>    </span><span class="kw">type </span>Output = Message;
 <a href=#356 id=356 data-nosnippet>356</a>
-<a href=#357 id=357 data-nosnippet>357</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#357 id=357 data-nosnippet>357</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#358 id=358 data-nosnippet>358</a>        <span class="comment">// Update the relevant channel object with the new latest message if this message is newer
 <a href=#359 id=359 data-nosnippet>359</a>        </span><span class="kw">let </span>guild = <span class="self">self</span>.message.guild_id.and_then(|g_id| cache.guilds.get_mut(<span class="kw-2">&amp;</span>g_id));
 <a href=#360 id=360 data-nosnippet>360</a>
@@ -415,7 +415,7 @@
 <a href=#415 id=415 data-nosnippet>415</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>MessageUpdateEvent {
 <a href=#416 id=416 data-nosnippet>416</a>    <span class="kw">type </span>Output = Message;
 <a href=#417 id=417 data-nosnippet>417</a>
-<a href=#418 id=418 data-nosnippet>418</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#418 id=418 data-nosnippet>418</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#419 id=419 data-nosnippet>419</a>        <span class="kw">for </span>message <span class="kw">in </span>cache.messages.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.message.channel_id)<span class="question-mark">?</span>.iter_mut() {
 <a href=#420 id=420 data-nosnippet>420</a>            <span class="kw">if </span>message.id == <span class="self">self</span>.message.id {
 <a href=#421 id=421 data-nosnippet>421</a>                <span class="kw">let </span>old_message = message.clone();
@@ -431,7 +431,7 @@
 <a href=#431 id=431 data-nosnippet>431</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>PresenceUpdateEvent {
 <a href=#432 id=432 data-nosnippet>432</a>    <span class="kw">type </span>Output = Presence;
 <a href=#433 id=433 data-nosnippet>433</a>
-<a href=#434 id=434 data-nosnippet>434</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;Presence&gt; {
+<a href=#434 id=434 data-nosnippet>434</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;Presence&gt; {
 <a href=#435 id=435 data-nosnippet>435</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(guild_id) = <span class="self">self</span>.presence.guild_id
 <a href=#436 id=436 data-nosnippet>436</a>            &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span>guild_id)
 <a href=#437 id=437 data-nosnippet>437</a>        {
@@ -476,7 +476,7 @@
 <a href=#476 id=476 data-nosnippet>476</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ReadyEvent {
 <a href=#477 id=477 data-nosnippet>477</a>    <span class="kw">type </span>Output = NonZeroU16;
 <a href=#478 id=478 data-nosnippet>478</a>
-<a href=#479 id=479 data-nosnippet>479</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#479 id=479 data-nosnippet>479</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#480 id=480 data-nosnippet>480</a>        <span class="kw">for </span>unavailable <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.ready.guilds {
 <a href=#481 id=481 data-nosnippet>481</a>            cache.guilds.remove(<span class="kw-2">&amp;</span>unavailable.id);
 <a href=#482 id=482 data-nosnippet>482</a>            cache.unavailable_guilds.insert(unavailable.id, ());
@@ -502,7 +502,7 @@
 <a href=#502 id=502 data-nosnippet>502</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ThreadCreateEvent {
 <a href=#503 id=503 data-nosnippet>503</a>    <span class="kw">type </span>Output = GuildThread;
 <a href=#504 id=504 data-nosnippet>504</a>
-<a href=#505 id=505 data-nosnippet>505</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#505 id=505 data-nosnippet>505</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#506 id=506 data-nosnippet>506</a>        cache
 <a href=#507 id=507 data-nosnippet>507</a>            .guilds
 <a href=#508 id=508 data-nosnippet>508</a>            .get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.thread.base.guild_id)
@@ -513,7 +513,7 @@
 <a href=#513 id=513 data-nosnippet>513</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ThreadUpdateEvent {
 <a href=#514 id=514 data-nosnippet>514</a>    <span class="kw">type </span>Output = GuildThread;
 <a href=#515 id=515 data-nosnippet>515</a>
-<a href=#516 id=516 data-nosnippet>516</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#516 id=516 data-nosnippet>516</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#517 id=517 data-nosnippet>517</a>        cache
 <a href=#518 id=518 data-nosnippet>518</a>            .guilds
 <a href=#519 id=519 data-nosnippet>519</a>            .get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.thread.base.guild_id)
@@ -524,7 +524,7 @@
 <a href=#524 id=524 data-nosnippet>524</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ThreadDeleteEvent {
 <a href=#525 id=525 data-nosnippet>525</a>    <span class="kw">type </span>Output = GuildThread;
 <a href=#526 id=526 data-nosnippet>526</a>
-<a href=#527 id=527 data-nosnippet>527</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#527 id=527 data-nosnippet>527</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#528 id=528 data-nosnippet>528</a>        cache
 <a href=#529 id=529 data-nosnippet>529</a>            .guilds
 <a href=#530 id=530 data-nosnippet>530</a>            .get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.thread.guild_id)
@@ -535,7 +535,7 @@
 <a href=#535 id=535 data-nosnippet>535</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>ThreadListSyncEvent {
 <a href=#536 id=536 data-nosnippet>536</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#537 id=537 data-nosnippet>537</a>
-<a href=#538 id=538 data-nosnippet>538</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#538 id=538 data-nosnippet>538</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#539 id=539 data-nosnippet>539</a>        <span class="kw">let </span><span class="kw-2">mut </span>guild = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id)<span class="question-mark">?</span>;
 <a href=#540 id=540 data-nosnippet>540</a>        <span class="kw">let </span><span class="prelude-val">Some</span>(channel_ids) = <span class="kw-2">&amp;</span><span class="self">self</span>.channel_ids <span class="kw">else </span>{
 <a href=#541 id=541 data-nosnippet>541</a>            <span class="comment">// channel_ids is none, this is a full sync, easy path
@@ -580,7 +580,7 @@
 <a href=#580 id=580 data-nosnippet>580</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>UserUpdateEvent {
 <a href=#581 id=581 data-nosnippet>581</a>    <span class="kw">type </span>Output = CurrentUser;
 <a href=#582 id=582 data-nosnippet>582</a>
-<a href=#583 id=583 data-nosnippet>583</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#583 id=583 data-nosnippet>583</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#584 id=584 data-nosnippet>584</a>        <span class="kw">let </span><span class="kw-2">mut </span>user = cache.user.write();
 <a href=#585 id=585 data-nosnippet>585</a>        <span class="prelude-val">Some</span>(std::mem::replace(<span class="kw-2">&amp;mut </span>user, <span class="self">self</span>.current_user.clone()))
 <a href=#586 id=586 data-nosnippet>586</a>    }
@@ -589,7 +589,7 @@
 <a href=#589 id=589 data-nosnippet>589</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>VoiceStateUpdateEvent {
 <a href=#590 id=590 data-nosnippet>590</a>    <span class="kw">type </span>Output = VoiceState;
 <a href=#591 id=591 data-nosnippet>591</a>
-<a href=#592 id=592 data-nosnippet>592</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;VoiceState&gt; {
+<a href=#592 id=592 data-nosnippet>592</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;VoiceState&gt; {
 <a href=#593 id=593 data-nosnippet>593</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(guild_id) = <span class="self">self</span>.voice_state.guild_id {
 <a href=#594 id=594 data-nosnippet>594</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>guild) = cache.guilds.get_mut(<span class="kw-2">&amp;</span>guild_id) {
 <a href=#595 id=595 data-nosnippet>595</a>                <span class="kw">if let </span><span class="prelude-val">Some</span>(member) = <span class="kw-2">&amp;</span><span class="self">self</span>.voice_state.member {
@@ -617,7 +617,7 @@
 <a href=#617 id=617 data-nosnippet>617</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>VoiceChannelStatusUpdateEvent {
 <a href=#618 id=618 data-nosnippet>618</a>    <span class="kw">type </span>Output = FixedString&lt;u16&gt;;
 <a href=#619 id=619 data-nosnippet>619</a>
-<a href=#620 id=620 data-nosnippet>620</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#620 id=620 data-nosnippet>620</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#621 id=621 data-nosnippet>621</a>        <span class="kw">let </span><span class="kw-2">mut </span>guild = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.guild_id)<span class="question-mark">?</span>;
 <a href=#622 id=622 data-nosnippet>622</a>        <span class="kw">let </span><span class="kw-2">mut </span>channel = guild.channels.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.id)<span class="question-mark">?</span>;
 <a href=#623 id=623 data-nosnippet>623</a>
@@ -635,7 +635,7 @@
 <a href=#635 id=635 data-nosnippet>635</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildScheduledEventCreateEvent {
 <a href=#636 id=636 data-nosnippet>636</a>    <span class="kw">type </span>Output = std::convert::Infallible;
 <a href=#637 id=637 data-nosnippet>637</a>
-<a href=#638 id=638 data-nosnippet>638</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#638 id=638 data-nosnippet>638</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#639 id=639 data-nosnippet>639</a>        update_guild_event(cache, <span class="kw-2">&amp;</span><span class="self">self</span>.event);
 <a href=#640 id=640 data-nosnippet>640</a>        <span class="prelude-val">None
 <a href=#641 id=641 data-nosnippet>641</a>    </span>}
@@ -644,7 +644,7 @@
 <a href=#644 id=644 data-nosnippet>644</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildScheduledEventUpdateEvent {
 <a href=#645 id=645 data-nosnippet>645</a>    <span class="kw">type </span>Output = ScheduledEvent;
 <a href=#646 id=646 data-nosnippet>646</a>
-<a href=#647 id=647 data-nosnippet>647</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#647 id=647 data-nosnippet>647</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#648 id=648 data-nosnippet>648</a>        update_guild_event(cache, <span class="kw-2">&amp;</span><span class="self">self</span>.event)
 <a href=#649 id=649 data-nosnippet>649</a>    }
 <a href=#650 id=650 data-nosnippet>650</a>}
@@ -652,7 +652,7 @@
 <a href=#652 id=652 data-nosnippet>652</a><span class="kw">impl </span>CacheUpdate <span class="kw">for </span>GuildScheduledEventDeleteEvent {
 <a href=#653 id=653 data-nosnippet>653</a>    <span class="kw">type </span>Output = ScheduledEvent;
 <a href=#654 id=654 data-nosnippet>654</a>
-<a href=#655 id=655 data-nosnippet>655</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
+<a href=#655 id=655 data-nosnippet>655</a>    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, cache: <span class="kw-2">&amp;</span>Cache) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Output&gt; {
 <a href=#656 id=656 data-nosnippet>656</a>        <span class="kw">let </span><span class="kw-2">mut </span>guild = cache.guilds.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.event.guild_id)<span class="question-mark">?</span>;
 <a href=#657 id=657 data-nosnippet>657</a>        guild.scheduled_events.remove(<span class="kw-2">&amp;</span><span class="self">self</span>.event.id)
 <a href=#658 id=658 data-nosnippet>658</a>    }
