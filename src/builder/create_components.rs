@@ -1,6 +1,5 @@
 use std::borrow::Cow;
 
-use nonmax::NonMaxU32;
 use serde::Serialize;
 
 use crate::model::prelude::*;
@@ -187,7 +186,7 @@ pub struct CreateSection<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     #[serde(skip_serializing_if = "<[_]>::is_empty")]
     components: Cow<'a, [CreateSectionComponent<'a>]>,
     accessory: CreateSectionAccessory<'a>,
@@ -210,13 +209,8 @@ impl<'a> CreateSection<'a> {
     }
 
     /// Sets the `id` for this section.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -314,7 +308,7 @@ pub struct CreateTextDisplay<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     content: Cow<'a, str>,
 }
 
@@ -331,14 +325,9 @@ impl<'a> CreateTextDisplay<'a> {
     }
 
     /// Sets the `id` for this text display component.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message or modal and will
-    /// be generated sequentially, avoiding existing `id`s, when not set.
     #[must_use]
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -411,7 +400,7 @@ pub struct CreateThumbnail<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     media: CreateUnfurledMediaItem<'a>,
     #[serde(skip_serializing_if = "Option::is_none")]
     description: Option<Cow<'a, str>>,
@@ -432,13 +421,8 @@ impl<'a> CreateThumbnail<'a> {
     }
 
     /// Sets the `id` for this thumbnail.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -538,7 +522,7 @@ pub struct CreateMediaGallery<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     items: Cow<'a, [CreateMediaGalleryItem<'a>]>,
 }
 
@@ -553,13 +537,8 @@ impl<'a> CreateMediaGallery<'a> {
     }
 
     /// Sets the `id` for this media gallery.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -695,7 +674,7 @@ pub struct CreateFile<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     file: CreateUnfurledMediaItem<'a>,
     #[serde(skip_serializing_if = "Option::is_none")]
     spoiler: Option<bool>,
@@ -714,13 +693,8 @@ impl<'a> CreateFile<'a> {
     }
 
     /// Sets the `id` for this file component.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -801,7 +775,7 @@ pub struct CreateSeparator {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     #[serde(skip_serializing_if = "Option::is_none")]
     divider: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -820,13 +794,8 @@ impl CreateSeparator {
     }
 
     /// Sets the `id` for this separator.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -867,7 +836,7 @@ pub struct CreateContainer<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     #[serde(skip_serializing_if = "Option::is_none")]
     accent_color: Option<Colour>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -888,13 +857,8 @@ impl<'a> CreateContainer<'a> {
     }
 
     /// Sets the `id` for this container.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -1058,7 +1022,7 @@ pub struct CreateLabel<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     label: Cow<'a, str>,
     description: Option<Cow<'a, str>>,
     component: CreateLabelComponent<'a>,
@@ -1135,13 +1099,8 @@ impl<'a> CreateLabel<'a> {
     }
 
     /// Sets the `id` for this label.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the modal and will be generated
-    /// sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -1205,7 +1164,7 @@ pub struct CreateFileUpload<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     custom_id: Cow<'a, str>,
     min_values: u8,
     max_values: u8,
@@ -1229,13 +1188,8 @@ impl<'a> CreateFileUpload<'a> {
     }
 
     /// Sets the `id` for this file upload component.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the modal and will be generated
-    /// sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -1305,7 +1259,7 @@ pub struct CreateRadioGroup<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     custom_id: Cow<'a, str>,
     options: Cow<'a, [CreateRadioGroupOption<'a>]>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1331,13 +1285,8 @@ impl<'a> CreateRadioGroup<'a> {
     }
 
     /// Sets the `id` for this radio group.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the modal and will be generated
-    /// sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -1442,7 +1391,7 @@ pub struct CreateCheckboxGroup<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     custom_id: Cow<'a, str>,
     options: Cow<'a, [CreateCheckboxGroupOption<'a>]>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1474,13 +1423,8 @@ impl<'a> CreateCheckboxGroup<'a> {
     }
 
     /// Sets the `id` for this checkbox group.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the modal and will be generated
-    /// sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -1619,7 +1563,7 @@ pub struct CreateCheckbox<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     custom_id: Cow<'a, str>,
     #[serde(skip_serializing_if = "Option::is_none")]
     default: Option<bool>,
@@ -1637,13 +1581,8 @@ impl<'a> CreateCheckbox<'a> {
     }
 
     /// Sets the `id` for this checkbox.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the modal and will be generated
-    /// sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -1677,7 +1616,7 @@ pub struct CreateButton<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     #[serde(skip_serializing_if = "Option::is_none")]
     url: Option<Cow<'a, str>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1745,13 +1684,8 @@ impl<'a> CreateButton<'a> {
     }
 
     /// Sets the `id` for this button.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message and will be
-    /// generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -2048,7 +1982,7 @@ impl TryFrom<SelectMenuKind> for CreateSelectMenuKind<'_> {
 #[must_use]
 pub struct CreateSelectMenu<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     custom_id: Cow<'a, str>,
     #[serde(skip_serializing_if = "Option::is_none")]
     placeholder: Option<Cow<'a, str>>,
@@ -2082,13 +2016,8 @@ impl<'a> CreateSelectMenu<'a> {
     }
 
     /// Sets the `id` for this select menu.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the message or modal and will
-    /// be generated sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
@@ -2273,7 +2202,7 @@ pub struct CreateInputText<'a> {
     #[serde(rename = "type")]
     kind: ComponentType,
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<NonMaxU32>,
+    id: Option<ComponentId>,
     custom_id: Cow<'a, str>,
     style: InputTextStyle,
     min_length: Option<u16>,
@@ -2305,13 +2234,8 @@ impl<'a> CreateInputText<'a> {
     }
 
     /// Sets the `id` for this input text.
-    ///
-    /// **Note:** Must be between `0` and `2147483647`. A value of `0` is allowed but will be
-    /// treated as empty and replaced by the API. A negative value will be set to `0` and thus
-    /// be treated the same. Component `id`s must be unique within the modal and will be generated
-    /// sequentially, avoiding existing `id`s, when not set.
-    pub fn id(mut self, id: i32) -> Self {
-        self.id = NonMaxU32::new(id.max(0).unsigned_abs());
+    pub fn id(mut self, id: ComponentId) -> Self {
+        self.id = Some(id);
         self
     }
 
