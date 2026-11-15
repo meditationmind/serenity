@@ -9,6 +9,7 @@ use super::CloseFrame;
 ///
 /// Note that - from a user standpoint - there should be no situation in which you manually handle
 /// these.
+// A gateway change
 #[derive(Debug)]
 #[non_exhaustive]
 pub enum Error {

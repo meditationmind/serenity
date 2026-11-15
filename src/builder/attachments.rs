@@ -28,6 +28,7 @@ pub enum AttachmentDataKind<'a> {
 /// A builder for creating a new attachment from a file path, file data, or URL.
 ///
 /// [Discord docs](https://docs.discord.com/developers/resources/message#attachment-object-attachment-structure).
+// A builder change
 #[derive(Clone, Debug)]
 #[non_exhaustive]
 #[must_use]
